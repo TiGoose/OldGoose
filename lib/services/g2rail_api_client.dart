@@ -89,10 +89,26 @@ class GrailApiClient {
     return solutionsJson;
   }
 
-  Future<dynamic> getAsyncResult(String asyncKey) async {
+  Future<dynamic> getAsyncResult(String asyncKey, {int retryCounts = 3}) async {
+    if (retryCounts == 0) {
+      return {
+        "data": {
+          "description": "Async Result not ready",
+          "code": "async_not_ready"
+        }
+      };
+    }
     final asyncResultURl = '$baseUrl/api/v2/async_results/$asyncKey';
     final asyncResult = await httpClient.get(Uri.parse(asyncResultURl),
         headers: getAuthorizationHeaders({"async_key": asyncKey}));
-    return jsonDecode(utf8.decode(asyncResult.bodyBytes));
+
+    var rtn = jsonDecode(utf8.decode(asyncResult.bodyBytes));
+
+    if (rtn["code"] != null && rtn["code"] == "async_not_ready") {
+       await Future.delayed(const Duration(seconds: 5));
+       await getAsyncResult(asyncKey, retryCounts: retryCounts -= 1);
+    } else {
+      return {"data": jsonDecode(utf8.decode(asyncResult.bodyBytes))};
+    }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:mongo_dart/mongo_dart.dart';
+import 'package:mongo_dart/mongo_dart.dart' show Db;
 
 class TrafficWidget extends StatefulWidget {
   @override
@@ -366,7 +368,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       left: 0,
                       child: GestureDetector(
                         onTap: () {
-                          tryPayment();
+                          tryMongo();
                         },
                         child: Container(
                           width: 334,
@@ -403,7 +405,28 @@ class _TrafficWidgetState extends State<TrafficWidget> {
         ]));
   }
 
-  void tryPayment() {
-    print('whatever');
+  Future<void> tryMongo() async {
+    print('1');
+    var db = Db('mongodb://vincent:1357924680@v.walila.fun:27017/goose?authSource=admin&ssl=false');
+    print('2');
+    try {
+      await db.open();
+      print('3');
+
+      var colOrder = db.collection('order');
+      print('4');
+      colOrder.insert({
+        'orderNo': 1,
+        'status': 'Init',
+        'orderTime': DateTime.now().toUtc(),
+        'email': 'vincent-vincent@yahoo.com.tw',
+        'Amount': 1
+      });
+      print('success');
+    }
+    finally {
+      db.close();
+      print('db close');
+    }
   }
 }

@@ -52,9 +52,10 @@ class Solutions {
   String? departure;
   Duration? duration;
   int? transferTimes;
+  List<Sections>? sections;
 
   Solutions(
-      {this.from, this.to, this.departure, this.duration, this.transferTimes});
+      {this.from, this.to, this.departure, this.duration, this.transferTimes, this.sections});
 
   Solutions.fromJson(Map<String, dynamic> json) {
     from = json['from'] != null ? new From.fromJson(json['from']) : null;
@@ -64,6 +65,12 @@ class Solutions {
         ? new Duration.fromJson(json['duration'])
         : null;
     transferTimes = json['transfer_times'];
+    if (json['sections'] != null) {
+      sections = <Sections>[];
+      json['sections'].forEach((v) {
+        sections!.add(new Sections.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +86,9 @@ class Solutions {
       data['duration'] = this.duration!.toJson();
     }
     data['transfer_times'] = this.transferTimes;
+    if (this.sections != null) {
+      data['sections'] = this.sections!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -125,52 +135,48 @@ class Duration {
 }
 
 class Sections {
-  List<Section>? sections;
+  String? carrierCode;
+  String? carrierDescription;
+  String? carrierIcon;
+  List<Offers>? offers;
+  List<Trains>? trains;
 
-  Sections({this.sections});
+  Sections(
+      {this.carrierCode,
+        this.carrierDescription,
+        this.carrierIcon,
+        this.offers,
+        this.trains});
 
   Sections.fromJson(Map<String, dynamic> json) {
-    if (json['sections'] != null) {
-      sections = <Section>[];
-      json['sections'].forEach((v) {
-        sections!.add(new Section.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.sections != null) {
-      data['sections'] = this.sections!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Section {
-  String? carrierDescription;
-  String? carrierCode;
-  List<Offers>? offers;
-
-  Section({this.carrierDescription, this.carrierCode, this.offers});
-
-  Section.fromJson(Map<String, dynamic> json) {
-    carrierDescription = json['carrier_description'];
     carrierCode = json['carrier_code'];
+    carrierDescription = json['carrier_description'];
+    carrierIcon = json['carrier_icon'];
     if (json['offers'] != null) {
       offers = <Offers>[];
       json['offers'].forEach((v) {
         offers!.add(new Offers.fromJson(v));
       });
     }
+    if (json['trains'] != null) {
+      trains = <Trains>[];
+      json['trains'].forEach((v) {
+        trains!.add(new Trains.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['carrier_description'] = this.carrierDescription;
+
     data['carrier_code'] = this.carrierCode;
+    data['carrier_description'] = this.carrierDescription;
+    data['carrier_icon'] = this.carrierIcon;
     if (this.offers != null) {
       data['offers'] = this.offers!.map((v) => v.toJson()).toList();
+    }
+    if (this.trains != null) {
+      data['trains'] = this.trains!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -179,39 +185,43 @@ class Section {
 class Offers {
   String? code;
   String? description;
+  String? detail;
+  String? helpUrl;
+  Restriction? restriction;
   String? ticketType;
   String? seatType;
   String? refundType;
-  String? changeType;
+
   String? confirmAgain;
-  String? detail;
-  Restriction? restriction;
+  String? changeType;
+
   List<Services>? services;
 
   Offers(
       {this.code,
         this.description,
+        this.detail,
+        this.helpUrl,
+        this.restriction,
         this.ticketType,
         this.seatType,
         this.refundType,
-        this.changeType,
         this.confirmAgain,
-        this.detail,
-        this.restriction,
+        this.changeType,
         this.services});
 
   Offers.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     description = json['description'];
+    detail = json['detail'];
+    helpUrl = json['help_url'];
+    restriction = json['restriction'];
     ticketType = json['ticket_type'];
     seatType = json['seat_type'];
     refundType = json['refund_type'];
-    changeType = json['change_type'];
     confirmAgain = json['confirm_again'];
-    detail = json['detail'];
-    restriction = json['restriction'] != null
-        ? new Restriction.fromJson(json['restriction'])
-        : null;
+    changeType = json['change_type'];
+
     if (json['services'] != null) {
       services = <Services>[];
       json['services'].forEach((v) {
@@ -224,15 +234,19 @@ class Offers {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     data['description'] = this.description;
+    data['detail'] = this.detail;
+    data['help_url'] = this.helpUrl;
+    data['restriction'] = this.restriction;
     data['ticket_type'] = this.ticketType;
     data['seat_type'] = this.seatType;
     data['refund_type'] = this.refundType;
-    data['change_type'] = this.changeType;
     data['confirm_again'] = this.confirmAgain;
-    data['detail'] = this.detail;
+    data['change_type'] = this.changeType;
+
     if (this.restriction != null) {
       data['restriction'] = this.restriction!.toJson();
     }
+
     if (this.services != null) {
       data['services'] = this.services!.map((v) => v.toJson()).toList();
     }
@@ -266,37 +280,110 @@ class Services {
   String? code;
   String? description;
   String? detail;
+  Null? featurePhoto;
   Available? available;
-  AverageUnitPrice? averageUnitPrice;
-  AverageUnitPrice? price;
+  Price? price;
+  Price? averageUnitPrice;
   String? bookingCode;
   String? bookingType;
+  Null? hasWifi;
+  Null? hasPowerOutlet;
+  Null? hasAirConditioning;
+  Null? hasEntertainmentSystem;
+  Null? hasReadingLight;
+  Null? seatReservation;
+  Null? seatType;
+  Null? numberOfSeatsPerRow;
+  Null? bedType;
+  Null? toiletType;
+  Null? foodServiceType;
+  Null? foodDrinks;
+  Null? freeMegazine;
+  Null? cleaningKit;
+  Null? welcomeKit;
+  Null? loungeService;
+  Null? checkIn;
+  Null? silentArea;
+  Null? privateCabin;
+  Null? playArea;
+  Null? bicycleSpace;
+  Null? disabledFacilities;
+  Null? morningCall;
+  String? helpUrl;
 
   Services(
       {this.code,
         this.description,
         this.detail,
+        this.featurePhoto,
         this.available,
-        this.averageUnitPrice,
         this.price,
+        this.averageUnitPrice,
         this.bookingCode,
-        this.bookingType});
+        this.bookingType,
+        this.hasWifi,
+        this.hasPowerOutlet,
+        this.hasAirConditioning,
+        this.hasEntertainmentSystem,
+        this.hasReadingLight,
+        this.seatReservation,
+        this.seatType,
+        this.numberOfSeatsPerRow,
+        this.bedType,
+        this.toiletType,
+        this.foodServiceType,
+        this.foodDrinks,
+        this.freeMegazine,
+        this.cleaningKit,
+        this.welcomeKit,
+        this.loungeService,
+        this.checkIn,
+        this.silentArea,
+        this.privateCabin,
+        this.playArea,
+        this.bicycleSpace,
+        this.disabledFacilities,
+        this.morningCall,
+        this.helpUrl});
 
   Services.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     description = json['description'];
     detail = json['detail'];
+    featurePhoto = json['feature_photo'];
     available = json['available'] != null
         ? new Available.fromJson(json['available'])
         : null;
+    price = json['price'] != null ? new Price.fromJson(json['price']) : null;
     averageUnitPrice = json['average_unit_price'] != null
-        ? new AverageUnitPrice.fromJson(json['average_unit_price'])
-        : null;
-    price = json['price'] != null
-        ? new AverageUnitPrice.fromJson(json['price'])
+        ? new Price.fromJson(json['average_unit_price'])
         : null;
     bookingCode = json['booking_code'];
     bookingType = json['booking_type'];
+    hasWifi = json['has_wifi'];
+    hasPowerOutlet = json['has_power_outlet'];
+    hasAirConditioning = json['has_air_conditioning'];
+    hasEntertainmentSystem = json['has_entertainment_system'];
+    hasReadingLight = json['has_reading_light'];
+    seatReservation = json['seat_reservation'];
+    seatType = json['seat_type'];
+    numberOfSeatsPerRow = json['number_of_seats_per_row'];
+    bedType = json['bed_type'];
+    toiletType = json['toilet_type'];
+    foodServiceType = json['food_service_type'];
+    foodDrinks = json['food_drinks'];
+    freeMegazine = json['free_megazine'];
+    cleaningKit = json['cleaning_kit'];
+    welcomeKit = json['welcome_kit'];
+    loungeService = json['lounge_service'];
+    checkIn = json['check_in'];
+    silentArea = json['silent_area'];
+    privateCabin = json['private_cabin'];
+    playArea = json['play_area'];
+    bicycleSpace = json['bicycle_space'];
+    disabledFacilities = json['disabled_facilities'];
+    morningCall = json['morning_call'];
+    helpUrl = json['help_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -304,17 +391,43 @@ class Services {
     data['code'] = this.code;
     data['description'] = this.description;
     data['detail'] = this.detail;
+    data['feature_photo'] = this.featurePhoto;
     if (this.available != null) {
       data['available'] = this.available!.toJson();
+    }
+
+    if (this.price != null) {
+      data['price'] = this.price!.toJson();
     }
     if (this.averageUnitPrice != null) {
       data['average_unit_price'] = this.averageUnitPrice!.toJson();
     }
-    if (this.price != null) {
-      data['price'] = this.price!.toJson();
-    }
     data['booking_code'] = this.bookingCode;
     data['booking_type'] = this.bookingType;
+    data['has_wifi'] = this.hasWifi;
+    data['has_power_outlet'] = this.hasPowerOutlet;
+    data['has_air_conditioning'] = this.hasAirConditioning;
+    data['has_entertainment_system'] = this.hasEntertainmentSystem;
+    data['has_reading_light'] = this.hasReadingLight;
+    data['seat_reservation'] = this.seatReservation;
+    data['seat_type'] = this.seatType;
+    data['number_of_seats_per_row'] = this.numberOfSeatsPerRow;
+    data['bed_type'] = this.bedType;
+    data['toilet_type'] = this.toiletType;
+    data['food_service_type'] = this.foodServiceType;
+    data['food_drinks'] = this.foodDrinks;
+    data['free_megazine'] = this.freeMegazine;
+    data['cleaning_kit'] = this.cleaningKit;
+    data['welcome_kit'] = this.welcomeKit;
+    data['lounge_service'] = this.loungeService;
+    data['check_in'] = this.checkIn;
+    data['silent_area'] = this.silentArea;
+    data['private_cabin'] = this.privateCabin;
+    data['play_area'] = this.playArea;
+    data['bicycle_space'] = this.bicycleSpace;
+    data['disabled_facilities'] = this.disabledFacilities;
+    data['morning_call'] = this.morningCall;
+    data['help_url'] = this.helpUrl;
     return data;
   }
 }
@@ -335,13 +448,13 @@ class Available {
   }
 }
 
-class AverageUnitPrice {
+class Price {
   String? currency;
   int? cents;
 
-  AverageUnitPrice({this.currency, this.cents});
+  Price({this.currency, this.cents});
 
-  AverageUnitPrice.fromJson(Map<String, dynamic> json) {
+  Price.fromJson(Map<String, dynamic> json) {
     currency = json['currency'];
     cents = json['cents'];
   }
@@ -350,6 +463,55 @@ class AverageUnitPrice {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['currency'] = this.currency;
     data['cents'] = this.cents;
+    return data;
+  }
+}
+
+class Trains {
+  String? number;
+  String? type;
+  From? from;
+  From? to;
+  String? departure;
+  String? arrival;
+  String? helpUrl;
+  Null? stops;
+
+  Trains(
+      {this.number,
+        this.type,
+        this.from,
+        this.to,
+        this.departure,
+        this.arrival,
+        this.helpUrl,
+        this.stops});
+
+  Trains.fromJson(Map<String, dynamic> json) {
+    number = json['number'];
+    type = json['type'];
+    from = json['from'] != null ? new From.fromJson(json['from']) : null;
+    to = json['to'] != null ? new From.fromJson(json['to']) : null;
+    departure = json['departure'];
+    arrival = json['arrival'];
+    helpUrl = json['help_url'];
+    stops = json['stops'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['number'] = this.number;
+    data['type'] = this.type;
+    if (this.from != null) {
+      data['from'] = this.from!.toJson();
+    }
+    if (this.to != null) {
+      data['to'] = this.to!.toJson();
+    }
+    data['departure'] = this.departure;
+    data['arrival'] = this.arrival;
+    data['help_url'] = this.helpUrl;
+    data['stops'] = this.stops;
     return data;
   }
 }

@@ -1,3 +1,5 @@
+import 'SearchResponse.dart';
+
 class ResponseData {
   List<SearchResponse>? data;
   ResponseData({this.data});

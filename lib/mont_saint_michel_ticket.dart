@@ -14,7 +14,7 @@ class _TicketWidgetState extends State<TicketWidget> {
     return Container(
       width: 402,
       height: 870,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color : Color.fromRGBO(255, 255, 255, 1),
       ),
       child: Stack(
@@ -25,11 +25,11 @@ class _TicketWidgetState extends State<TicketWidget> {
           child: Container(
               width: 402,
               height: 60,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color : Color.fromRGBO(171, 182, 194, 1),
               )
           )
-      ),Positioned(
+      ),const Positioned(
         top: 16,
         left: 14,
         child: Text('Ticket', textAlign: TextAlign.left, style: TextStyle(
@@ -40,7 +40,7 @@ class _TicketWidgetState extends State<TicketWidget> {
             fontWeight: FontWeight.normal,
             height: 1
         ),)
-    ),Positioned(
+    ),const Positioned(
         top: 234,
         left: 28,
         child: Text('Date', textAlign: TextAlign.left, style: TextStyle(
@@ -51,7 +51,7 @@ class _TicketWidgetState extends State<TicketWidget> {
             fontWeight: FontWeight.normal,
             height: 1.5
         ),)
-    ),Positioned(
+    ),const Positioned(
         top: 325,
         left: 28,
         child: Text('Session', textAlign: TextAlign.left, style: TextStyle(
@@ -67,19 +67,19 @@ class _TicketWidgetState extends State<TicketWidget> {
         left: 27,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius : BorderRadius.only(
+            borderRadius : const BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
               bottomLeft: Radius.circular(5),
               bottomRight: Radius.circular(5),
             ),
-            color : Color.fromRGBO(255, 255, 255, 1),
+            color : const Color.fromRGBO(255, 255, 255, 1),
             border : Border.all(
-              color: Color.fromRGBO(214, 214, 214, 1),
+              color: const Color.fromRGBO(214, 214, 214, 1),
               width: 1,
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             mainAxisSize: MainAxisSize.min,
 
@@ -87,15 +87,15 @@ class _TicketWidgetState extends State<TicketWidget> {
               Container(
                   width: 20,
                   height: 20,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color : Color.fromRGBO(255, 255, 255, 1),
                   ),
                   child: Stack(
                       children: <Widget>[
                       ]
                   )
-              ), SizedBox(width : 10),
-              Text('placeholder', textAlign: TextAlign.left, style: TextStyle(
+              ), const SizedBox(width : 10),
+              const Text('placeholder', textAlign: TextAlign.left, style: TextStyle(
                   color: Color.fromRGBO(0, 46, 108, 1),
                   fontFamily: 'Arial',
                   fontSize: 14,
@@ -107,7 +107,7 @@ class _TicketWidgetState extends State<TicketWidget> {
             ],
           ),
         )
-    ),Positioned(
+    ),const Positioned(
         top: 151,
         left: 27,
         child: Text('Count', textAlign: TextAlign.left, style: TextStyle(
@@ -123,35 +123,35 @@ class _TicketWidgetState extends State<TicketWidget> {
         left: 27,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius : BorderRadius.only(
+            borderRadius : const BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
               bottomLeft: Radius.circular(5),
               bottomRight: Radius.circular(5),
             ),
-            color : Color.fromRGBO(255, 255, 255, 1),
+            color : const Color.fromRGBO(255, 255, 255, 1),
             border : Border.all(
-              color: Color.fromRGBO(214, 214, 214, 1),
+              color: const Color.fromRGBO(214, 214, 214, 1),
               width: 1,
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             mainAxisSize: MainAxisSize.min,
 
             children: <Widget>[
-              Text('1', textAlign: TextAlign.left, style: TextStyle(
+              const Text('1', textAlign: TextAlign.left, style: TextStyle(
                   color: Color.fromRGBO(44, 55, 110, 1),
                   fontFamily: 'Arial',
                   fontSize: 14,
                   letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
                   height: 1
-              ),), SizedBox(width : 1),
+              ),), const SizedBox(width : 1),
               Container(
                   width: 1,
                   height: 14,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color : Color.fromRGBO(44, 55, 110, 1),
                   )
               ),
@@ -159,7 +159,7 @@ class _TicketWidgetState extends State<TicketWidget> {
             ],
           ),
         )
-    ),Positioned(
+    ),const Positioned(
         top: 68,
         left: 27,
         child: Text('Email', textAlign: TextAlign.left, style: TextStyle(
@@ -175,35 +175,35 @@ class _TicketWidgetState extends State<TicketWidget> {
         left: 27,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius : BorderRadius.only(
+            borderRadius : const BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
               bottomLeft: Radius.circular(5),
               bottomRight: Radius.circular(5),
             ),
-            color : Color.fromRGBO(255, 255, 255, 1),
+            color : const Color.fromRGBO(255, 255, 255, 1),
             border : Border.all(
-              color: Color.fromRGBO(214, 214, 214, 1),
+              color: const Color.fromRGBO(214, 214, 214, 1),
               width: 1,
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             mainAxisSize: MainAxisSize.min,
 
             children: <Widget>[
-              Text('og@mail.com', textAlign: TextAlign.left, style: TextStyle(
+              const Text('og@mail.com', textAlign: TextAlign.left, style: TextStyle(
                   color: Color.fromRGBO(44, 55, 110, 1),
                   fontFamily: 'Arial',
                   fontSize: 14,
                   letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                   fontWeight: FontWeight.normal,
                   height: 1
-              ),), SizedBox(width : 1),
+              ),), const SizedBox(width : 1),
               Container(
                   width: 1,
                   height: 14,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color : Color.fromRGBO(44, 55, 110, 1),
                   )
               ),
@@ -215,10 +215,10 @@ class _TicketWidgetState extends State<TicketWidget> {
         top: 357,
         left: 28,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color : Color.fromRGBO(255, 255, 255, 1),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
 
@@ -237,22 +237,22 @@ class _TicketWidgetState extends State<TicketWidget> {
                                 height: 25,
                                 decoration: BoxDecoration(
                                   border : Border.all(
-                                    color: Color.fromRGBO(5, 10, 48, 1),
+                                    color: const Color.fromRGBO(5, 10, 48, 1),
                                     width: 1,
                                   ),
-                                  borderRadius : BorderRadius.all(Radius.elliptical(25, 25)),
+                                  borderRadius : const BorderRadius.all(Radius.elliptical(25, 25)),
                                 )
                             )
                         ),
                       ]
                   )
-              ), SizedBox(width : 6),
+              ), const SizedBox(width : 6),
               Container(
                   width: 80,
                   height: 15,
 
                   child: Stack(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Positioned(
                             top: 0,
                             left: 0,
@@ -276,10 +276,10 @@ class _TicketWidgetState extends State<TicketWidget> {
         top: 357,
         left: 189,
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color : Color.fromRGBO(255, 255, 255, 1),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
 
@@ -298,22 +298,22 @@ class _TicketWidgetState extends State<TicketWidget> {
                                 height: 25,
                                 decoration: BoxDecoration(
                                   border : Border.all(
-                                    color: Color.fromRGBO(5, 10, 48, 1),
+                                    color: const Color.fromRGBO(5, 10, 48, 1),
                                     width: 1,
                                   ),
-                                  borderRadius : BorderRadius.all(Radius.elliptical(25, 25)),
+                                  borderRadius : const BorderRadius.all(Radius.elliptical(25, 25)),
                                 )
                             )
                         ),
                       ]
                   )
-              ), SizedBox(width : 6),
+              ), const SizedBox(width : 6),
               Container(
                   width: 78,
                   height: 15,
 
                   child: Stack(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Positioned(
                             top: 0,
                             left: 0,
@@ -339,7 +339,7 @@ class _TicketWidgetState extends State<TicketWidget> {
         child: Container(
             width: 334,
             height: 57,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
 
             ),
             child: Stack(
@@ -350,7 +350,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                       child: Container(
                           width: 334,
                           height: 57,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius : BorderRadius.only(
                               topLeft: Radius.circular(5),
                               topRight: Radius.circular(5),
@@ -360,7 +360,7 @@ class _TicketWidgetState extends State<TicketWidget> {
                             color : Color.fromRGBO(5, 10, 48, 1),
                           )
                       )
-                  ),Positioned(
+                  ),const Positioned(
                       top: 15,
                       left: 26,
                       child: Text('Continue', textAlign: TextAlign.center, style: TextStyle(
@@ -379,7 +379,7 @@ class _TicketWidgetState extends State<TicketWidget> {
       top: 417,
       left: 24,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius : BorderRadius.only(
             topLeft: Radius.circular(5),
             topRight: Radius.circular(5),
@@ -388,13 +388,13 @@ class _TicketWidgetState extends State<TicketWidget> {
           ),
           color : Color.fromRGBO(242, 248, 255, 1),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Row(
             mainAxisSize: MainAxisSize.min,
 
             children: <Widget>[
-            SizedBox(width : 10),
-            Text('Please note that the session you choose will only allow you to stay in the park for 3 hours.', textAlign: TextAlign.left, style: TextStyle(
+            const SizedBox(width : 10),
+            const Text('Please note that the session you choose will only allow you to stay in the park for 3 hours.', textAlign: TextAlign.left, style: TextStyle(
                 color: Color.fromRGBO(0, 46, 108, 1),
             fontFamily: 'Arial',
             fontSize: 14,

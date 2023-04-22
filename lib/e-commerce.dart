@@ -8,6 +8,7 @@ lib/apps/simple_ecommerce.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:old_goose/payment.dart';
 
 const String manLookRightImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
@@ -15,6 +16,17 @@ const String dogImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/pet.jpg';
 const String womanLookLeftImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/woman-look-left.jpg';
+const String saintMichelImageUrl = 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg';
+const String schlossNeuschwansteinCastleImageUrl = 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg';
+
+Package saintMichelPackage = Package(title: '聖米歇爾山');
+Package schlossNeuschwansteinCastlePackage = Package(title: '新天鵝堡');
+
+class Package {
+  final String title;
+
+  Package({required this.title});
+}
 
 Cart cart = Cart();
 
@@ -87,26 +99,27 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: listViewPadding,
         children: [
           Text(
-            'Shop by Category',
+            '老天鵝精選套裝行程',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
-          CategoryTile(
-            imageUrl: manLookRightImageUrl,
-            category: mensCategory,
-            imageAlignment: Alignment.topCenter,
+          PackageTile(
+              package: saintMichelPackage,
+              imageUrl: saintMichelImageUrl,
+              widget: PaymentWidget()
           ),
           const SizedBox(height: 16),
-          CategoryTile(
-            imageUrl: womanLookLeftImageUrl,
-            category: womensCategory,
-            imageAlignment: Alignment.topCenter,
+          PackageTile(
+              package: schlossNeuschwansteinCastlePackage,
+              imageUrl: schlossNeuschwansteinCastleImageUrl,
+              widget: PaymentWidget()
           ),
           const SizedBox(height: 16),
-          CategoryTile(
-            imageUrl: dogImageUrl, // TODO: Replace with your own image
-            category: petsCategory,
-          ),
+          // CategoryTile(
+          //   imageUrl: saintMichelImageUrl,
+          //   category: mensCategory,
+          //   imageAlignment: Alignment.topCenter,
+          // ),
         ],
       ),
     );
@@ -410,6 +423,14 @@ class CallToActionButton extends StatelessWidget {
   }
 }
 
+// class PackageScreen extends StatefulWidget {
+//   const PackageScreen({required this.package, Key? key}) : super(key: key);
+//   final Package package;
+//
+//   @override
+//   State<PackageScreen> createState() => _PackageScreenState();
+// }
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({required this.category, Key? key}) : super(key: key);
   final Category category;
@@ -419,6 +440,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 enum Filters { popular, recent, sale }
+
 
 class _CategoryScreenState extends State<CategoryScreen> {
   Category get category => widget.category;
@@ -726,6 +748,66 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
+class PackageTile extends StatelessWidget {
+  const PackageTile(
+      {required this.package,
+        required this.imageUrl,
+        this.imageAlignment = Alignment.center,
+        Key? key, required this.widget})
+      : super(key: key);
+  final String imageUrl;
+  final Package package;
+  final StatefulWidget widget;
+
+  /// Which part of the image to prefer
+  final Alignment imageAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => _pushScreen(
+          context: context,
+          screen: widget
+      ),
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.network(
+              imageUrl,
+              color: kGreyBackground,
+              colorBlendMode: BlendMode.darken,
+              alignment: imageAlignment,
+              fit: BoxFit.cover,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                package.title.toUpperCase(),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      blurRadius:10.0,  // shadow blur
+                      color: Colors.black, // shadow color
+                      offset: Offset(2.0,2.0), // how much shadow will be shown
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CategoryTile extends StatelessWidget {
   const CategoryTile(
       {required this.category,
@@ -779,6 +861,60 @@ class CategoryTile extends StatelessWidget {
     );
   }
 }
+
+// class CategoryTile extends StatelessWidget {
+//   const CategoryTile(
+//       {required this.category,
+//         required this.imageUrl,
+//         this.imageAlignment = Alignment.center,
+//         Key? key})
+//       : super(key: key);
+//   final String imageUrl;
+//   final Category category;
+//
+//   /// Which part of the image to prefer
+//   final Alignment imageAlignment;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () => _pushScreen(
+//         context: context,
+//         screen: CategoryScreen(
+//           category: category,
+//         ),
+//       ),
+//       child: Container(
+//         height: 200,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//         clipBehavior: Clip.antiAlias,
+//         child: Stack(
+//           fit: StackFit.expand,
+//           children: [
+//             Image.network(
+//               imageUrl,
+//               color: kGreyBackground,
+//               colorBlendMode: BlendMode.darken,
+//               alignment: imageAlignment,
+//               fit: BoxFit.cover,
+//             ),
+//             Align(
+//               alignment: Alignment.center,
+//               child: Text(
+//                 category.title.toUpperCase(),
+//                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+//                   color: Colors.white,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class SearchBar extends StatefulWidget {
   const SearchBar({required this.onChanged, Key? key}) : super(key: key);

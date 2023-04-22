@@ -53,7 +53,9 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Figma Flutter Generator HomeWidget - FRAME
-    return Container(
+    return
+
+      Container(
         width: 402,
         height: 870,
         decoration: BoxDecoration(
@@ -132,6 +134,9 @@ class HomeWidget extends StatelessWidget {
                         },
                         )),
                   ]))),
-        ]));
+        ]
+    )
+    );
+
   }
 }

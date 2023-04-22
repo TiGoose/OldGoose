@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:old_goose/payment.dart';
 
 
 class TrafficWidget extends StatefulWidget {
@@ -139,6 +140,6 @@ class _TrafficWidgetState extends State<TrafficWidget> {
   }
 
   void tryPayment(String s) {
-    print('whatever $s');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentWidget())) ;
   }
 }

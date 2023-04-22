@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:old_goose/services/g2rail_api_client.dart';
 import 'package:http/http.dart' as http;
+import 'models/BookingRequest.dart';
+import 'models/ResponseData.dart';
 import 'models/SolutionResponse.dart';
 
 
@@ -117,18 +121,48 @@ class HomePage extends StatelessWidget {
 
 
   Future<void> SearchSolution() async {
-    print("Im here ");
+    ResponseData searchResponse;
 
     GrailApiClient client = GrailApiClient(httpClient: http.Client(), baseUrl: "http://alpha.api.g2rail.com", apiKey: "fa656e6b99d64f309d72d6a8e7284953", secret: "9a52b1f7-7c96-4305-8569-1016a55048bc");
-    var asyncKey = await client.getSolutions("ST_D1297OY2", "ST_LV5236GZ", "2023-04-22", "08:00", 1, 0);
-
-    print("Im here -- ");
+    var asyncKey = await client.getSolutions("ST_D1297OY2", "ST_LV5236GZ", "2023-04-24", "08:00", 1, 0);
     var asyncCode = SolutionResponse.fromJson(asyncKey);
-    print("Im here 2" + asyncCode.async);
 
-    Future.delayed(const Duration(seconds: 10), () async {
-      var result = await client.getAsyncResult(asyncCode.async);
-      print("result: " + result);
-    });
+    while(true) {
+      try {
+        var response = await client.getAsyncResult(asyncCode.async);
+        if(!response['data'].toString().contains("async_not_ready")) {
+          searchResponse = ResponseData.fromJson(response);
+          break;
+        }
+
+        await Future.delayed(const Duration(seconds: 2));
+      } catch (error){
+        print(error);
+      }
+    }
+
+    String? bookingCode = searchResponse.data?[0].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode;
+    var bookingRequest = BookingRequest.fromJson(jsonDecode('{"passengers":[{"last_name":"zhang","first_name":"san","birthdate":"1986-09-01","passport":"A123456","email":"x@a.cn","phone":"+8615000367081","gender":"male"}],"sections":["${bookingCode!}"],"seat_reserved":true,"memo":"partner_order_id"}'));
+    print(bookingRequest.toJson());
+    var onlineOrderAsync = await client.onlineOrder(bookingRequest,asyncKey['async']);
+    asyncCode = SolutionResponse.fromJson(onlineOrderAsync);
+    var onlineOrderId;
+
+    while(true) {
+      try {
+        var bookingResponse = await client.getAsyncResult(asyncCode.async);
+        if(!bookingResponse['data'].toString().contains("async_not_ready")) {
+          searchResponse = ResponseData.fromJson(bookingResponse);
+          onlineOrderId = bookingResponse['data']['id'].toString();
+          break;
+        }
+
+        await Future.delayed(const Duration(seconds: 2));
+      } catch (error){
+        print(error);
+      }
+    }
+
+    print('onlineOrderId:$onlineOrderId');
   }
 }

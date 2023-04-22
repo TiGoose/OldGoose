@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
+import '../models/BookingRequest.dart';
+
 class SearchCriteria {
   String from = '';
   String to = '';
@@ -74,41 +76,38 @@ class GrailApiClient {
 
   Future<dynamic> getSolutions(from, to, date, time, adult, child) async {
     final criteria = SearchCriteria(from, to, date, time, adult, child);
-    final solutionUrl =
-        '$baseUrl/api/v2/online_solutions/?${criteria.toQuery()}';
-
-    final solutionResponse = await httpClient
-        .get(Uri.parse(solutionUrl), headers: getAuthorizationHeaders(criteria.toMap()));
-
-    if (solutionResponse.statusCode != 200) {
-      throw Exception('error getting solutions');
-    }
-
+    final solutionUrl = '$baseUrl/api/v2/online_solutions/?${criteria.toQuery()}';
+    final solutionResponse = await httpClient.get(Uri.parse(solutionUrl), headers: getAuthorizationHeaders(criteria.toMap()));
     final solutionsJson = jsonDecode(solutionResponse.body);
-
     return solutionsJson;
   }
 
-  Future<dynamic> getAsyncResult(String asyncKey, {int retryCounts = 3}) async {
-    if (retryCounts == 0) {
-      return {
-        "data": {
-          "description": "Async Result not ready",
-          "code": "async_not_ready"
-        }
-      };
-    }
+  Future<Map<String, dynamic>> onlineOrder(BookingRequest bookingRequest, String asyncKey) async {
+    final onlineOrderURL = '$baseUrl/api/v2/online_orders';
+    final bookResult = await httpClient.post(Uri.parse(onlineOrderURL),headers: getAuthorizationHeaders(bookingRequest.toJson()),body: jsonEncode(bookingRequest.toJson()));
+    final bookingResponse = jsonDecode(utf8.decode(bookResult.bodyBytes));
+    return bookingResponse;
+  }
+
+  Future<Map<String, dynamic>> onlineConfirmations(String onlineOrderId, String asyncKey) async {
+    final onlineConfirmationsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_confirmations';
+    final confirmationsResult = await httpClient.post(Uri.parse(onlineConfirmationsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}),body: jsonEncode({"online_order_id": onlineOrderId}));
+    final confirmationsResponse = jsonDecode(utf8.decode(confirmationsResult.bodyBytes));
+    return confirmationsResponse;
+  }
+
+  Future<List<dynamic>> onlineTickets(String onlineOrderId, String asyncKey) async {
+    final onlineTicketsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_tickets';
+    final onlineTicketsResult = await httpClient.get(Uri.parse(onlineTicketsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}));
+    final onlineTicketsResponse = jsonDecode(utf8.decode(onlineTicketsResult.bodyBytes));
+    return onlineTicketsResponse;
+  }
+
+  Future<Map<String, dynamic>> getAsyncResult(String asyncKey) async {
     final asyncResultURl = '$baseUrl/api/v2/async_results/$asyncKey';
     final asyncResult = await httpClient.get(Uri.parse(asyncResultURl),
         headers: getAuthorizationHeaders({"async_key": asyncKey}));
-
-    var rtn = jsonDecode(utf8.decode(asyncResult.bodyBytes));
-
-    if (rtn["code"] != null && rtn["code"] == "async_not_ready") {
-       await Future.delayed(const Duration(seconds: 5));
-       await getAsyncResult(asyncKey, retryCounts: retryCounts -= 1);
-    } else {
-      return {"data": jsonDecode(utf8.decode(asyncResult.bodyBytes))};
-    }
+    final asyncResponse = jsonDecode(utf8.decode(asyncResult.bodyBytes));
+    return { "data" : asyncResponse};
   }
 }

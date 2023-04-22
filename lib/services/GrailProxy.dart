@@ -37,16 +37,10 @@ class SearchCriteria {
 }
 
 class GrailProxy {
-  final baseUrl;
-  final apiKey;
-  final secret;
-  final http.Client httpClient;
-
-  GrailProxy({required this.httpClient,
-    @required this.baseUrl,
-    @required this.apiKey,
-    @required this.secret});
-
+  String baseUrl = "http://alpha.api.g2rail.com";
+  String apiKey = "fa656e6b99d64f309d72d6a8e7284953";
+  String secret = "9a52b1f7-7c96-4305-8569-1016a55048bc";
+  final http.Client httpClient = http.Client();
 
   Map<String, String> getAuthorizationHeaders(Map<String, dynamic> params) {
     var timestamp = DateTime.now();

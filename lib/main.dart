@@ -7,10 +7,10 @@ Future<void> main() async {
   // Ticket APIs
   // var grailService = GrailService();
   // var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", 1, 0);
-  // var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode; //choose booking code
+  // var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode; //TODO: choose booking code by GUI
   // var onlineOrderId = await grailService.booking(bookingCode!);
-  // await grailService.confirm(onlineOrderId);
-  // var tickets = await grailService.getTicket(onlineOrderId);
+  // await grailService.confirm(onlineOrderId); //TODO:　confirm ticket when user paid
+  // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
   runApp(const MyApp());
 }

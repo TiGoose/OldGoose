@@ -11,13 +11,10 @@ import '../models/SolutionResponse.dart';
 import 'GrailProxy.dart';
 
 class GrailService {
-  String baseUrl = "http://alpha.api.g2rail.com";
-  String apiKey = "fa656e6b99d64f309d72d6a8e7284953";
-  String secret = "9a52b1f7-7c96-4305-8569-1016a55048bc";
   late final client;
 
   GrailService() {
-    client = GrailProxy(httpClient: http.Client(), baseUrl: baseUrl, apiKey: apiKey, secret: secret);
+    client = GrailProxy();
   }
 
   Future<ResponseData> search(String from, String to, String date, String time, int adult, int child) async {
@@ -25,7 +22,7 @@ class GrailService {
     var asyncKey = await client.getSolutions(from, to, date, time, adult, child);
     var asyncCode = SolutionResponse.fromJson(asyncKey);
     var rawSearchResponse = await client.getAsyncResult(asyncCode.async);
-
+    print(rawSearchResponse);
     return ResponseData.fromJson(rawSearchResponse);
   }
 
@@ -35,6 +32,7 @@ class GrailService {
     var onlineOrderAsync = await client.onlineOrder(bookingRequest);
     var asyncCode = SolutionResponse.fromJson(onlineOrderAsync);
     var rawBookingResponse = await client.getAsyncResult(asyncCode.async);
+    print(rawBookingResponse);
     return rawBookingResponse['data']['id'].toString();
   }
 
@@ -45,8 +43,8 @@ class GrailService {
     var rawOnlineConfirmation = await client.getAsyncResult(asyncCode2.async);
 
     //TODO: Double confirm if needed
-    debugPrint(rawOnlineConfirmation.toString());
-    debugPrint(rawOnlineConfirmation['data']['confirm_again']);
+    print(rawOnlineConfirmation);
+    print(rawOnlineConfirmation['data']['confirm_again']);
 
     return rawOnlineConfirmation;
   }

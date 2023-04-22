@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'mont_saint_michel_ticket.dart';
+import 'mont_saint_michel_traffic.dart';
+
 void main() {
   runApp(const MyApp());
 }

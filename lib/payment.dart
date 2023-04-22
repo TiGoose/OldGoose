@@ -48,7 +48,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             height: 346,
             decoration: BoxDecoration(
               image : DecorationImage(
-                  image: AssetImage('assets/images/Image1.png'),
+                  image: AssetImage('assets/images/qrcode.png'),
                   fit: BoxFit.fitWidth
               ),
             )
@@ -56,7 +56,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     ),Positioned(
         top: 515,
         left: 90,
-        child: Text('1182979108641 </br> 玉山銀行 808', textAlign: TextAlign.left, style: TextStyle(
+        child: Text('1182979108641 玉山銀行 808', textAlign: TextAlign.left, style: TextStyle(
             color: Color.fromRGBO(0, 0, 0, 1),
         fontFamily: 'Inter',
         fontSize: 30,

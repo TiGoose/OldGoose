@@ -31,6 +31,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
           Positioned(
               top: 0,
               left: 0,
+
               child: Container(
                 width: 402,
                 height: 60,
@@ -68,9 +69,9 @@ class _TrafficWidgetState extends State<TrafficWidget> {
             left: 25,
             child: ElevatedButton(
               onPressed: () {
-                // 按下第一個按鈕後的處理邏輯
+                tryPayment('a');
               },
-              child: const Text('組合 a : +上午票'),
+              child: const Text('大人組合 a : +上午票'),
             ),
           ),
           Positioned(
@@ -78,78 +79,66 @@ class _TrafficWidgetState extends State<TrafficWidget> {
             left: 25,
             child: ElevatedButton(
               onPressed: () {
-                // 按下第一個按鈕後的處理邏輯
+                tryPayment('b');
               },
-              child: const Text('組合 b : +上午票'),
+              child: const Text('大人組合 b : +上午票'),
             ),
           ),
 
-          const Positioned(
-              top: 500,
-              left: 26,
-              child: Text(
-                '立即訂購',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(20, 20, 10, 0),
-                    fontFamily: 'Inter',
-                    fontSize: 24,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          Positioned(
-              top: 653,
-              left: 29,
-              child: Container(
-                  width: 334,
-                  height: 57,
-                  decoration: const BoxDecoration(),
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          tryPayment();
-                        },
-                        child: Container(
-                          width: 334,
-                          height: 57,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5),
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                            ),
-                            color: Color.fromRGBO(5, 10, 48, 1),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Positioned(
-                      top: 15,
-                      left: 26,
-                      child: Text(
-                        '立即訂購',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontFamily: 'Inter',
-                          fontSize: 24,
-                          letterSpacing: 0,
-                          fontWeight: FontWeight.normal,
-                          height: 1,
-                        ),
-                      ),
-                    ),
+          // Positioned(
+          //     top: 653,
+          //     left: 29,
+          //     child: Container(
+          //         width: 334,
+          //         height: 57,
+          //         decoration: const BoxDecoration(),
+          //         child: Stack(children: <Widget>[
+          //           Positioned(
+          //             top: 0,
+          //             left: 0,
+          //             child: GestureDetector(
+          //               onTap: () {
+          //                 tryPayment('any');
+          //               },
+          //               child: Container(
+          //                 width: 334,
+          //                 height: 57,
+          //                 decoration: const BoxDecoration(
+          //                   borderRadius: BorderRadius.only(
+          //                     topLeft: Radius.circular(5),
+          //                     topRight: Radius.circular(5),
+          //                     bottomLeft: Radius.circular(5),
+          //                     bottomRight: Radius.circular(5),
+          //                   ),
+          //                   color: Color.fromRGBO(5, 10, 48, 1),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+
+                    // const Positioned(
+                    //   top: 15,
+                    //   left: 26,
+                    //   child: Text(
+                    //     '立即訂購',
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(
+                    //       color: Color.fromRGBO(255, 255, 255, 1),
+                    //       fontFamily: 'Inter',
+                    //       fontSize: 24,
+                    //       letterSpacing: 0,
+                    //       fontWeight: FontWeight.normal,
+                    //       height: 1,
+                    //     ),
+                    //   ),
+                    // ),
+
+
                   ]))),
         ]));
   }
 
-  void tryPayment() {
-    print('whatever');
+  void tryPayment(String s) {
+    print('whatever $s');
   }
 }

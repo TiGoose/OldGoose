@@ -103,13 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
           PackageTile(
               package: saintMichelPackage,
               imageUrl: saintMichelImageUrl,
-              widget: PaymentWidget()
+              widget: PackageScreen(package: saintMichelPackage, imageUrl: saintMichelImageUrl)
           ),
           const SizedBox(height: 16),
           PackageTile(
               package: schlossNeuschwansteinCastlePackage,
               imageUrl: schlossNeuschwansteinCastleImageUrl,
-              widget: PaymentWidget()
+              widget: PackageScreen(package: schlossNeuschwansteinCastlePackage, imageUrl: schlossNeuschwansteinCastleImageUrl)
           ),
           const SizedBox(height: 16),
           CategoryTile(
@@ -420,6 +420,102 @@ class CallToActionButton extends StatelessWidget {
   }
 }
 
+class PackageScreen extends StatefulWidget{
+
+  const PackageScreen({Key? key, required this.package, required this.imageUrl}) : super(key: key);
+  final Package package;
+  final String imageUrl;
+
+  @override
+  State<PackageScreen> createState() => _PackageScreenState();
+}
+
+class _PackageScreenState extends State<PackageScreen> {
+  final adultCountController = TextEditingController();
+  final emailController = TextEditingController();
+
+  Package get package => widget.package;
+  String get imageUrl => widget.imageUrl;
+
+  @override
+  void dispose() {
+    adultCountController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(package.title),
+        actions: const [
+          CartAppBarAction(),
+        ],
+      ),
+      body:
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              imageUrl,
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: '請輸入您的 email',
+                ),
+                // validator: validateEmail.,
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: adultCountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '成人所需數量',
+                  hintText: '請輸入成人所需數量',
+                ),
+                // validator: validateQuantity,
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                print('click btn ler~');
+                // if (Form.of(context).validate()) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => SecondPage(
+                //         email: emailController.text,
+                //         quantity: int.parse(quantityController.text),
+                //       ),
+                //     ),
+                //   );
+                // }
+              },
+              child: Text('確認購買'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({required this.category, Key? key}) : super(key: key);
   final Category category;
@@ -429,7 +525,6 @@ class CategoryScreen extends StatefulWidget {
 }
 
 enum Filters { popular, recent, sale }
-
 
 class _CategoryScreenState extends State<CategoryScreen> {
   Category get category => widget.category;
@@ -850,60 +945,6 @@ class CategoryTile extends StatelessWidget {
     );
   }
 }
-
-// class CategoryTile extends StatelessWidget {
-//   const CategoryTile(
-//       {required this.category,
-//         required this.imageUrl,
-//         this.imageAlignment = Alignment.center,
-//         Key? key})
-//       : super(key: key);
-//   final String imageUrl;
-//   final Category category;
-//
-//   /// Which part of the image to prefer
-//   final Alignment imageAlignment;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return InkWell(
-//       onTap: () => _pushScreen(
-//         context: context,
-//         screen: CategoryScreen(
-//           category: category,
-//         ),
-//       ),
-//       child: Container(
-//         height: 200,
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(10),
-//         ),
-//         clipBehavior: Clip.antiAlias,
-//         child: Stack(
-//           fit: StackFit.expand,
-//           children: [
-//             Image.network(
-//               imageUrl,
-//               color: kGreyBackground,
-//               colorBlendMode: BlendMode.darken,
-//               alignment: imageAlignment,
-//               fit: BoxFit.cover,
-//             ),
-//             Align(
-//               alignment: Alignment.center,
-//               child: Text(
-//                 category.title.toUpperCase(),
-//                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-//                   color: Colors.white,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class SearchBar extends StatefulWidget {
   const SearchBar({required this.onChanged, Key? key}) : super(key: key);

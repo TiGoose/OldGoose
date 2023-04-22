@@ -31,7 +31,7 @@ class _MyWebViewState extends State<MyWebView> {
   void initState() {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://forms.gle/7vJt5iUBWLr1AuzN8'));
+      ..loadRequest(Uri.parse('https://docs.google.com/forms/d/e/1FAIpQLSdoexrmDSlFzOeXWAm_Sdf1I51pZxkGdA1KLc4XT0WpBUOgOQ/viewform'));
 
     super.initState();
   }

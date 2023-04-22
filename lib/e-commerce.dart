@@ -433,6 +433,7 @@ class PackageScreen extends StatefulWidget{
 class _PackageScreenState extends State<PackageScreen> {
   final adultCountController = TextEditingController();
   final emailController = TextEditingController();
+  final childCountController = TextEditingController();
 
   Package get package => widget.package;
   String get imageUrl => widget.imageUrl;
@@ -441,6 +442,7 @@ class _PackageScreenState extends State<PackageScreen> {
   void dispose() {
     adultCountController.dispose();
     emailController.dispose();
+    childCountController.dispose();
     super.dispose();
   }
 
@@ -455,12 +457,25 @@ class _PackageScreenState extends State<PackageScreen> {
         ],
       ),
       body:
-      Center(
+      SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network(
               imageUrl,
+            ),
+            SizedBox(height: 20),
+            Text('這邊是介紹 12123132145465 jfweioj jewij jeiwo dk kdk ~~~6 ewffwe 5465464564654654w  ejdiwjeioj oiwj',
+              style: TextStyle(
+                fontSize: 16
+              ),
+            ),
+            SizedBox(height: 20),
+            Text('這邊是價格 \$20000',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.red,
+              ),
             ),
             SizedBox(height: 20),
             Padding(
@@ -486,6 +501,20 @@ class _PackageScreenState extends State<PackageScreen> {
                   border: OutlineInputBorder(),
                   labelText: '成人所需數量',
                   hintText: '請輸入成人所需數量',
+                ),
+                // validator: validateQuantity,
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: childCountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '小孩所需數量',
+                  hintText: '請輸入小孩所需數量',
                 ),
                 // validator: validateQuantity,
               ),

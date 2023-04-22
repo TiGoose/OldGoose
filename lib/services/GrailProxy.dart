@@ -36,13 +36,13 @@ class SearchCriteria {
   }
 }
 
-class GrailApiClient {
+class GrailProxy {
   final baseUrl;
   final apiKey;
   final secret;
   final http.Client httpClient;
 
-  GrailApiClient({required this.httpClient,
+  GrailProxy({required this.httpClient,
     @required this.baseUrl,
     @required this.apiKey,
     @required this.secret});

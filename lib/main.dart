@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:old_goose/services/GrailService.dart';
 import 'e-commerce.dart';
 import 'mont_saint_michel_traffic.dart';
 
-void main() {
+Future<void> main() async {
+  // Ticket APIs
+  // var grailService = GrailService();
+  // var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", 1, 0);
+  // var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode; //choose booking code
+  // var onlineOrderId = await grailService.booking(bookingCode!);
+  // await grailService.confirm(onlineOrderId);
+  // var tickets = await grailService.getTicket(onlineOrderId);
+
   runApp(const MyApp());
 }
 

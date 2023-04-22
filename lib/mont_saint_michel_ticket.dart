@@ -92,14 +92,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                   ),
                   child: Stack(
                       children: <Widget>[
-                        Positioned(
-                            top: 1.6666665077209473,
-                            left: 2.499999761581421,
-                            child: SvgPicture.asset(
-                                'assets/images/vector.svg',
-                                semanticsLabel: 'vector'
-                            );
-                        ),
                       ]
                   )
               ), SizedBox(width : 10),
@@ -238,13 +230,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                   child: Stack(
                       children: <Widget>[
                         Positioned(
-                            top: 6,
-                            left: 6,
-                            child: SvgPicture.asset(
-                                'assets/images/ellipse1985.svg',
-                                semanticsLabel: 'ellipse1985'
-                            );
-                        ),Positioned(
                             top: 0,
                             left: 0,
                             child: Container(
@@ -306,13 +291,6 @@ class _TicketWidgetState extends State<TicketWidget> {
                   child: Stack(
                       children: <Widget>[
                         Positioned(
-                            top: 6,
-                            left: 6,
-                            child: SvgPicture.asset(
-                                'assets/images/ellipse1985.svg',
-                                semanticsLabel: 'ellipse1985'
-                            );
-                        ),Positioned(
                             top: 0,
                             left: 0,
                             child: Container(
@@ -415,8 +393,8 @@ class _TicketWidgetState extends State<TicketWidget> {
             mainAxisSize: MainAxisSize.min,
 
             children: <Widget>[
-            null, SizedBox(width : 10),
-            Text('Please note that the session you choose </br> will only allow you to stay in the park for 3 hours.', textAlign: TextAlign.left, style: TextStyle(
+            SizedBox(width : 10),
+            Text('Please note that the session you choose will only allow you to stay in the park for 3 hours.', textAlign: TextAlign.left, style: TextStyle(
                 color: Color.fromRGBO(0, 46, 108, 1),
             fontFamily: 'Arial',
             fontSize: 14,
@@ -434,3 +412,4 @@ class _TicketWidgetState extends State<TicketWidget> {
     );
   }
 }
+        

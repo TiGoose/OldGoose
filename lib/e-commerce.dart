@@ -111,12 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
               imageUrl: schlossNeuschwansteinCastleImageUrl,
               widget: PackageScreen(package: schlossNeuschwansteinCastlePackage, imageUrl: schlossNeuschwansteinCastleImageUrl)
           ),
-          const SizedBox(height: 16),
-          CategoryTile(
-            imageUrl: saintMichelImageUrl,
-            category: mensCategory,
-            imageAlignment: Alignment.topCenter,
-          ),
         ],
       ),
     );
@@ -1119,96 +1113,8 @@ class OrderItem {
   OrderItem({required this.product, this.selectedSize, this.selectedColor});
 }
 
-// TODO: Come up with your own categories
-Category mensCategory = Category(title: 'Men', selections: [
-  'Shirts',
-  'Jeans',
-  'Shorts',
-]);
-
 
 final kGreyBackground = Colors.grey[200];
 
 // TODO: Fetch products and feed into widgets
-List<Product> products = [
-  Product(
-      name: '2-Pack Crewneck T-Shirts - Black',
-      imageUrls: [
-        'https://images-na.ssl-images-amazon.com/images/I/91ieWhKe9AL._AC_UX569_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/71UqhKT2MDL._AC_UX466_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/81K7OAepB9L._AC_UX466_.jpg',
-        'https://images-na.ssl-images-amazon.com/images/I/812T%2Bu00R4L._AC_UX466_.jpg'
-      ],
-      cost: 12.99,
-      category: mensCategory,
-      productType: 'shirts',
-      sizes: ['S', 'M', 'L', 'XL']),
-  Product(
-    name: 'Short Sleeve Henley - Blue',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/81tpGc13OgL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81oNSlos2tL._AC_UY679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/819ea2vQIjL._AC_UY679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/91SH0RB-8dL._AC_UY606_.jpg'
-    ],
-    cost: 17.99,
-    category: mensCategory,
-    productType: 'shirts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: 'Polo RL V-Neck',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/61m68nuygSL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/61URnzIoCPL._AC_UX522_.jpg',
-    ],
-    cost: 24.99,
-    category: mensCategory,
-    productType: 'shirts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: 'Athletic-Fit Stretch Jeans',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/91SIuLNN%2BlL._AC_UY679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/91Qpp%2BRPLtL._AC_UX522_.jpg',
-    ],
-    cost: 29.99,
-    category: mensCategory,
-    productType: 'jeans',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: "Levi's Original Jeans",
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/91L4zjZKF-L._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/91Mf37jbSvL._AC_UX522_.jpg',
-    ],
-    cost: 39.99,
-    category: mensCategory,
-    productType: 'jeans',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: '2-Pack Performance Shorts',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/A1lTY32j6gL._AC_UX679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/71JYOHJ%2BS-L._AC_UX522_.jpg',
-    ],
-    cost: 19.99,
-    category: mensCategory,
-    productType: 'shorts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: "Levi's Cargo Shorts",
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/915Io2JEUPL._AC_UX679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/91WJgn0FNkL._AC_UX679_.jpg',
-    ],
-    cost: 29.99,
-    category: mensCategory,
-    productType: 'shorts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-];
+List<Product> products = [];

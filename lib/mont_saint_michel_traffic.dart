@@ -341,7 +341,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                             ),Positioned(
                                 top: 15,
                                 left: 26,
-                                child: Text('Continue', textAlign: TextAlign.center, style: TextStyle(
+                                child: Text('立即訂購', textAlign: TextAlign.center, style: TextStyle(
                                     color: Color.fromRGBO(255, 255, 255, 1),
                                     fontFamily: 'Inter',
                                     fontSize: 24,

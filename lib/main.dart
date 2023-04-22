@@ -116,7 +116,7 @@ class HomeWidget extends StatelessWidget {
                         left: 26,
                         child: GestureDetector(
                             child: Text(
-                          'Mont-Saint-Michel Traffic',
+                          '聖米歇爾套票',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -131,56 +131,6 @@ class HomeWidget extends StatelessWidget {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficWidget()))
                         },
                         )),
-                  ]))),
-          Positioned(
-              top: 241,
-              left: 34,
-              child: Container(
-                  width: 334,
-                  height: 107,
-                  decoration: BoxDecoration(),
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        child:GestureDetector(
-                        child: Container(
-                            width: 334,
-                            height: 107,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                              ),
-                              color: Color.fromRGBO(5, 10, 48, 1),
-                            )),
-                          onTap: ()=>{
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => TicketWidget()))
-                          },
-                        )
-              ),
-                    Positioned(
-                        top: 30,
-                        left: 26,
-                        child:GestureDetector(
-                        child: Text(
-                          'Mont-Saint-Michel Ticket',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontFamily: 'Inter',
-                              fontSize: 24,
-                              letterSpacing:
-                                  0 /*percentages not used in flutter. defaulting to zero*/,
-                              fontWeight: FontWeight.normal,
-                              height: 1),
-                        ), onTap: ()=>{
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => TicketWidget()))
-
-                        },),
-                    )
                   ]))),
         ]));
   }

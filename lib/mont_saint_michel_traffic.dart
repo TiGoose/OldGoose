@@ -134,8 +134,8 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                     // ),
 
 
-                  ]))),
-        ]));
+                  ]));
+        // ]));
   }
 
   void tryPayment(String s) {

@@ -50,7 +50,7 @@ class Solutions {
   From? from;
   From? to;
   String? departure;
-  Duration? duration;
+  _Duration? duration;
   int? transferTimes;
   List<Sections>? sections;
 
@@ -62,7 +62,7 @@ class Solutions {
     to = json['to'] != null ? new From.fromJson(json['to']) : null;
     departure = json['departure'];
     duration = json['duration'] != null
-        ? new Duration.fromJson(json['duration'])
+        ? new _Duration.fromJson(json['duration'])
         : null;
     transferTimes = json['transfer_times'];
     if (json['sections'] != null) {
@@ -115,13 +115,13 @@ class From {
   }
 }
 
-class Duration {
+class _Duration {
   int? hour;
   int? minutes;
 
-  Duration({this.hour, this.minutes});
+  _Duration({this.hour, this.minutes});
 
-  Duration.fromJson(Map<String, dynamic> json) {
+  _Duration.fromJson(Map<String, dynamic> json) {
     hour = json['hour'];
     minutes = json['minutes'];
   }

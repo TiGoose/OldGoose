@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class TrafficWidget extends StatefulWidget {
   @override
   _TrafficWidgetState createState() => _TrafficWidgetState();
@@ -13,6 +14,8 @@ class _TrafficWidgetState extends State<TrafficWidget> {
       _inputText = text;
     });
   }
+
+  get child => null;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +99,57 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
+          Positioned(
+              top: 653,
+              left: 29,
+              child: Container(
+                  width: 334,
+                  height: 57,
+                  decoration: const BoxDecoration(),
+                  child: Stack(children: <Widget>[
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          tryPayment();
+                        },
+                        child: Container(
+                          width: 334,
+                          height: 57,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              topRight: Radius.circular(5),
+                              bottomLeft: Radius.circular(5),
+                              bottomRight: Radius.circular(5),
+                            ),
+                            color: Color.fromRGBO(5, 10, 48, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      top: 15,
+                      left: 26,
+                      child: Text(
+                        '立即訂購',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          fontFamily: 'Inter',
+                          fontSize: 24,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.normal,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ]))),
         ]));
+  }
+
+  void tryPayment() {
+    print('whatever');
   }
 }

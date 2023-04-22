@@ -14,7 +14,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
     return Container(
         width: 402,
         height: 870,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color : Color.fromRGBO(255, 255, 255, 1),
         ),
         child: Stack(
@@ -25,11 +25,11 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   child: Container(
                       width: 402,
                       height: 60,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color : Color.fromRGBO(171, 182, 194, 1),
                       )
                   )
-              ),Positioned(
+              ),const Positioned(
                   top: 16,
                   left: 14,
                   child: Text('Traffic', textAlign: TextAlign.left, style: TextStyle(
@@ -40,7 +40,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       fontWeight: FontWeight.normal,
                       height: 1
                   ),)
-              ),Positioned(
+              ),const Positioned(
                   top: 72,
                   left: 25,
                   child: Text('From', textAlign: TextAlign.left, style: TextStyle(
@@ -56,35 +56,35 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   left: 25,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius : BorderRadius.only(
+                      borderRadius : const BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),
                       ),
-                      color : Color.fromRGBO(255, 255, 255, 1),
+                      color : const Color.fromRGBO(255, 255, 255, 1),
                       border : Border.all(
-                        color: Color.fromRGBO(214, 214, 214, 1),
+                        color: const Color.fromRGBO(214, 214, 214, 1),
                         width: 1,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
 
                       children: <Widget>[
-                        Text('Paris', textAlign: TextAlign.left, style: TextStyle(
+                        const Text('Paris', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(44, 55, 110, 1),
                             fontFamily: 'Arial',
                             fontSize: 14,
                             letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                             fontWeight: FontWeight.normal,
                             height: 1
-                        ),), SizedBox(width : 1),
+                        ),), const SizedBox(width : 1),
                         Container(
                             width: 1,
                             height: 14,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color : Color.fromRGBO(44, 55, 110, 1),
                             )
                         ),
@@ -92,7 +92,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       ],
                     ),
                   )
-              ),Positioned(
+              ),const Positioned(
                   top: 152,
                   left: 27,
                   child: Text('To', textAlign: TextAlign.left, style: TextStyle(
@@ -103,7 +103,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       fontWeight: FontWeight.normal,
                       height: 1.5
                   ),)
-              ),Positioned(
+              ),const Positioned(
                   top: 232,
                   left: 28,
                   child: Text('Date', textAlign: TextAlign.left, style: TextStyle(
@@ -119,35 +119,35 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   left: 27,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius : BorderRadius.only(
+                      borderRadius : const BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),
                       ),
-                      color : Color.fromRGBO(255, 255, 255, 1),
+                      color : const Color.fromRGBO(255, 255, 255, 1),
                       border : Border.all(
-                        color: Color.fromRGBO(214, 214, 214, 1),
+                        color: const Color.fromRGBO(214, 214, 214, 1),
                         width: 1,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
 
                       children: <Widget>[
-                        Text('Nice', textAlign: TextAlign.left, style: TextStyle(
+                        const Text('Nice', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(44, 55, 110, 1),
                             fontFamily: 'Arial',
                             fontSize: 14,
                             letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                             fontWeight: FontWeight.normal,
                             height: 1
-                        ),), SizedBox(width : 1),
+                        ),), const SizedBox(width : 1),
                         Container(
                             width: 1,
                             height: 14,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color : Color.fromRGBO(44, 55, 110, 1),
                             )
                         ),
@@ -155,7 +155,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       ],
                     ),
                   )
-              ),Positioned(
+              ),const Positioned(
                   top: 394,
                   left: 28,
                   child: Text('Adult', textAlign: TextAlign.left, style: TextStyle(
@@ -171,35 +171,35 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   left: 28,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius : BorderRadius.only(
+                      borderRadius : const BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),
                       ),
-                      color : Color.fromRGBO(255, 255, 255, 1),
+                      color : const Color.fromRGBO(255, 255, 255, 1),
                       border : Border.all(
-                        color: Color.fromRGBO(214, 214, 214, 1),
+                        color: const Color.fromRGBO(214, 214, 214, 1),
                         width: 1,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
 
                       children: <Widget>[
-                        Text('1', textAlign: TextAlign.left, style: TextStyle(
+                        const Text('1', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(44, 55, 110, 1),
                             fontFamily: 'Arial',
                             fontSize: 14,
                             letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                             fontWeight: FontWeight.normal,
                             height: 1
-                        ),), SizedBox(width : 1),
+                        ),), const SizedBox(width : 1),
                         Container(
                             width: 1,
                             height: 14,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color : Color.fromRGBO(44, 55, 110, 1),
                             )
                         ),
@@ -207,7 +207,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       ],
                     ),
                   )
-              ),Positioned(
+              ),const Positioned(
                   top: 474,
                   left: 28,
                   child: Text('Child', textAlign: TextAlign.left, style: TextStyle(
@@ -223,35 +223,35 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   left: 28,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius : BorderRadius.only(
+                      borderRadius : const BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),
                       ),
-                      color : Color.fromRGBO(255, 255, 255, 1),
+                      color : const Color.fromRGBO(255, 255, 255, 1),
                       border : Border.all(
-                        color: Color.fromRGBO(214, 214, 214, 1),
+                        color: const Color.fromRGBO(214, 214, 214, 1),
                         width: 1,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
 
                       children: <Widget>[
-                        Text('0', textAlign: TextAlign.left, style: TextStyle(
+                        const Text('0', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(44, 55, 110, 1),
                             fontFamily: 'Arial',
                             fontSize: 14,
                             letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                             fontWeight: FontWeight.normal,
                             height: 1
-                        ),), SizedBox(width : 1),
+                        ),), const SizedBox(width : 1),
                         Container(
                             width: 1,
                             height: 14,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color : Color.fromRGBO(44, 55, 110, 1),
                             )
                         ),
@@ -259,7 +259,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                       ],
                     ),
                   )
-              ),Positioned(
+              ),const Positioned(
                   top: 557,
                   left: 28,
                   child: Text('Email', textAlign: TextAlign.left, style: TextStyle(
@@ -275,35 +275,35 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   left: 28,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius : BorderRadius.only(
+                      borderRadius : const BorderRadius.only(
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                         bottomRight: Radius.circular(5),
                       ),
-                      color : Color.fromRGBO(255, 255, 255, 1),
+                      color : const Color.fromRGBO(255, 255, 255, 1),
                       border : Border.all(
-                        color: Color.fromRGBO(214, 214, 214, 1),
+                        color: const Color.fromRGBO(214, 214, 214, 1),
                         width: 1,
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
 
                       children: <Widget>[
-                        Text('og@mail.com', textAlign: TextAlign.left, style: TextStyle(
+                        const Text('og@mail.com', textAlign: TextAlign.left, style: TextStyle(
                             color: Color.fromRGBO(44, 55, 110, 1),
                             fontFamily: 'Arial',
                             fontSize: 14,
                             letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
                             fontWeight: FontWeight.normal,
                             height: 1
-                        ),), SizedBox(width : 1),
+                        ),), const SizedBox(width : 1),
                         Container(
                             width: 1,
                             height: 14,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color : Color.fromRGBO(44, 55, 110, 1),
                             )
                         ),
@@ -317,7 +317,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                   child: Container(
                       width: 334,
                       height: 57,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
 
                       ),
                       child: Stack(
@@ -328,7 +328,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                                 child: Container(
                                     width: 334,
                                     height: 57,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       borderRadius : BorderRadius.only(
                                         topLeft: Radius.circular(5),
                                         topRight: Radius.circular(5),
@@ -338,7 +338,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
                                       color : Color.fromRGBO(5, 10, 48, 1),
                                     )
                                 )
-                            ),Positioned(
+                            ),const Positioned(
                                 top: 15,
                                 left: 26,
                                 child: Text('Continue', textAlign: TextAlign.center, style: TextStyle(

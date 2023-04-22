@@ -12,10 +12,7 @@ import 'package:old_goose/payment.dart';
 
 const String manLookRightImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
-const String dogImageUrl =
-    'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/pet.jpg';
-const String womanLookLeftImageUrl =
-    'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/woman-look-left.jpg';
+
 const String saintMichelImageUrl = 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg';
 const String schlossNeuschwansteinCastleImageUrl = 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg';
 
@@ -115,11 +112,11 @@ class _HomeScreenState extends State<HomeScreen> {
               widget: PaymentWidget()
           ),
           const SizedBox(height: 16),
-          // CategoryTile(
-          //   imageUrl: saintMichelImageUrl,
-          //   category: mensCategory,
-          //   imageAlignment: Alignment.topCenter,
-          // ),
+          CategoryTile(
+            imageUrl: saintMichelImageUrl,
+            category: mensCategory,
+            imageAlignment: Alignment.topCenter,
+          ),
         ],
       ),
     );
@@ -422,14 +419,6 @@ class CallToActionButton extends StatelessWidget {
     );
   }
 }
-
-// class PackageScreen extends StatefulWidget {
-//   const PackageScreen({required this.package, Key? key}) : super(key: key);
-//   final Package package;
-//
-//   @override
-//   State<PackageScreen> createState() => _PackageScreenState();
-// }
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({required this.category, Key? key}) : super(key: key);
@@ -1066,14 +1055,7 @@ Category mensCategory = Category(title: 'Men', selections: [
   'Jeans',
   'Shorts',
 ]);
-Category womensCategory = Category(title: 'Women', selections: [
-  'Shirts',
-  'Jeans',
-]);
-Category petsCategory = Category(title: 'Pets', selections: [
-  'Toys',
-  'Treats',
-]);
+
 
 final kGreyBackground = Colors.grey[200];
 
@@ -1158,101 +1140,5 @@ List<Product> products = [
     category: mensCategory,
     productType: 'shorts',
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: '2-Pack Short-Sleeve Crewneck',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/911mb8PkHSL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81LDpImWPAL._AC_UX522_.jpg',
-    ],
-    cost: 16.99,
-    category: womensCategory,
-    productType: 'shirts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: 'Waffle Knit Tunic Blouse',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/71lDML8KDQL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/61Ojm-DnojL._AC_UY679_.jpg',
-    ],
-    cost: 22.99,
-    category: womensCategory,
-    productType: 'shirts',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: 'Mid-Rise Skinny Jeans',
-    imageUrls: [
-      //TODO links not working returning null
-      'https://images-na.ssl-images-amazon.com/images/I/71canaWSlAL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/71zLzCwbXUL._AC_UX522_.jpg',
-    ],
-    cost: 28.99,
-    category: womensCategory,
-    productType: 'jeans',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: "Levi's Straight 505 Jeans",
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/51D4eXuwKaL._AC_UX679_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/51sHwN6mDzL._AC_UX679_.jpg',
-    ],
-    cost: 34.99,
-    category: womensCategory,
-    productType: 'jeans',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: "Levi's 715 Bootcut Jeans",
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/81QwSgeXHTL._AC_UX522_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81qmkt1Be0L._AC_UY679_.jpg',
-    ],
-    cost: 34.99,
-    category: womensCategory,
-    productType: 'jeans',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-  ),
-  Product(
-    name: '3-Pack - Squeaky Plush Dog Toy',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/712YaF31-3L._AC_SL1000_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/71K1NzmHCfL._AC_SL1000_.jpg',
-    ],
-    cost: 9.99,
-    category: petsCategory,
-    productType: 'toys',
-  ),
-  Product(
-    name: 'Wobble Wag Giggle Ball',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/81XyqDXVwCL._AC_SX355_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81Ye9KrP3pL._AC_SY355_.jpg',
-    ],
-    cost: 11.99,
-    category: petsCategory,
-    productType: 'toys',
-  ),
-  Product(
-    name: 'Duck Hide Twists',
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/51dS9c0xIdL._SX342_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81z4lvRtc5L._SL1500_.jpg',
-    ],
-    cost: 8.99,
-    category: petsCategory,
-    productType: 'treats',
-  ),
-  Product(
-    name: "Zuke's Mini Training Treats",
-    imageUrls: [
-      'https://images-na.ssl-images-amazon.com/images/I/81LV2CHtGKL._AC_SY355_.jpg',
-      'https://images-na.ssl-images-amazon.com/images/I/81K30Bs9C6L._AC_SY355_.jpg',
-    ],
-    cost: 10.99,
-    category: petsCategory,
-    productType: 'treats',
   ),
 ];

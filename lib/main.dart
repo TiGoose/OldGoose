@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:old_goose/DBHelper.dart';
-import 'package:old_goose/Order.dart';
 import 'e-commerce.dart';
 import 'mont_saint_michel_traffic.dart';
 
@@ -13,7 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DbHelper().connect();
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -3,7 +3,7 @@ import 'package:old_goose/Order.dart';
 
 class DbHelper {
   static final DbHelper _singleton = DbHelper._internal();
-  Db? _db;
+  static Db? _db;
 
   factory DbHelper() {
     return _singleton;
@@ -11,7 +11,7 @@ class DbHelper {
 
   DbHelper._internal();
 
-  Future<void> connect() async {
+  static Future<void> connect() async {
     var connectionString =
         'mongodb://vincent:1357924680@v.walila.fun:27017/goose?authSource=admin&ssl=false';
     if (_db == null) {
@@ -20,19 +20,21 @@ class DbHelper {
     }
   }
 
-  Future<void> close() async {
+  static Future<void> close() async {
     if (_db != null) {
       await _db!.close();
     }
   }
 
-  Future<void> insertOrder(Order order) async {
+  // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));
+  static Future<void> insertOrder(Order order) async {
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
 
-    await colOrder.insert(order.toMap());
+    await colOrder.insert(OrderToMap(order));
+    // await colOrder.insert(order.OrderToMap());
 
     // await colOrder.insert({
     //   'orderNo': 1,
@@ -43,13 +45,22 @@ class DbHelper {
     // });
   }
 
-  Future<List<Order>> GetOrderByEMail(String Email) async {
+  static Future<Order?> GetOrderById(String id) async {
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
-    var cursor = colOrder.find(where.eq('Email', Email));
-    var orderList = await cursor.map((doc) => Order.fromMap(doc)).toList();
+    var map = await colOrder.findOne(where.eq('_id', id));
+    return OrderFromMap(map);
+
+  }
+  static Future<List<Order?>> GetOrderByEMail(String email) async {
+    if (_db == null) {
+      await connect();
+    }
+    var colOrder = _db!.collection('order');
+    var cursor = colOrder.find(where.eq('Email', email));
+    var orderList = await cursor.map((doc) => OrderFromMap(doc)).toList();
     return orderList;
   }
 }

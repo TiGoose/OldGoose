@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
     print("Im here ");
 
     GrailApiClient client = GrailApiClient(httpClient: http.Client(), baseUrl: "http://alpha.api.g2rail.com", apiKey: "fa656e6b99d64f309d72d6a8e7284953", secret: "9a52b1f7-7c96-4305-8569-1016a55048bc");
-    var asyncKey = await client.getSolutions("Berlin", "Frankfurt", "2023-04-22", "08:00", 1, 0);
+    var asyncKey = await client.getSolutions("ST_D1297OY2", "ST_LV5236GZ", "2023-04-22", "08:00", 1, 0);
 
     print("Im here -- ");
     var asyncCode = SolutionResponse.fromJson(asyncKey);

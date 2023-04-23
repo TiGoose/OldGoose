@@ -15,9 +15,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'Order.dart';
 
-const String manLookRightImageUrl =
-    'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
-
 Package saintMichelPackage = Package(
     title: '聖米歇爾山',
     imageUrl:
@@ -26,7 +23,8 @@ Package saintMichelPackage = Package(
     childPrice: 1000,
     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
     from: 'xxx',
-    to: 'qqqq');
+    to: 'qqqq'
+);
 Package schlossNeuschwansteinCastlePackage = Package(
     title: '新天鵝堡',
     imageUrl:
@@ -35,7 +33,39 @@ Package schlossNeuschwansteinCastlePackage = Package(
     childPrice: 20886,
     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
     from: 'xxx',
-    to: 'qqqq');
+    to: 'qqqq'
+);
+Package frankfurtPackage = Package(
+    title: '法蘭克福兩日遊',
+    imageUrl:
+        'https://mimihan.tw/wp-content/uploads/20190408150845_16.jpg',
+    adultPrice: 3000,
+    childPrice: 2300,
+    description: '',
+    from: 'xxx',
+    to: 'qqqq'
+);
+Package berlinPackage = Package(
+    title: '柏林三日遊',
+    imageUrl:
+    'https://www.leo-travel.idv.tw/wp-content/uploads/germany-berlin-berliner-dom-spree-river-cruise-DSC_6387-photo-17701.jpg',
+    adultPrice: 3000,
+    childPrice: 2300,
+    description: '',
+    from: 'xxx',
+    to: 'qqqq'
+);
+Package munichPackage = Package(
+    title: '慕尼黑兩日遊',
+    imageUrl:
+    'https://www.leo-travel.idv.tw/wp-content/uploads/germany-munich-Marienplatz-1476964067.jpg',
+    adultPrice: 3000,
+    childPrice: 2300,
+    description: '',
+    from: 'xxx',
+    to: 'qqqq'
+);
+
 
 class Package {
   final String title;
@@ -141,6 +171,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   package: schlossNeuschwansteinCastlePackage,
                   widget: PackageScreen(
                       package: schlossNeuschwansteinCastlePackage),
+                ),
+                const SizedBox(height: 16),
+                PackageTile(
+                  package: frankfurtPackage,
+                  widget: PackageScreen(
+                      package: frankfurtPackage),
+                ),
+                const SizedBox(height: 16),
+                PackageTile(
+                  package: berlinPackage,
+                  widget: PackageScreen(
+                      package: berlinPackage),
+                ),
+                const SizedBox(height: 16),
+                PackageTile(
+                  package: munichPackage,
+                  widget: PackageScreen(
+                      package: munichPackage),
                 ),
                 const SizedBox(height: 16),
               ],

@@ -27,13 +27,16 @@ class DbHelper {
   }
 
   // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));
-  static Future<void> insertOrder(Order order) async {
+  static Future<String> insertOrder(Order order) async {
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
 
-    await colOrder.insert(OrderToMap(order));
+    // var result = await colOrder.insertOne(OrderToMap(order));
+    var result = await colOrder.insert(OrderToMap(order));
+    return result['\$oid'];
+
     // await colOrder.insert(order.OrderToMap());
 
     // await colOrder.insert({

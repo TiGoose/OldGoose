@@ -8,6 +8,8 @@ lib/apps/simple_ecommerce.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:old_goose/DBHelper.dart';
+import 'package:old_goose/payment.dart';
 
 const String manLookRightImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
@@ -34,7 +36,7 @@ class Package {
   final int  childPrice;
   final String description;
 
-  Package({required this.title, required this.imageUrl, required this.adultPrice, required this.childPrice, required this.description});
+  Package({required this.title, required this.imageUrl, required this.price, required this.description});
 }
 
 Cart cart = Cart();
@@ -531,6 +533,18 @@ class _PackageScreenState extends State<PackageScreen> {
             ElevatedButton(
               onPressed: () {
                 print('click btn ler~');
+                var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
+                    amount: 1,
+                    adultCount: int.parse(adultCountController.text),
+                    childCount: int.parse(childCountController.text),
+                    session: '',
+                    lastName: '',
+                    firstName: '',
+                    mobile: '',
+                    birthday: '',
+                    passport: '',
+                    gender: 'M'));
+                print(orderId);
                 // if (Form.of(context).validate()) {
                 //   Navigator.push(
                 //     context,

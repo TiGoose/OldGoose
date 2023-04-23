@@ -14,6 +14,7 @@ Future<void> main() async {
   // await grailService.confirm(onlineOrderId); //TODO:　confirm ticket when user paid
   // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
+  DbHelper.insertUserData();
   runApp(const MyApp());
   DbHelper.close();
 }
@@ -23,12 +24,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () async {
+      // try{
+      //   await DbHelper.close();
+      // }
+      // // ignore: empty_catches
+      // catch(e){
+      //
+      // }
+      await DbHelper.connect();
+      await DbHelper.insertUserData();
+    });
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: SafeArea(child: SimpleEcommerce()),
     )   );
   }
+
 }
 
 class HomeWidget extends StatelessWidget {

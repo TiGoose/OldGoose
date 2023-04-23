@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
+import 'package:old_goose/payment.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -746,17 +747,18 @@ class _PackageScreenState extends State<PackageScreen> {
                     passport: '',
                     gender: 'M'));
                 print(orderId);
-                // if (Form.of(context).validate()) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => SecondPage(
-                //         email: emailController.text,
-                //         quantity: int.parse(quantityController.text),
-                //       ),
-                //     ),
-                //   );
-                // }
+                if (Form.of(context).validate()) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentWidget(
+                        orderId: orderId.toString(),
+                        email: emailController.text,
+                        amount: package.adultPrice * adultC + package.childPrice * childC,
+                      ),
+                    ),
+                  );
+                }
               },
               child: Text('確認購買'),
             ),

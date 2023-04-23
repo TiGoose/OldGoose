@@ -70,7 +70,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
             left: 25,
             child: ElevatedButton(
               onPressed: () {
-                tryPayment('a');
+                // tryPayment('a');
               },
               child: const Text('大人組合 a : +上午票'),
             ),
@@ -80,7 +80,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
             left: 25,
             child: ElevatedButton(
               onPressed: () {
-                tryPayment('b');
+                // tryPayment('b');
               },
               child: const Text('大人組合 b : +上午票'),
             ),
@@ -139,7 +139,7 @@ class _TrafficWidgetState extends State<TrafficWidget> {
         // ]));
   }
 
-  void tryPayment(String s) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentWidget())) ;
-  }
+  // void tryPayment(String s) {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentWidget())) ;
+  // }
 }

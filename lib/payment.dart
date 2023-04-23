@@ -1,89 +1,75 @@
+
 import 'package:flutter/material.dart';
 
+import 'e-commerce.dart';
+
 class PaymentWidget extends StatefulWidget {
-  const PaymentWidget({super.key});
+  const PaymentWidget({super.key, required this.orderId, required this.email, required this.amount});
+  final String orderId;
+  final String email;
+  final int amount;
 
   @override
   PaymentWidgetState createState() => PaymentWidgetState();
 }
 
 class PaymentWidgetState extends State<PaymentWidget> {
+  int get amount => widget.amount;
+  String get orderId => widget.orderId;
+  String get email => widget.email;
+
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator PaymentWidget - FRAME
 
-    return Container(
-        width: 402,
-        height: 870,
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('付款取得以保留您的訂單'),
+        actions: const [
+          LiveChatBarAction(),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Center(
+                child:
+                  Image.asset(
+                    'assets/images/usdt.png',
+                    width: 200,
+                    height: 200,
+                  ),
+              ),
+              SizedBox(height: 20),
+              Text('訂單編號：$orderId',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              Text(
+                  '總金額： USDT \$' + (amount / 31).toStringAsFixed(2),
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.red,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text('地址：TQjVwofuGBGc21SFF2sywf8bkXtYpY8znt',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              Text('訂單將保留 30 分鐘，請於時限內付款，票券將會寄到您提供的 Email - ' + email + ' !' ,
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              Text('感謝您的訂購，期待能繼續服務您~' ,
+                style: TextStyle(fontSize: 24,
+                  color: Colors.red,),
+              ),
+            ]
         ),
-        child: Stack(children: <Widget>[
-          Positioned(
-              top: 0,
-              left: 0,
-              child: Container(
-                  width: 402,
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(171, 182, 194, 1),
-                  ))),
-          const Positioned(
-              top: 16,
-              left: 14,
-              child: Text(
-                '支付',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontFamily: 'Inter',
-                    fontSize: 30,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          Positioned(
-              top: 131,
-              left: 45,
-              child: Container(
-                  width: 311,
-                  height: 346,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/qrcode.png'),
-                        fit: BoxFit.fitWidth),
-                  ))),
-          const Positioned(
-              top: 515,
-              left: 90,
-              child: Text(
-                '1182979108641 玉山銀行 808',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontFamily: 'Inter',
-                    fontSize: 30,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-          const Positioned(
-              top: 96,
-              left: 84,
-              child: Text(
-                '新台幣：2,040',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontFamily: 'Inter',
-                    fontSize: 30,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
-        ]));
+      )
+    );
   }
 }

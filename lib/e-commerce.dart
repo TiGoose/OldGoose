@@ -9,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
+import 'package:old_goose/payment.dart';
+import 'package:old_goose/services/GrailService.dart';
 
 import 'Order.dart';
 
@@ -615,14 +617,16 @@ class _PackageScreenState extends State<PackageScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                print('click btn ler~');
-                var adult = int.tryParse(adultCountController.text) ?? 0;
-                var child = int.tryParse(childCountController.text) ??0;
+              onPressed: () async {
+                var grailService = GrailService();
+                var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", int.parse(adultCountController.text), int.parse(childCountController.text));
+                var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode;
+                var onlineOrderId = await grailService.booking(bookingCode!, emailController.text);
                 var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
-                    amount: package.adultPrice*adult + package.childPrice*child,
-                    adultCount: adult,
-                    childCount: child,
+                    orderId: onlineOrderId,
+                    amount: 1,
+                    adultCount: int.parse(adultCountController.text),
+                    childCount: int.parse(childCountController.text),
                     session: '',
                     lastName: '',
                     firstName: '',

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/services/GrailService.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'Order.dart';
 
@@ -159,10 +160,14 @@ class _LiveChatBarActionState extends State<LiveChatBarAction> {
           )
         ],
       ),
-      onPressed: () => _pushScreen(
-        context: context,
-        screen: const CartScreen(),
-      ),
+      onPressed: () async {
+        const url = 'http://oldgoose.v.walila.fun/';
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(Uri.parse(url));
+        } else {
+          throw 'Could not launch http://oldgoose.v.walila.fun/';
+        }
+      }
     );
   }
 }
@@ -483,6 +488,7 @@ class _PackageScreenState extends State<PackageScreen> {
 
   int _adultCount = 0;
   int _childCount = 0;
+  String _email = '';
 
   _increaseAdultCount() {
     setState(() {

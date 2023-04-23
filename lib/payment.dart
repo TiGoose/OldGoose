@@ -102,7 +102,7 @@ class StatusWidgetState extends State<StatusWidget> {
                 Center(
                   child:
                   Image.asset(
-                    'assets/images/success.png',
+                    'assets/images/loading.png',
                     width: 200,
                     height: 200,
                   ),
@@ -117,7 +117,7 @@ class StatusWidgetState extends State<StatusWidget> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 18.0,
                   ),
-                  child: Text('票券將會於 3 小時內寄到您的 Email ，若逾時仍未收到票券，可點擊右上角聯繫 live chat，將由專人為您服務。' ,
+                  child: Text('票券將會於您付款後約 1 小時內寄到您的 Email ，若逾時仍未收到票券，可點擊右上角聯繫 live chat，將由專人為您服務。' ,
                     style: TextStyle(fontSize: 20,
                       color: Colors.blueAccent,),
                   ),

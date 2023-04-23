@@ -557,6 +557,8 @@ class _PackageScreenState extends State<PackageScreen> {
   int _adultCount = 0;
   int _childCount = 0;
   String _email = '';
+  Map<String, dynamic>? paymentIntent;
+  var clientkey = "sk_test_51MzZGsAal8fGT9eQSbcU99X0lPZRRro6amrKu8vbFUz9zFkmEqEoi71EMt8vGlcKf9fBmJ4IshSqP2JBHYLCP4kG00Pd6voMhq"; // Secret Key
 
   _increaseAdultCount() {
     setState(() {
@@ -783,6 +785,8 @@ class _PackageScreenState extends State<PackageScreen> {
                   throw ArgumentError('成人或小孩票數量都是0');
                 }
 
+                makePayment('TWD',(package.adultPrice * adultC + package.childPrice * childC).toString());
+
                 var orderId = await DbHelper.insertOrder(Order.NewOrder(
                     email: emailController.text,
                     orderId: '',
@@ -820,17 +824,6 @@ class _PackageScreenState extends State<PackageScreen> {
                     print('ccc');
                   }
                 });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentWidget(
-                      orderId: orderId.toString(),
-                      email: emailController.text,
-                      amount: package.adultPrice * adultC +
-                          package.childPrice * childC,
-                    ),
-                  ),
-                );
               },
               child: Text('確認購買'),
             ),
@@ -838,6 +831,113 @@ class _PackageScreenState extends State<PackageScreen> {
         ),
       ),
     );
+  }
+
+  createPaymentIntent(String amount, String currency) async {
+    try {
+
+      // TODO: Request body
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card'
+      };
+
+      // TODO: POST request to stripe
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer $clientkey',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      log('Payment Intent Body->>> ${response.body.toString()}');
+      return jsonDecode(response.body);
+    } catch (err) {
+      log('err charging user: ${err.toString()}');
+    }
+  }
+
+  calculateAmount(String amount) {
+    final calculatedAmout = (int.parse(amount)) * 100;
+    return calculatedAmout.toString();
+  }
+
+  Future<void> makePayment(String currency, String amount) async {
+    try {
+      // TODO: Create Payment intent
+      paymentIntent = await createPaymentIntent(amount, currency);
+
+      // TODO: Initialte Payment Sheet
+      await Stripe.instance
+          .initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent!['client_secret'],
+          applePay: null,
+          googlePay: null,
+          style: ThemeMode.light,
+          merchantDisplayName: 'OldGoose',
+        ),
+      ).then((value) async {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StatusWidget(),
+            ),
+          );
+        });
+      });
+
+      // TODO: now finally display payment sheeet
+      displayPaymentSheet();
+    } catch (e, s) {
+      String ss = "exception 1 :$e";
+      String s2 = "reason :$s";
+      log('hihi');
+      log("exception 1:$e");
+    }
+  }
+
+  displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Text("Payment Successfull"),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+
+        // TODO: update payment intent to null
+        paymentIntent = null;
+      }).onError((error, stackTrace) {
+        String ss = "exception 2 :$error";
+        String s2 = "reason :$stackTrace";
+      });
+    } on StripeException catch (e) {
+      print('Error is:---> $e');
+      String ss = "exception 3 :$e";
+    } catch (e) {
+      log('$e');
+    }
   }
 }
 

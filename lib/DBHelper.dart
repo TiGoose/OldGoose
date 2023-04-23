@@ -29,9 +29,7 @@ class DbHelper {
 
   static Future<void> insertUserData() async{
     await Future.delayed(const Duration(seconds: 10));
-    print('connect to db');
     final Map<String, dynamic> userData = await UserDataService.generateUserData();
-    print('Get User Data Done');
     var userCol = _db!.collection('user_data');
 
 

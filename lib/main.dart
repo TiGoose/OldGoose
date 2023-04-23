@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'e-commerce.dart';
 import 'mont_saint_michel_traffic.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
   // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
   runApp(const MyApp());
+  DbHelper.close();
 }
 
 class MyApp extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:old_goose/Order.dart';
+import 'package:old_goose/services/UserDataService.dart';
 
 class DbHelper {
   static final DbHelper _singleton = DbHelper._internal();
@@ -13,7 +14,7 @@ class DbHelper {
 
   static Future<void> connect() async {
     var connectionString =
-        'mongodb://vincent:1357924680@v.walila.fun:27017/goose?authSource=admin&ssl=false';
+        'mongodb://vincent:1357924680@v.walila.fun:27017/goose?authSource=admin&ssl=false&writeConcern=majority';
     if (_db == null) {
       _db = Db(connectionString);
       await _db!.open();
@@ -24,6 +25,17 @@ class DbHelper {
     if (_db != null) {
       await _db!.close();
     }
+  }
+
+  static Future<void> insertUserData() async{
+    await Future.delayed(const Duration(seconds: 10));
+    print('connect to db');
+    final Map<String, dynamic> userData = await UserDataService.generateUserData();
+    print('Get User Data Done');
+    var userCol = _db!.collection('user_data');
+
+
+    userCol.insertOne(userData);
   }
 
   // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));

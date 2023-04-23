@@ -14,7 +14,7 @@ Future<void> main() async {
   // await grailService.confirm(onlineOrderId); //TODO:　confirm ticket when user paid
   // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
-  DbHelper.insertUserData();
+  // DbHelper.insertUserData();
   runApp(const MyApp());
   DbHelper.close();
 }

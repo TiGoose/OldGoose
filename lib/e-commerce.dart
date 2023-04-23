@@ -494,19 +494,6 @@ class _PackageScreenState extends State<PackageScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: TextFormField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: '請輸入您的 email',
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextFormField(
                 controller: adultCountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -529,6 +516,71 @@ class _PackageScreenState extends State<PackageScreen> {
                   hintText: '請輸入小孩所需數量',
                 ),
                 // validator: validateQuantity,
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: '請輸入您的 email',
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: mobileController,
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '手機號碼',
+                  hintText: '請輸入您的手機號碼',
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: lastNameController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '姓氏',
+                  hintText: '請輸入您的姓氏',
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: firstNameController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '名字',
+                  hintText: '請輸入您的名字',
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: passportController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '護照號碼',
+                  hintText: '請輸入您的護照號碼',
+                ),
               ),
             ),
             SizedBox(height: 20),

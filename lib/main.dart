@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'package:old_goose/services/MailService.dart';
@@ -15,6 +16,8 @@ Future<void> main() async {
   // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
   // DbHelper.insertUserData();
+  Stripe.publishableKey = 'pk_test_51MzZGsAal8fGT9eQ7oCwc31CbDogCPNTyVSx8kAvxxfRumfHwm9bq0PEheuxRcfaumzVfcAc5iDVC6260FLzuXmI007ZwVzzw7';
+
   runApp(const MyApp());
   DbHelper.close();
 }

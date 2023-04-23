@@ -5,13 +5,19 @@ flutterui.design
 lib/apps/simple_ecommerce.dart
 */
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/payment.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:developer';
 
 import 'Order.dart';
 
@@ -63,10 +69,10 @@ Package munichPackage = Package(
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
-    keywords:
-        '#慕尼黑啤酒屋 #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
+    keywords: '#慕尼黑啤酒屋 #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
     from: 'xxx',
-    to: 'qqqq');
+    to: 'qqqq'
+);
 
 List<Package> packages = [
   saintMichelPackage,
@@ -140,11 +146,11 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> searchResultTiles = [];
     if (searchString.isNotEmpty) {
       searchResultTiles = packages
-          .where((p) =>
-              p.keywords.toLowerCase().contains(searchString.toLowerCase()))
+          .where(
+              (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
           .map(
             (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
-          )
+      )
           .toList();
     }
     return Scaffold(
@@ -158,9 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: searchString.isNotEmpty
           ? ListView(
-              padding: listViewPadding,
-              children: searchResultTiles,
-            )
+            padding: listViewPadding,
+            children: searchResultTiles,
+          )
           : ListView(
               padding: listViewPadding,
               children: [
@@ -182,17 +188,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 16),
                 PackageTile(
                   package: frankfurtPackage,
-                  widget: PackageScreen(package: frankfurtPackage),
+                  widget: PackageScreen(
+                      package: frankfurtPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: berlinPackage,
-                  widget: PackageScreen(package: berlinPackage),
+                  widget: PackageScreen(
+                      package: berlinPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: munichPackage,
-                  widget: PackageScreen(package: munichPackage),
+                  widget: PackageScreen(
+                      package: munichPackage),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -212,22 +221,23 @@ class _LiveChatBarActionState extends State<LiveChatBarAction> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        icon: Stack(
-          alignment: Alignment.center,
-          children: const [
-            Icon(
-              Icons.chat,
-            )
-          ],
-        ),
-        onPressed: () async {
-          const url = 'http://oldgoose.v.walila.fun/';
-          if (await canLaunchUrl(Uri.parse(url))) {
-            await launchUrl(Uri.parse(url));
-          } else {
-            throw 'Could not launch http://oldgoose.v.walila.fun/';
-          }
-        });
+      icon: Stack(
+        alignment: Alignment.center,
+        children: const [
+          Icon(
+            Icons.chat,
+          )
+        ],
+      ),
+      onPressed: () async {
+        const url = 'http://oldgoose.v.walila.fun/';
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(Uri.parse(url));
+        } else {
+          throw 'Could not launch http://oldgoose.v.walila.fun/';
+        }
+      }
+    );
   }
 }
 
@@ -766,6 +776,7 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+
                 var adultC = _adultCount;
                 var childC = _childCount;
                 if (adultC < 1 && childC < 1) {

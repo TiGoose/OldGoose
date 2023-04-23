@@ -21,14 +21,18 @@ Package saintMichelPackage = Package(
     imageUrl: 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
     adultPrice: 2023,
     childPrice: 1000,
-    description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈'
+    description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
+    from: 'xxx',
+    to: 'qqqq'
 );
 Package schlossNeuschwansteinCastlePackage = Package(
     title: '新天鵝堡',
     imageUrl: 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
     adultPrice: 50556,
     childPrice: 20886,
-    description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆'
+    description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
+    from: 'xxx',
+    to: 'qqqq'
 );
 
 class Package {
@@ -37,8 +41,10 @@ class Package {
   final int adultPrice;
   final int  childPrice;
   final String description;
+  final String from;
+  final String to;
 
-  Package({required this.title, required this.imageUrl, required this.adultPrice, required this.childPrice, required this.description});
+  Package({required this.title, required this.imageUrl, required this.adultPrice, required this.childPrice, required this.description, required this.from, required this.to});
 }
 
 Cart cart = Cart();

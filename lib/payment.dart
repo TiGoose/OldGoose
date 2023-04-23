@@ -73,3 +73,59 @@ class PaymentWidgetState extends State<PaymentWidget> {
     );
   }
 }
+
+class StatusWidget extends StatefulWidget {
+  const StatusWidget({super.key});
+
+  @override
+  StatusWidgetState createState() => StatusWidgetState();
+}
+
+class StatusWidgetState extends State<StatusWidget> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('交易狀態'),
+          actions: const [
+            LiveChatBarAction(),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Center(
+                  child:
+                  Image.asset(
+                    'assets/images/success.png',
+                    width: 200,
+                    height: 200,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text('感謝您使用老天鵝平台訂購票券！' ,
+                  style: TextStyle(fontSize: 24,
+                    color: Colors.red,),
+                ),
+                SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
+                  child: Text('票券將會於 3 小時內寄到您的 Email ，若逾時仍未收到票券，可點擊右上角聯繫 live chat，將由專人為您服務。' ,
+                    style: TextStyle(fontSize: 20,
+                      color: Colors.blueAccent,),
+                  ),
+                ),
+
+              ]
+          ),
+        )
+    );
+  }
+}

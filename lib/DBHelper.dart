@@ -55,7 +55,7 @@ class DbHelper {
     }
     var colOrder = _db!.collection('order');
     var modify = {
-      'Status': 'Processing',
+      'Status': 'BookDone',
       'ModifyTime': DateTime.now().toUtc(),
       'OrderId': orderId,
     };

@@ -773,6 +773,27 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+
+                var adultC = _adultCount;
+                var childC = _childCount;
+                if (adultC < 1 && childC < 1) {
+                  throw ArgumentError('成人或小孩票數量都是0');
+                }
+
+                var orderId = await DbHelper.insertOrder(Order.NewOrder(
+                    email: emailController.text,
+                    orderId: '',
+                    amount: package.adultPrice * adultC +
+                        package.childPrice * childC,
+                    adultCount: adultC,
+                    childCount: childC,
+                    session: '',
+                    lastName: lastNameController.text,
+                    firstName: firstNameController.text,
+                    mobile: mobileController.text,
+                    birthday: '',
+                    passport: passportController.text,
+                    gender: 'M'));
                 var grailService = GrailService();
                 var searchResponse = await grailService.search(
                     "ST_D1297OY2",
@@ -785,26 +806,8 @@ class _PackageScreenState extends State<PackageScreen> {
                     .sections?[0].offers?[0].services?[0].bookingCode;
                 var onlineOrderId = await grailService.booking(
                     bookingCode!, emailController.text);
-                var adultC = _adultCount;
-                var childC = _childCount;
-                if (adultC < 1 && childC < 1) {
-                  throw ArgumentError('成人或小孩票數量都是0');
-                }
-                var orderId = DbHelper.insertOrder(Order.NewOrder(
-                    email: emailController.text,
-                    orderId: onlineOrderId,
-                    amount: package.adultPrice * adultC +
-                        package.childPrice * childC,
-                    adultCount: adultC,
-                    childCount: childC,
-                    session: '',
-                    lastName: lastNameController.text,
-                    firstName: firstNameController.text,
-                    mobile: mobileController.text,
-                    birthday: '',
-                    passport: passportController.text,
-                    gender: 'M'));
-                // print(orderId);
+
+                await DbHelper.UpdateOrderId(orderId, onlineOrderId);
                 if (Form.of(context).validate()) {
                   Navigator.push(
                     context,

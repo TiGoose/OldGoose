@@ -11,6 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/payment.dart';
 
+import 'Order.dart';
+
 const String manLookRightImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
 
@@ -36,7 +38,7 @@ class Package {
   final int  childPrice;
   final String description;
 
-  Package({required this.title, required this.imageUrl, required this.price, required this.description});
+  Package({required this.title, required this.imageUrl, required this.adultPrice, required this.childPrice, required this.description});
 }
 
 Cart cart = Cart();

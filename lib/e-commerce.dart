@@ -5,13 +5,19 @@ flutterui.design
 lib/apps/simple_ecommerce.dart
 */
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:old_goose/DBHelper.dart';
 import 'package:old_goose/payment.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:developer';
 
 import 'Order.dart';
 
@@ -66,7 +72,8 @@ Package munichPackage = Package(
     keywords:
         '#慕尼黑啤酒屋 德國  #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
     from: 'xxx',
-    to: 'qqqq');
+    to: 'qqqq'
+);
 
 List<Package> packages = [
   saintMichelPackage,
@@ -140,11 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> searchResultTiles = [];
     if (searchString.isNotEmpty) {
       searchResultTiles = packages
-          .where((p) =>
-              p.keywords.toLowerCase().contains(searchString.toLowerCase()))
+          .where(
+              (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
           .map(
             (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
-          )
+      )
           .toList();
     }
     return Scaffold(
@@ -158,9 +165,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: searchString.isNotEmpty
           ? ListView(
-              padding: listViewPadding,
-              children: searchResultTiles,
-            )
+            padding: listViewPadding,
+            children: searchResultTiles,
+          )
           : ListView(
               padding: listViewPadding,
               children: [
@@ -182,17 +189,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 16),
                 PackageTile(
                   package: frankfurtPackage,
-                  widget: PackageScreen(package: frankfurtPackage),
+                  widget: PackageScreen(
+                      package: frankfurtPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: berlinPackage,
-                  widget: PackageScreen(package: berlinPackage),
+                  widget: PackageScreen(
+                      package: berlinPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: munichPackage,
-                  widget: PackageScreen(package: munichPackage),
+                  widget: PackageScreen(
+                      package: munichPackage),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -212,22 +222,23 @@ class _LiveChatBarActionState extends State<LiveChatBarAction> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        icon: Stack(
-          alignment: Alignment.center,
-          children: const [
-            Icon(
-              Icons.chat,
-            )
-          ],
-        ),
-        onPressed: () async {
-          const url = 'http://oldgoose.v.walila.fun/';
-          if (await canLaunchUrl(Uri.parse(url))) {
-            await launchUrl(Uri.parse(url));
-          } else {
-            throw 'Could not launch http://oldgoose.v.walila.fun/';
-          }
-        });
+      icon: Stack(
+        alignment: Alignment.center,
+        children: const [
+          Icon(
+            Icons.chat,
+          )
+        ],
+      ),
+      onPressed: () async {
+        const url = 'http://oldgoose.v.walila.fun/';
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(Uri.parse(url));
+        } else {
+          throw 'Could not launch http://oldgoose.v.walila.fun/';
+        }
+      }
+    );
   }
 }
 
@@ -547,6 +558,8 @@ class _PackageScreenState extends State<PackageScreen> {
   int _adultCount = 0;
   int _childCount = 0;
   String _email = '';
+  Map<String, dynamic>? paymentIntent;
+  var clientkey = "sk_test_51MzZGsAal8fGT9eQSbcU99X0lPZRRro6amrKu8vbFUz9zFkmEqEoi71EMt8vGlcKf9fBmJ4IshSqP2JBHYLCP4kG00Pd6voMhq"; // Secret Key
 
   _increaseAdultCount() {
     setState(() {
@@ -766,11 +779,14 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+
                 var adultC = _adultCount;
                 var childC = _childCount;
                 if (adultC < 1 && childC < 1) {
                   throw ArgumentError('成人或小孩票數量都是0');
                 }
+
+                makePayment('TWD',(package.adultPrice * adultC + package.childPrice * childC).toString());
 
                 var orderId = await DbHelper.insertOrder(Order.NewOrder(
                     email: emailController.text,
@@ -809,17 +825,6 @@ class _PackageScreenState extends State<PackageScreen> {
                     print('ccc');
                   }
                 });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentWidget(
-                      orderId: orderId.toString(),
-                      email: emailController.text,
-                      amount: package.adultPrice * adultC +
-                          package.childPrice * childC,
-                    ),
-                  ),
-                );
               },
               child: Text('確認購買'),
             ),
@@ -827,6 +832,113 @@ class _PackageScreenState extends State<PackageScreen> {
         ),
       ),
     );
+  }
+
+  createPaymentIntent(String amount, String currency) async {
+    try {
+
+      // TODO: Request body
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card'
+      };
+
+      // TODO: POST request to stripe
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer $clientkey',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      log('Payment Intent Body->>> ${response.body.toString()}');
+      return jsonDecode(response.body);
+    } catch (err) {
+      log('err charging user: ${err.toString()}');
+    }
+  }
+
+  calculateAmount(String amount) {
+    final calculatedAmout = (int.parse(amount)) * 100;
+    return calculatedAmout.toString();
+  }
+
+  Future<void> makePayment(String currency, String amount) async {
+    try {
+      // TODO: Create Payment intent
+      paymentIntent = await createPaymentIntent(amount, currency);
+
+      // TODO: Initialte Payment Sheet
+      await Stripe.instance
+          .initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent!['client_secret'],
+          applePay: null,
+          googlePay: null,
+          style: ThemeMode.light,
+          merchantDisplayName: 'OldGoose',
+        ),
+      ).then((value) async {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StatusWidget(),
+            ),
+          );
+        });
+      });
+
+      // TODO: now finally display payment sheeet
+      displayPaymentSheet();
+    } catch (e, s) {
+      String ss = "exception 1 :$e";
+      String s2 = "reason :$s";
+      log('hihi');
+      log("exception 1:$e");
+    }
+  }
+
+  displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ),
+                    ),
+                    Text("Payment Successfull"),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+
+        // TODO: update payment intent to null
+        paymentIntent = null;
+      }).onError((error, stackTrace) {
+        String ss = "exception 2 :$error";
+        String s2 = "reason :$stackTrace";
+      });
+    } on StripeException catch (e) {
+      print('Error is:---> $e');
+      String ss = "exception 3 :$e";
+    } catch (e) {
+      log('$e');
+    }
   }
 }
 

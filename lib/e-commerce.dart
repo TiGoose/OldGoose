@@ -624,6 +624,9 @@ class _PackageScreenState extends State<PackageScreen> {
                 var onlineOrderId = await grailService.booking(bookingCode!, emailController.text);
                 var adultC = int.tryParse(adultCountController.text) ?? 0;
                 var childC = int.tryParse(childCountController.text) ?? 0;
+                if(adultC < 1 && childC <1){
+                  throw ArgumentError('成人或小孩票數量都是0');
+                  }
                 var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
                     orderId: onlineOrderId,
                     amount: package.adultPrice*adultC+package.childPrice*childC,

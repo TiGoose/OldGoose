@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 import '../models/BookingRequest.dart';
+import 'package:ntp/ntp.dart';
 
 class SearchCriteria {
   String from = '';
@@ -42,8 +43,8 @@ class GrailProxy {
   String secret = "9a52b1f7-7c96-4305-8569-1016a55048bc";
   final http.Client httpClient = http.Client();
 
-  Map<String, String> getAuthorizationHeaders(Map<String, dynamic> params) {
-    var timestamp = DateTime.now();
+  Future<Map<String, String>> getAuthorizationHeaders(Map<String, dynamic> params) async {
+    var timestamp = await NTP.now();
     params['t'] = (timestamp.millisecondsSinceEpoch ~/ 1000).toString();
     params['api_key'] = apiKey;
 
@@ -71,28 +72,28 @@ class GrailProxy {
   Future<dynamic> getSolutions(from, to, date, time, adult, child) async {
     final criteria = SearchCriteria(from, to, date, time, adult, child);
     final solutionUrl = '$baseUrl/api/v2/online_solutions/?${criteria.toQuery()}';
-    final solutionResponse = await httpClient.get(Uri.parse(solutionUrl), headers: getAuthorizationHeaders(criteria.toMap()));
+    final solutionResponse = await httpClient.get(Uri.parse(solutionUrl), headers: await getAuthorizationHeaders(criteria.toMap()));
     final solutionsJson = jsonDecode(solutionResponse.body);
     return solutionsJson;
   }
 
   Future<Map<String, dynamic>> onlineOrder(BookingRequest bookingRequest) async {
     final onlineOrderURL = '$baseUrl/api/v2/online_orders';
-    final bookResult = await httpClient.post(Uri.parse(onlineOrderURL),headers: getAuthorizationHeaders(bookingRequest.toJson()),body: jsonEncode(bookingRequest.toJson()));
+    final bookResult = await httpClient.post(Uri.parse(onlineOrderURL),headers: await getAuthorizationHeaders(bookingRequest.toJson()),body: jsonEncode(bookingRequest.toJson()));
     final bookingResponse = jsonDecode(utf8.decode(bookResult.bodyBytes));
     return bookingResponse;
   }
 
   Future<Map<String, dynamic>> onlineConfirmations(String onlineOrderId) async {
     final onlineConfirmationsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_confirmations';
-    final confirmationsResult = await httpClient.post(Uri.parse(onlineConfirmationsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}),body: jsonEncode({"online_order_id": onlineOrderId}));
+    final confirmationsResult = await httpClient.post(Uri.parse(onlineConfirmationsURL),headers: await getAuthorizationHeaders({"online_order_id": onlineOrderId}),body: jsonEncode({"online_order_id": onlineOrderId}));
     final confirmationsResponse = jsonDecode(utf8.decode(confirmationsResult.bodyBytes));
     return confirmationsResponse;
   }
 
   Future<List<dynamic>> onlineTickets(String onlineOrderId) async {
     final onlineTicketsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_tickets';
-    final onlineTicketsResult = await httpClient.get(Uri.parse(onlineTicketsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}));
+    final onlineTicketsResult = await httpClient.get(Uri.parse(onlineTicketsURL),headers: await getAuthorizationHeaders({"online_order_id": onlineOrderId}));
     final onlineTicketsResponse = jsonDecode(utf8.decode(onlineTicketsResult.bodyBytes));
     return onlineTicketsResponse;
   }
@@ -108,7 +109,7 @@ class GrailProxy {
     }
     final asyncResultURl = '$baseUrl/api/v2/async_results/$asyncKey';
     final asyncResult = await httpClient.get(Uri.parse(asyncResultURl),
-        headers: getAuthorizationHeaders({"async_key": asyncKey}));
+        headers: await getAuthorizationHeaders({"async_key": asyncKey}));
 
     var rtn = jsonDecode(utf8.decode(asyncResult.bodyBytes));
 

@@ -42,22 +42,27 @@ class DbHelper {
     }
     var colOrder = _db!.collection('order');
     var modify = {
-      'Status': status,
-      'ModifyTime': DateTime.now().toUtc(),
+      r'$set': {
+        'Status': status,
+        'ModifyTime': DateTime.now().toUtc(),
+      }
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
     return result.id.toHexString();
   }
+
   static Future<String> UpdateOrderId(String id, String orderId) async{
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
     var modify = {
-      'Status': 'BookDone',
-      'ModifyTime': DateTime.now().toUtc(),
-      'OrderId': orderId,
+      r'$set': {
+        'Status': 'BookDone',
+        'ModifyTime': DateTime.now().toUtc(),
+        'OrderId': orderId,
+      }
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);

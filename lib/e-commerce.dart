@@ -22,7 +22,7 @@ Package saintMichelPackage = Package(
     adultPrice: 2023,
     childPrice: 1000,
     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
-    keywords: '',
+    keywords: '聖米歇爾山 Mont Saint Michel 法國',
     from: 'xxx',
     to: 'qqqq');
 Package schlossNeuschwansteinCastlePackage = Package(
@@ -32,7 +32,7 @@ Package schlossNeuschwansteinCastlePackage = Package(
     adultPrice: 50556,
     childPrice: 20886,
     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
-    keywords: '',
+    keywords: '新天鵝堡 Schloss Neuschwanstein castle 慕尼黑 德國',
     from: 'xxx',
     to: 'qqqq');
 Package frankfurtPackage = Package(

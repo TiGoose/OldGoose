@@ -22,6 +22,7 @@ Package saintMichelPackage = Package(
     adultPrice: 2023,
     childPrice: 1000,
     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
+    keywords: '',
     from: 'xxx',
     to: 'qqqq'
 );
@@ -32,6 +33,7 @@ Package schlossNeuschwansteinCastlePackage = Package(
     adultPrice: 50556,
     childPrice: 20886,
     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
+    keywords: '',
     from: 'xxx',
     to: 'qqqq'
 );
@@ -42,6 +44,7 @@ Package frankfurtPackage = Package(
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
+    keywords: '#羅馬廣場 #市政廳 #法蘭克福大教堂 #鐵橋 #歐洲中央銀行 #歌德故居 #法蘭克福歌劇院 #正義之泉 #聖保羅教堂 #法蘭克福證券交易所',
     from: 'xxx',
     to: 'qqqq'
 );
@@ -52,6 +55,7 @@ Package berlinPackage = Package(
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
+    keywords: '#勃蘭登堡門 #德國國會大廈#柏林大教堂 #菩提樹下大街 #歐洲猶太人紀念碑 #波茨坦廣場 #勝利紀念柱 #柏林墻遺址 #東德安全部博物館 #佩加蒙博物館 #玉林廣場',
     from: 'xxx',
     to: 'qqqq'
 );
@@ -62,10 +66,18 @@ Package munichPackage = Package(
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
+    keywords: '#慕尼黑啤酒屋 #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
     from: 'xxx',
     to: 'qqqq'
 );
 
+List<Package> packages = [
+  saintMichelPackage,
+  schlossNeuschwansteinCastlePackage,
+  frankfurtPackage,
+  berlinPackage,
+  munichPackage,
+];
 
 class Package {
   final String title;
@@ -73,6 +85,7 @@ class Package {
   final int adultPrice;
   final int childPrice;
   final String description;
+  final String keywords;
   final String from;
   final String to;
 
@@ -82,6 +95,7 @@ class Package {
       required this.adultPrice,
       required this.childPrice,
       required this.description,
+      required this.keywords,
       required this.from,
       required this.to});
 }
@@ -127,15 +141,15 @@ class _HomeScreenState extends State<HomeScreen> {
     var listViewPadding =
         const EdgeInsets.symmetric(horizontal: 16, vertical: 24);
     List<Widget> searchResultTiles = [];
-    // if (searchString.isNotEmpty) {
-    //   searchResultTiles = products
-    //       .where(
-    //           (p) => p.name.toLowerCase().contains(searchString.toLowerCase()))
-    //       .map(
-    //         (p) => ProductTile(product: p),
-    //   )
-    //       .toList();
-    // }
+    if (searchString.isNotEmpty) {
+      searchResultTiles = packages
+          .where(
+              (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
+          .map(
+            (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
+      )
+          .toList();
+    }
     return Scaffold(
       appBar: AppBar(
         title: SearchBar(
@@ -146,14 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: searchString.isNotEmpty
-          ? GridView.count(
-              padding: listViewPadding,
-              crossAxisCount: 2,
-              mainAxisSpacing: 24,
-              crossAxisSpacing: 24,
-              childAspectRatio: .78,
-              children: searchResultTiles,
-            )
+          ? ListView(
+            padding: listViewPadding,
+            children: searchResultTiles,
+          )
           : ListView(
               padding: listViewPadding,
               children: [

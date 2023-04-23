@@ -788,11 +788,11 @@ class _PackageScreenState extends State<PackageScreen> {
                     adultCount: adultC,
                     childCount: childC,
                     session: '',
-                    lastName: '',
-                    firstName: '',
-                    mobile: '',
+                    lastName: lastNameController.text,
+                    firstName: firstNameController.text,
+                    mobile: mobileController.text,
                     birthday: '',
-                    passport: '',
+                    passport: passportController.text,
                     gender: 'M'));
                 print(orderId);
                 if (Form.of(context).validate()) {

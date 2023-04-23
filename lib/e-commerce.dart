@@ -810,10 +810,12 @@ class _PackageScreenState extends State<PackageScreen> {
                   await DbHelper.UpdateOrderId(orderId, onlineOrderId);
                 }
                 catch(e){
-                  await DbHelper.UpdateStatus(orderId, 'BookingFail');
+                  // await DbHelper.UpdateStatus(orderId, 'BookingFail');
                 }
 
+                print('lalala');
                 if (Form.of(context).validate()) {
+                  print('hahaha');
                   Navigator.push(
                     context,
                     MaterialPageRoute(

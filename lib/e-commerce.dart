@@ -812,10 +812,6 @@ class _PackageScreenState extends State<PackageScreen> {
                 catch(e){
                   // await DbHelper.UpdateStatus(orderId, 'BookingFail');
                 }
-
-                print('lalala');
-                if (Form.of(context).validate()) {
-                  print('hahaha');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -826,7 +822,6 @@ class _PackageScreenState extends State<PackageScreen> {
                       ),
                     ),
                   );
-                }
               },
               child: Text('確認購買'),
             ),

@@ -18,33 +18,40 @@ const String manLookRightImageUrl =
 
 Package saintMichelPackage = Package(
     title: '聖米歇爾山',
-    imageUrl: 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
+    imageUrl:
+        'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
     adultPrice: 2023,
     childPrice: 1000,
     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 Package schlossNeuschwansteinCastlePackage = Package(
     title: '新天鵝堡',
-    imageUrl: 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
+    imageUrl:
+        'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
     adultPrice: 50556,
     childPrice: 20886,
     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 
 class Package {
   final String title;
   final String imageUrl;
   final int adultPrice;
-  final int  childPrice;
+  final int childPrice;
   final String description;
   final String from;
   final String to;
 
-  Package({required this.title, required this.imageUrl, required this.adultPrice, required this.childPrice, required this.description, required this.from, required this.to});
+  Package(
+      {required this.title,
+      required this.imageUrl,
+      required this.adultPrice,
+      required this.childPrice,
+      required this.description,
+      required this.from,
+      required this.to});
 }
 
 Cart cart = Cart();
@@ -72,6 +79,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late String searchString;
+
   @override
   void initState() {
     searchString = '';
@@ -79,13 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void setSearchString(String value) => setState(() {
-    searchString = value;
-  });
+        searchString = value;
+      });
 
   @override
   Widget build(BuildContext context) {
     var listViewPadding =
-    const EdgeInsets.symmetric(horizontal: 16, vertical: 24);
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 24);
     List<Widget> searchResultTiles = [];
     // if (searchString.isNotEmpty) {
     //   searchResultTiles = products
@@ -107,47 +115,46 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: searchString.isNotEmpty
           ? GridView.count(
-        padding: listViewPadding,
-        crossAxisCount: 2,
-        mainAxisSpacing: 24,
-        crossAxisSpacing: 24,
-        childAspectRatio: .78,
-        children: searchResultTiles,
-      )
+              padding: listViewPadding,
+              crossAxisCount: 2,
+              mainAxisSpacing: 24,
+              crossAxisSpacing: 24,
+              childAspectRatio: .78,
+              children: searchResultTiles,
+            )
           : ListView(
-        padding: listViewPadding,
-        children: [
-          Text(
-            '老天鵝精選套裝行程',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 16),
-          PackageTile(
-              package: saintMichelPackage,
-              widget: PackageScreen(package: saintMichelPackage),
-          ),
-          const SizedBox(height: 16),
-          PackageTile(
-              package: schlossNeuschwansteinCastlePackage,
-              widget: PackageScreen(package: schlossNeuschwansteinCastlePackage),
-          ),
-          const SizedBox(height: 16),
-        ],
-      ),
+              padding: listViewPadding,
+              children: [
+                Text(
+                  '老天鵝精選套裝行程',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 16),
+                PackageTile(
+                  package: saintMichelPackage,
+                  widget: PackageScreen(package: saintMichelPackage),
+                ),
+                const SizedBox(height: 16),
+                PackageTile(
+                  package: schlossNeuschwansteinCastlePackage,
+                  widget: PackageScreen(
+                      package: schlossNeuschwansteinCastlePackage),
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
     );
   }
 }
 
-class LiveChatBarAction extends StatefulWidget{
+class LiveChatBarAction extends StatefulWidget {
   const LiveChatBarAction({Key? key}) : super(key: key);
 
   @override
   State<LiveChatBarAction> createState() => _LiveChatBarActionState();
-
 }
 
 class _LiveChatBarActionState extends State<LiveChatBarAction> {
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -278,64 +285,64 @@ class _ProductScreenState extends State<ProductScreen> {
     List<Widget> imagePreviews = product.imageUrls
         .map(
           (url) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: GestureDetector(
-          onTap: () => setSelectedImageUrl(url),
-          child: Container(
-            height: 50,
-            width: 50,
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: selectedImageUrl == url
-                  ? Border.all(
-                  color: Theme.of(context).colorScheme.secondary,
-                  width: 1.75)
-                  : null,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Image.network(
-              url,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: GestureDetector(
+              onTap: () => setSelectedImageUrl(url),
+              child: Container(
+                height: 50,
+                width: 50,
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: selectedImageUrl == url
+                      ? Border.all(
+                          color: Theme.of(context).colorScheme.secondary,
+                          width: 1.75)
+                      : null,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Image.network(
+                  url,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    )
+        )
         .toList();
 
     List<Widget> sizeSelectionWidgets = product.sizes
-        ?.map(
-          (s) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: GestureDetector(
-          onTap: () {
-            setSelectedSize(s);
-          },
-          child: Container(
-            height: 42,
-            width: 38,
-            decoration: BoxDecoration(
-              color: selectedSize == s
-                  ? Theme.of(context).colorScheme.secondary
-                  : null,
-              border: Border.all(
-                color: Colors.grey[350]!,
-                width: 1.25,
+            ?.map(
+              (s) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    setSelectedSize(s);
+                  },
+                  child: Container(
+                    height: 42,
+                    width: 38,
+                    decoration: BoxDecoration(
+                      color: selectedSize == s
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
+                      border: Border.all(
+                        color: Colors.grey[350]!,
+                        width: 1.25,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        s,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: selectedSize == s ? Colors.white : null),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                s,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: selectedSize == s ? Colors.white : null),
-              ),
-            ),
-          ),
-        ),
-      ),
-    )
-        .toList() ??
+            )
+            .toList() ??
         [];
 
     return Scaffold(
@@ -386,8 +393,8 @@ class _ProductScreenState extends State<ProductScreen> {
                   Text(
                     '\$${product.cost}',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -436,9 +443,9 @@ class _ProductScreenState extends State<ProductScreen> {
 class CallToActionButton extends StatelessWidget {
   const CallToActionButton(
       {required this.onPressed,
-        required this.labelText,
-        this.minSize = const Size(266, 45),
-        Key? key})
+      required this.labelText,
+      this.minSize = const Size(266, 45),
+      Key? key})
       : super(key: key);
   final Function onPressed;
   final String labelText;
@@ -464,8 +471,7 @@ class CallToActionButton extends StatelessWidget {
   }
 }
 
-class PackageScreen extends StatefulWidget{
-
+class PackageScreen extends StatefulWidget {
   const PackageScreen({Key? key, required this.package}) : super(key: key);
   final Package package;
 
@@ -489,16 +495,19 @@ class _PackageScreenState extends State<PackageScreen> {
       _adultCount = (_adultCount + 1).clamp(0, 10);
     });
   }
+
   _decreaseAdultCount() {
     setState(() {
       _adultCount = (_adultCount - 1).clamp(0, 10);
     });
   }
+
   _increaseChildCount() {
     setState(() {
       _childCount = (_childCount + 1).clamp(0, 10);
     });
   }
+
   _decreaseChildCount() {
     setState(() {
       _childCount = (_childCount - 1).clamp(0, 10);
@@ -528,8 +537,7 @@ class _PackageScreenState extends State<PackageScreen> {
           LiveChatBarAction(),
         ],
       ),
-      body:
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -537,19 +545,20 @@ class _PackageScreenState extends State<PackageScreen> {
               package.imageUrl,
             ),
             SizedBox(height: 20),
-            Text(package.description,
-              style: TextStyle(
-                fontSize: 16
-              ),
+            Text(
+              package.description,
+              style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 20),
-            Text('成人價： \$' + package.adultPrice.toString(),
+            Text(
+              '成人價： \$' + package.adultPrice.toString(),
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.red,
               ),
             ),
-            Text('孩童價： \$' + package.childPrice.toString(),
+            Text(
+              '孩童價： \$' + package.childPrice.toString(),
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.red,
@@ -571,37 +580,35 @@ class _PackageScreenState extends State<PackageScreen> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child:
-                    Text('成人所需數量', textAlign: TextAlign.left),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: _decreaseAdultCount,
-                        color: _adultCount == 0 ? Colors.grey : Colors.black,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        '$_adultCount',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(width: 10),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: _increaseAdultCount,
-                        color: _adultCount == 10 ? Colors.grey : Colors.black,
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('成人所需數量', textAlign: TextAlign.left),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: _decreaseAdultCount,
+                          color: _adultCount == 0 ? Colors.grey : Colors.black,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '$_adultCount',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(width: 10),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: _increaseAdultCount,
+                          color: _adultCount == 10 ? Colors.grey : Colors.black,
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
             SizedBox(height: 20),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -609,8 +616,7 @@ class _PackageScreenState extends State<PackageScreen> {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child:
-                      Text('孩童所需數量', textAlign: TextAlign.left),
+                      child: Text('孩童所需數量', textAlign: TextAlign.left),
                     ),
                     Row(
                       children: [
@@ -633,8 +639,7 @@ class _PackageScreenState extends State<PackageScreen> {
                       ],
                     ),
                   ],
-                )
-            ),
+                )),
             SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -704,17 +709,27 @@ class _PackageScreenState extends State<PackageScreen> {
             ElevatedButton(
               onPressed: () async {
                 var grailService = GrailService();
-                var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", _adultCount, _childCount);
-                var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode;
-                var onlineOrderId = await grailService.booking(bookingCode!, emailController.text);
+                var searchResponse = await grailService.search(
+                    "ST_D1297OY2",
+                    "ST_LV5236GZ",
+                    "2023-04-25",
+                    "15:00",
+                    _adultCount,
+                    _childCount);
+                var bookingCode = searchResponse.data?[1].solutions?[0]
+                    .sections?[0].offers?[0].services?[0].bookingCode;
+                var onlineOrderId = await grailService.booking(
+                    bookingCode!, emailController.text);
                 var adultC = _adultCount;
                 var childC = _childCount;
-                if(adultC < 1 && childC <1){
+                if (adultC < 1 && childC < 1) {
                   throw ArgumentError('成人或小孩票數量都是0');
-                  }
-                var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
+                }
+                var orderId = DbHelper.insertOrder(Order.NewOrder(
+                    email: emailController.text,
                     orderId: onlineOrderId,
-                    amount: package.adultPrice*adultC+package.childPrice*childC,
+                    amount: package.adultPrice * adultC +
+                        package.childPrice * childC,
                     adultCount: adultC,
                     childCount: childC,
                     session: '',
@@ -773,11 +788,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     List<ProductRow> productRows = category.selections
         .map((s) => ProductRow(
-      productType: s,
-      products: _products
-          .where((p) => p.productType.toLowerCase() == s.toLowerCase())
-          .toList(),
-    ))
+              productType: s,
+              products: _products
+                  .where((p) => p.productType.toLowerCase() == s.toLowerCase())
+                  .toList(),
+            ))
         .toList();
     return Scaffold(
       appBar: AppBar(
@@ -809,39 +824,39 @@ class ProductRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<ProductTile> productTiles =
-    products.map((p) => ProductTile(product: p)).toList();
+        products.map((p) => ProductTile(product: p)).toList();
 
     return productTiles.isEmpty
         ? const SizedBox.shrink()
         : Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 18.0,
-          ),
-          child: Text(
-            productType,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        SizedBox(
-          height: 205,
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            itemCount: productTiles.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (_, index) => productTiles[index],
-            separatorBuilder: (_, index) => const SizedBox(
-              width: 24,
-            ),
-          ),
-        ),
-      ],
-    );
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18.0,
+                ),
+                child: Text(
+                  productType,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SizedBox(
+                height: 205,
+                child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  itemCount: productTiles.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (_, index) => productTiles[index],
+                  separatorBuilder: (_, index) => const SizedBox(
+                    width: 24,
+                  ),
+                ),
+              ),
+            ],
+          );
   }
 }
 
@@ -949,44 +964,44 @@ class _CartScreenState extends State<CartScreen> {
     List<Widget> orderItemRows = cart.itemsInCart
         .map(
           (item) => Row(
-        children: [
-          SizedBox(
-            width: 125,
-            child: ProductImage(
-              product: item.product,
-            ),
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.product.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+            children: [
+              SizedBox(
+                width: 125,
+                child: ProductImage(
+                  product: item.product,
                 ),
-                const SizedBox(
-                  height: 8,
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.product.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      '\$${item.product.cost}',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                    ),
+                  ],
                 ),
-                Text(
-                  '\$${item.product.cost}',
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => cart.remove(item),
+                color: Colors.red,
+              )
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => cart.remove(item),
-            color: Colors.red,
-          )
-        ],
-      ),
-    )
+        )
         .toList();
 
     return Scaffold(
@@ -1015,7 +1030,7 @@ class _CartScreenState extends State<CartScreen> {
             Expanded(
               child: ListView.separated(
                 padding:
-                const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                 itemCount: orderItemRows.length,
                 itemBuilder: (_, index) => orderItemRows[index],
                 separatorBuilder: (_, index) => const SizedBox(
@@ -1065,8 +1080,9 @@ class _CartScreenState extends State<CartScreen> {
 class PackageTile extends StatelessWidget {
   const PackageTile(
       {required this.package,
-        this.imageAlignment = Alignment.center,
-        Key? key, required this.widget})
+      this.imageAlignment = Alignment.center,
+      Key? key,
+      required this.widget})
       : super(key: key);
   final Package package;
   final StatefulWidget widget;
@@ -1077,10 +1093,7 @@ class PackageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _pushScreen(
-          context: context,
-          screen: widget
-      ),
+      onTap: () => _pushScreen(context: context, screen: widget),
       child: Container(
         height: 200,
         decoration: BoxDecoration(
@@ -1105,9 +1118,9 @@ class PackageTile extends StatelessWidget {
                   color: Colors.white,
                   shadows: [
                     Shadow(
-                      blurRadius:10.0,  // shadow blur
+                      blurRadius: 10.0, // shadow blur
                       color: Colors.black, // shadow color
-                      offset: Offset(2.0,2.0), // how much shadow will be shown
+                      offset: Offset(2.0, 2.0), // how much shadow will be shown
                     ),
                   ],
                 ),
@@ -1123,9 +1136,9 @@ class PackageTile extends StatelessWidget {
 class CategoryTile extends StatelessWidget {
   const CategoryTile(
       {required this.category,
-        required this.imageUrl,
-        this.imageAlignment = Alignment.center,
-        Key? key})
+      required this.imageUrl,
+      this.imageAlignment = Alignment.center,
+      Key? key})
       : super(key: key);
   final String imageUrl;
   final Category category;
@@ -1163,8 +1176,8 @@ class CategoryTile extends StatelessWidget {
               child: Text(
                 category.title.toUpperCase(),
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: Colors.white,
-                ),
+                      color: Colors.white,
+                    ),
               ),
             ),
           ],
@@ -1208,7 +1221,7 @@ class _SearchBarState extends State<SearchBar> {
           border: InputBorder.none,
           isDense: true,
           contentPadding:
-          kIsWeb ? const EdgeInsets.only(top: 10) : EdgeInsets.zero,
+              kIsWeb ? const EdgeInsets.only(top: 10) : EdgeInsets.zero,
           prefixIconConstraints: const BoxConstraints(
             minHeight: 36,
             minWidth: 36,
@@ -1274,12 +1287,12 @@ class Product {
 
   Product(
       {required this.name,
-        required this.imageUrls,
-        required this.cost,
-        this.description,
-        this.sizes,
-        required this.category,
-        required this.productType});
+      required this.imageUrls,
+      required this.cost,
+      this.description,
+      this.sizes,
+      required this.category,
+      required this.productType});
 }
 
 class Cart with ChangeNotifier {
@@ -1317,7 +1330,6 @@ class OrderItem {
 
   OrderItem({required this.product, this.selectedSize, this.selectedColor});
 }
-
 
 final kGreyBackground = Colors.grey[200];
 

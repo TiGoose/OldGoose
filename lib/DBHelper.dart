@@ -36,7 +36,7 @@ class DbHelper {
     userCol.insertOne(userData);
   }
 
-  static Future<String> UpdateStatus(String id, String status) async{
+  static Future<bool> UpdateStatus(String id, String status) async{
     if (_db == null) {
       await connect();
     }
@@ -49,7 +49,7 @@ class DbHelper {
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    return result.id.toHexString();
+    return result.isSuccess;
   }
 
   static Future<String> UpdateOrderId(String id, String orderId) async{

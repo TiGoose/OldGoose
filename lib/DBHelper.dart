@@ -49,8 +49,6 @@ class DbHelper {
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    print('result');
-    print(result);
     return result.isSuccess;
   }
 
@@ -59,7 +57,6 @@ class DbHelper {
       await connect();
     }
     var colOrder = _db!.collection('order');
-    print('ooo');
     var modify = {
       r'$set': {
         'Status': 'BookDone',
@@ -69,8 +66,6 @@ class DbHelper {
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    print('rrr');
-    print(result.id);
     return result.isSuccess;
   }
 

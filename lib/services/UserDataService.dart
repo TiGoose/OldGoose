@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserDataService {
   static Future<Map<String, dynamic>> generateUserData() async {
     final Map<String, dynamic> userData = {};
+    userData['TrackTime'] = DateTime.now().toUtc();
 
     // 生成使用者設備資訊
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

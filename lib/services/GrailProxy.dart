@@ -36,17 +36,11 @@ class SearchCriteria {
   }
 }
 
-class GrailApiClient {
-  final baseUrl;
-  final apiKey;
-  final secret;
-  final http.Client httpClient;
-
-  GrailApiClient({required this.httpClient,
-    @required this.baseUrl,
-    @required this.apiKey,
-    @required this.secret});
-
+class GrailProxy {
+  String baseUrl = "http://alpha.api.g2rail.com";
+  String apiKey = "fa656e6b99d64f309d72d6a8e7284953";
+  String secret = "9a52b1f7-7c96-4305-8569-1016a55048bc";
+  final http.Client httpClient = http.Client();
 
   Map<String, String> getAuthorizationHeaders(Map<String, dynamic> params) {
     var timestamp = DateTime.now();
@@ -82,32 +76,48 @@ class GrailApiClient {
     return solutionsJson;
   }
 
-  Future<Map<String, dynamic>> onlineOrder(BookingRequest bookingRequest, String asyncKey) async {
+  Future<Map<String, dynamic>> onlineOrder(BookingRequest bookingRequest) async {
     final onlineOrderURL = '$baseUrl/api/v2/online_orders';
     final bookResult = await httpClient.post(Uri.parse(onlineOrderURL),headers: getAuthorizationHeaders(bookingRequest.toJson()),body: jsonEncode(bookingRequest.toJson()));
     final bookingResponse = jsonDecode(utf8.decode(bookResult.bodyBytes));
     return bookingResponse;
   }
 
-  Future<Map<String, dynamic>> onlineConfirmations(String onlineOrderId, String asyncKey) async {
+  Future<Map<String, dynamic>> onlineConfirmations(String onlineOrderId) async {
     final onlineConfirmationsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_confirmations';
     final confirmationsResult = await httpClient.post(Uri.parse(onlineConfirmationsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}),body: jsonEncode({"online_order_id": onlineOrderId}));
     final confirmationsResponse = jsonDecode(utf8.decode(confirmationsResult.bodyBytes));
     return confirmationsResponse;
   }
 
-  Future<List<dynamic>> onlineTickets(String onlineOrderId, String asyncKey) async {
+  Future<List<dynamic>> onlineTickets(String onlineOrderId) async {
     final onlineTicketsURL = '$baseUrl/api/v2/online_orders/$onlineOrderId/online_tickets';
     final onlineTicketsResult = await httpClient.get(Uri.parse(onlineTicketsURL),headers: getAuthorizationHeaders({"online_order_id": onlineOrderId}));
     final onlineTicketsResponse = jsonDecode(utf8.decode(onlineTicketsResult.bodyBytes));
     return onlineTicketsResponse;
   }
 
-  Future<Map<String, dynamic>> getAsyncResult(String asyncKey) async {
+  Future<Map<String, dynamic>> getAsyncResult(String asyncKey, {int retryCounts = 10}) async {
+    if (retryCounts == 0) {
+      return {
+        "data": {
+          "description": "Async Result not ready",
+          "code": "async_not_ready"
+        }
+      };
+    }
     final asyncResultURl = '$baseUrl/api/v2/async_results/$asyncKey';
     final asyncResult = await httpClient.get(Uri.parse(asyncResultURl),
         headers: getAuthorizationHeaders({"async_key": asyncKey}));
-    final asyncResponse = jsonDecode(utf8.decode(asyncResult.bodyBytes));
-    return { "data" : asyncResponse};
+
+    var rtn = jsonDecode(utf8.decode(asyncResult.bodyBytes));
+
+    if (rtn is! List && rtn["code"].toString().contains("async_not_ready")) {
+      print('Remain retry:$retryCounts');
+      await Future.delayed(const Duration(seconds: 3));
+      return await getAsyncResult(asyncKey, retryCounts: retryCounts -= 1);
+    } else {
+      return {"data": jsonDecode(utf8.decode(asyncResult.bodyBytes))};
+    }
   }
 }

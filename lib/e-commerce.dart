@@ -622,11 +622,13 @@ class _PackageScreenState extends State<PackageScreen> {
                 var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", int.parse(adultCountController.text), int.parse(childCountController.text));
                 var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode;
                 var onlineOrderId = await grailService.booking(bookingCode!, emailController.text);
+                var adultC = int.tryParse(adultCountController.text) ?? 0;
+                var childC = int.tryParse(childCountController.text) ?? 0;
                 var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
                     orderId: onlineOrderId,
-                    amount: 1,
-                    adultCount: int.parse(adultCountController.text),
-                    childCount: int.parse(childCountController.text),
+                    amount: package.adultPrice*adultC+package.childPrice*childC,
+                    adultCount: adultC,
+                    childCount: childC,
                     session: '',
                     lastName: '',
                     firstName: '',

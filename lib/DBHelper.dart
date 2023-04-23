@@ -36,32 +36,42 @@ class DbHelper {
     userCol.insertOne(userData);
   }
 
-  static Future<String> UpdateStatus(String id, String status) async{
+  static Future<bool> UpdateStatus(String id, String status) async{
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
     var modify = {
-      'Status': status,
-      'ModifyTime': DateTime.now().toUtc(),
+      r'$set': {
+        'Status': status,
+        'ModifyTime': DateTime.now().toUtc(),
+      }
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    return result.id.toHexString();
+    print('result');
+    print(result);
+    return result.isSuccess;
   }
-  static Future<String> UpdateOrderId(String id, String orderId) async{
+
+  static Future<bool> UpdateOrderId(String id, String orderId) async{
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
+    print('ooo');
     var modify = {
-      'Status': 'BookDone',
-      'ModifyTime': DateTime.now().toUtc(),
-      'OrderId': orderId,
+      r'$set': {
+        'Status': 'BookDone',
+        'ModifyTime': DateTime.now().toUtc(),
+        'OrderId': orderId,
+      }
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    return result.id.toHexString();
+    print('rrr');
+    print(result.id);
+    return result.isSuccess;
   }
 
   // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));

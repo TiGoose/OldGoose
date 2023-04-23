@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
-import 'package:old_goose/payment.dart';
 import 'package:old_goose/services/GrailService.dart';
 
 import 'Order.dart';
@@ -156,22 +155,17 @@ class _LiveChatBarActionState extends State<LiveChatBarAction> {
         alignment: Alignment.center,
         children: const [
           Icon(
-            Icons.message,
+            Icons.chat,
           )
         ],
       ),
-      // onPressed: () => _pushScreen(
-      //   context: context,
-      //   screen: const CartScreen(),
-      // ),
-      onPressed: () => {
-        print('chatttttt')
-      },
+      onPressed: () => _pushScreen(
+        context: context,
+        screen: const CartScreen(),
+      ),
     );
   }
 }
-
-
 
 class CartAppBarAction extends StatefulWidget {
   const CartAppBarAction({Key? key}) : super(key: key);
@@ -480,23 +474,42 @@ class PackageScreen extends StatefulWidget{
 }
 
 class _PackageScreenState extends State<PackageScreen> {
-  final adultCountController = TextEditingController();
   final emailController = TextEditingController();
-  final childCountController = TextEditingController();
   final mobileController = TextEditingController();
   final lastNameController = TextEditingController();
   final firstNameController = TextEditingController();
   final passportController = TextEditingController();
   final ticketTimeController = TextEditingController();
 
-  Package get package => widget.package;
+  int _adultCount = 0;
+  int _childCount = 0;
 
+  _increaseAdultCount() {
+    setState(() {
+      _adultCount = (_adultCount + 1).clamp(0, 10);
+    });
+  }
+  _decreaseAdultCount() {
+    setState(() {
+      _adultCount = (_adultCount - 1).clamp(0, 10);
+    });
+  }
+  _increaseChildCount() {
+    setState(() {
+      _childCount = (_childCount + 1).clamp(0, 10);
+    });
+  }
+  _decreaseChildCount() {
+    setState(() {
+      _childCount = (_childCount - 1).clamp(0, 10);
+    });
+  }
+
+  Package get package => widget.package;
 
   @override
   void dispose() {
-    adultCountController.dispose();
     emailController.dispose();
-    childCountController.dispose();
     mobileController.dispose();
     lastNameController.dispose();
     firstNameController.dispose();
@@ -559,30 +572,68 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextFormField(
-                controller: adultCountController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '成人所需數量',
-                  hintText: '請輸入成人所需數量',
-                ),
-                // validator: validateQuantity,
-              ),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child:
+                    Text('成人所需數量', textAlign: TextAlign.left),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: _decreaseAdultCount,
+                        color: _adultCount == 0 ? Colors.grey : Colors.black,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        '$_adultCount',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(width: 10),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: _increaseAdultCount,
+                        color: _adultCount == 10 ? Colors.grey : Colors.black,
+                      ),
+                    ],
+                  ),
+                ],
+              )
             ),
             SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextFormField(
-                controller: childCountController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '小孩所需數量',
-                  hintText: '請輸入小孩所需數量',
-                ),
-                // validator: validateQuantity,
-              ),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child:
+                      Text('孩童所需數量', textAlign: TextAlign.left),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: _decreaseChildCount,
+                          color: _childCount == 0 ? Colors.grey : Colors.black,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '$_childCount',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        SizedBox(width: 10),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: _increaseChildCount,
+                          color: _childCount == 10 ? Colors.grey : Colors.black,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
             ),
             SizedBox(height: 20),
             Padding(
@@ -653,11 +704,11 @@ class _PackageScreenState extends State<PackageScreen> {
             ElevatedButton(
               onPressed: () async {
                 var grailService = GrailService();
-                var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", int.parse(adultCountController.text), int.parse(childCountController.text));
+                var searchResponse = await grailService.search("ST_D1297OY2", "ST_LV5236GZ", "2023-04-25", "15:00", _adultCount, _childCount);
                 var bookingCode = searchResponse.data?[1].solutions?[0].sections?[0].offers?[0].services?[0].bookingCode;
                 var onlineOrderId = await grailService.booking(bookingCode!, emailController.text);
-                var adultC = int.tryParse(adultCountController.text) ?? 0;
-                var childC = int.tryParse(childCountController.text) ?? 0;
+                var adultC = _adultCount;
+                var childC = _childCount;
                 if(adultC < 1 && childC <1){
                   throw ArgumentError('成人或小孩票數量都是0');
                   }
@@ -693,7 +744,6 @@ class _PackageScreenState extends State<PackageScreen> {
       ),
     );
   }
-
 }
 
 class CategoryScreen extends StatefulWidget {

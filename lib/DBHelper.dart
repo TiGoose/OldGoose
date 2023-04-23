@@ -49,6 +49,8 @@ class DbHelper {
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
+    print('result');
+    print(result);
     return result.isSuccess;
   }
 

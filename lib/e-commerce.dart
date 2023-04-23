@@ -24,8 +24,7 @@ Package saintMichelPackage = Package(
     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
     keywords: '',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 Package schlossNeuschwansteinCastlePackage = Package(
     title: '新天鵝堡',
     imageUrl:
@@ -35,41 +34,39 @@ Package schlossNeuschwansteinCastlePackage = Package(
     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
     keywords: '',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 Package frankfurtPackage = Package(
     title: '法蘭克福兩日遊',
-    imageUrl:
-        'https://mimihan.tw/wp-content/uploads/20190408150845_16.jpg',
+    imageUrl: 'https://mimihan.tw/wp-content/uploads/20190408150845_16.jpg',
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
-    keywords: '#羅馬廣場 #市政廳 #法蘭克福大教堂 #鐵橋 #歐洲中央銀行 #歌德故居 #法蘭克福歌劇院 #正義之泉 #聖保羅教堂 #法蘭克福證券交易所',
+    keywords:
+        '#羅馬廣場 #市政廳 #法蘭克福大教堂 #鐵橋 #歐洲中央銀行 #歌德故居 #法蘭克福歌劇院 #正義之泉 #聖保羅教堂 #法蘭克福證券交易所',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 Package berlinPackage = Package(
     title: '柏林三日遊',
     imageUrl:
-    'https://www.leo-travel.idv.tw/wp-content/uploads/germany-berlin-berliner-dom-spree-river-cruise-DSC_6387-photo-17701.jpg',
+        'https://www.leo-travel.idv.tw/wp-content/uploads/germany-berlin-berliner-dom-spree-river-cruise-DSC_6387-photo-17701.jpg',
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
-    keywords: '#勃蘭登堡門 #德國國會大廈#柏林大教堂 #菩提樹下大街 #歐洲猶太人紀念碑 #波茨坦廣場 #勝利紀念柱 #柏林墻遺址 #東德安全部博物館 #佩加蒙博物館 #玉林廣場',
+    keywords:
+        '#勃蘭登堡門 #德國國會大廈#柏林大教堂 #菩提樹下大街 #歐洲猶太人紀念碑 #波茨坦廣場 #勝利紀念柱 #柏林墻遺址 #東德安全部博物館 #佩加蒙博物館 #玉林廣場',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 Package munichPackage = Package(
     title: '慕尼黑兩日遊',
     imageUrl:
-    'https://www.leo-travel.idv.tw/wp-content/uploads/germany-munich-Marienplatz-1476964067.jpg',
+        'https://www.leo-travel.idv.tw/wp-content/uploads/germany-munich-Marienplatz-1476964067.jpg',
     adultPrice: 3000,
     childPrice: 2300,
     description: '',
-    keywords: '#慕尼黑啤酒屋 #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
+    keywords:
+        '#慕尼黑啤酒屋 #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
     from: 'xxx',
-    to: 'qqqq'
-);
+    to: 'qqqq');
 
 List<Package> packages = [
   saintMichelPackage,
@@ -143,11 +140,11 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> searchResultTiles = [];
     if (searchString.isNotEmpty) {
       searchResultTiles = packages
-          .where(
-              (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
+          .where((p) =>
+              p.keywords.toLowerCase().contains(searchString.toLowerCase()))
           .map(
             (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
-      )
+          )
           .toList();
     }
     return Scaffold(
@@ -161,9 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: searchString.isNotEmpty
           ? ListView(
-            padding: listViewPadding,
-            children: searchResultTiles,
-          )
+              padding: listViewPadding,
+              children: searchResultTiles,
+            )
           : ListView(
               padding: listViewPadding,
               children: [
@@ -185,20 +182,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 16),
                 PackageTile(
                   package: frankfurtPackage,
-                  widget: PackageScreen(
-                      package: frankfurtPackage),
+                  widget: PackageScreen(package: frankfurtPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: berlinPackage,
-                  widget: PackageScreen(
-                      package: berlinPackage),
+                  widget: PackageScreen(package: berlinPackage),
                 ),
                 const SizedBox(height: 16),
                 PackageTile(
                   package: munichPackage,
-                  widget: PackageScreen(
-                      package: munichPackage),
+                  widget: PackageScreen(package: munichPackage),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -218,23 +212,22 @@ class _LiveChatBarActionState extends State<LiveChatBarAction> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Stack(
-        alignment: Alignment.center,
-        children: const [
-          Icon(
-            Icons.chat,
-          )
-        ],
-      ),
-      onPressed: () async {
-        const url = 'http://oldgoose.v.walila.fun/';
-        if (await canLaunchUrl(Uri.parse(url))) {
-          await launchUrl(Uri.parse(url));
-        } else {
-          throw 'Could not launch http://oldgoose.v.walila.fun/';
-        }
-      }
-    );
+        icon: Stack(
+          alignment: Alignment.center,
+          children: const [
+            Icon(
+              Icons.chat,
+            )
+          ],
+        ),
+        onPressed: () async {
+          const url = 'http://oldgoose.v.walila.fun/';
+          if (await canLaunchUrl(Uri.parse(url))) {
+            await launchUrl(Uri.parse(url));
+          } else {
+            throw 'Could not launch http://oldgoose.v.walila.fun/';
+          }
+        });
   }
 }
 
@@ -773,7 +766,6 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-
                 var adultC = _adultCount;
                 var childC = _childCount;
                 if (adultC < 1 && childC < 1) {
@@ -794,34 +786,40 @@ class _PackageScreenState extends State<PackageScreen> {
                     birthday: '',
                     passport: passportController.text,
                     gender: 'M'));
-                try {
-                  var grailService = GrailService();
-                  var searchResponse = await grailService.search(
-                      "ST_D1297OY2",
-                      "ST_LV5236GZ",
-                      "2023-04-25",
-                      "15:00",
-                      _adultCount,
-                      _childCount);
-                  var bookingCode = searchResponse.data?[1].solutions?[0]
-                      .sections?[0].offers?[0].services?[0].bookingCode;
-                  var onlineOrderId = await grailService.booking(
-                      bookingCode!, emailController.text);
-                  await DbHelper.UpdateOrderId(orderId, onlineOrderId);
-                }
-                catch(e){
-                  await DbHelper.UpdateStatus(orderId, 'BookingFail');
-                }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PaymentWidget(
-                        orderId: orderId.toString(),
-                        email: emailController.text,
-                        amount: package.adultPrice * adultC + package.childPrice * childC,
-                      ),
+
+                Future(() async {
+                  try {
+                    var grailService = GrailService();
+                    var searchResponse = await grailService.search(
+                        "ST_D1297OY2",
+                        "ST_LV5236GZ",
+                        "2023-04-25",
+                        "15:00",
+                        _adultCount,
+                        _childCount);
+                    var bookingCode = searchResponse.data?[1].solutions?[0]
+                        .sections?[0].offers?[0].services?[0].bookingCode;
+                    var onlineOrderId = await grailService.booking(
+                        bookingCode!, emailController.text);
+                    print('aaa');
+                    await DbHelper.UpdateOrderId(orderId, onlineOrderId);
+                    print('bbb');
+                  } catch (e) {
+                    await DbHelper.UpdateStatus(orderId, 'BookingFail');
+                    print('ccc');
+                  }
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PaymentWidget(
+                      orderId: orderId.toString(),
+                      email: emailController.text,
+                      amount: package.adultPrice * adultC +
+                          package.childPrice * childC,
                     ),
-                  );
+                  ),
+                );
               },
               child: Text('確認購買'),
             ),

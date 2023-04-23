@@ -602,10 +602,12 @@ class _PackageScreenState extends State<PackageScreen> {
             ElevatedButton(
               onPressed: () {
                 print('click btn ler~');
+                var adult = int.tryParse(adultCountController.text) ?? 0;
+                var child = int.tryParse(childCountController.text) ??0;
                 var orderId = DbHelper.insertOrder(Order.NewOrder(email: emailController.text,
-                    amount: 1,
-                    adultCount: int.parse(adultCountController.text),
-                    childCount: int.parse(childCountController.text),
+                    amount: package.adultPrice*adult + package.childPrice*child,
+                    adultCount: adult,
+                    childCount: child,
                     session: '',
                     lastName: '',
                     firstName: '',

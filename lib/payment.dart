@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PaymentWidget extends StatefulWidget {
+  const PaymentWidget({super.key});
+
   @override
-  _PaymentWidgetState createState() => _PaymentWidgetState();
+  PaymentWidgetState createState() => PaymentWidgetState();
 }
 
-class _PaymentWidgetState extends State<PaymentWidget> {
+class PaymentWidgetState extends State<PaymentWidget> {
   @override
   Widget build(BuildContext context) {
     // Figma Flutter Generator PaymentWidget - FRAME
@@ -13,7 +15,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     return Container(
         width: 402,
         height: 870,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color.fromRGBO(255, 255, 255, 1),
         ),
         child: Stack(children: <Widget>[
@@ -23,10 +25,10 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               child: Container(
                   width: 402,
                   height: 60,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color.fromRGBO(171, 182, 194, 1),
                   ))),
-          Positioned(
+          const Positioned(
               top: 16,
               left: 14,
               child: Text(
@@ -47,12 +49,12 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               child: Container(
                   width: 311,
                   height: 346,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/images/qrcode.png'),
                         fit: BoxFit.fitWidth),
                   ))),
-          Positioned(
+          const Positioned(
               top: 515,
               left: 90,
               child: Text(
@@ -67,7 +69,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     fontWeight: FontWeight.normal,
                     height: 1),
               )),
-          Positioned(
+          const Positioned(
               top: 96,
               left: 84,
               child: Text(

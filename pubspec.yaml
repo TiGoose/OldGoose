@@ -40,6 +40,8 @@ dependencies:
   meta: ^1.8.0
   mongo_dart: ^0.9.1
   mailer: ^6.0.1
+  flutter_stripe: ^9.1.1
+
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 class Order {
   ObjectId? _id;
+  String OrderId;
   DateTime OrderTime;
   String Status;
   String Email;
@@ -19,7 +20,8 @@ class Order {
   String Gender;
 
   Order(
-      {required this.OrderTime,
+      {required this.OrderId,
+        required this.OrderTime,
       required this.Status,
       required this.Email,
       required this.TotalAmount,
@@ -35,6 +37,7 @@ class Order {
       required this.Gender});
 
   factory Order.NewOrder({
+    required String orderId,
     required String email,
     required int amount,
     required int adultCount,
@@ -52,6 +55,7 @@ class Order {
     }
 
     return Order(
+      OrderId: orderId,
       OrderTime: DateTime.now().toUtc(),
       Status: 'Init',
       Email: email,
@@ -96,6 +100,7 @@ bool isValidEmail(String email) {
 Map<String, dynamic> OrderToMap(Order order) {
   return {
     '_id': order._id?.toHexString(),
+    'OrderId': order.OrderId,
     'OrderTime': order.OrderTime.toIso8601String(),
     'Status': order.Status,
     'Email': order.Email,
@@ -118,6 +123,7 @@ Order? OrderFromMap(Map<String, dynamic>? map) {
     return null;
   }
   return Order(
+    OrderId:  map['orderId'],
     OrderTime: DateTime.parse(map['OrderTime']),
     Status: map['Status'],
     Email: map['Email'],

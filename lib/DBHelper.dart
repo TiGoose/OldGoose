@@ -36,6 +36,34 @@ class DbHelper {
     userCol.insertOne(userData);
   }
 
+  static Future<String> UpdateStatus(String id, String status) async{
+    if (_db == null) {
+      await connect();
+    }
+    var colOrder = _db!.collection('order');
+    var modify = {
+      'Status': status,
+      'ModifyTime': DateTime.now().toUtc(),
+    };
+
+    var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
+    return result.id.toHexString();
+  }
+  static Future<String> UpdateOrderId(String id, String orderId) async{
+    if (_db == null) {
+      await connect();
+    }
+    var colOrder = _db!.collection('order');
+    var modify = {
+      'Status': 'Processing',
+      'ModifyTime': DateTime.now().toUtc(),
+      'OrderId': orderId,
+    };
+
+    var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
+    return result.id.toHexString();
+  }
+
   // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));
   static Future<String> insertOrder(Order order) async {
     if (_db == null) {

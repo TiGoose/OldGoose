@@ -4,6 +4,7 @@ class Order {
   ObjectId? _id;
   String OrderId;
   DateTime OrderTime;
+  DateTime ModifyTime;
   String Status;
   String Email;
   int TotalAmount;
@@ -21,7 +22,8 @@ class Order {
 
   Order(
       {required this.OrderId,
-        required this.OrderTime,
+      required this.OrderTime,
+        required this.ModifyTime,
       required this.Status,
       required this.Email,
       required this.TotalAmount,
@@ -57,6 +59,7 @@ class Order {
     return Order(
       OrderId: orderId,
       OrderTime: DateTime.now().toUtc(),
+      ModifyTime: DateTime.now().toUtc(),
       Status: 'Init',
       Email: email,
       TotalAmount: amount,
@@ -73,22 +76,6 @@ class Order {
     );
   }
 }
-// Map<String, dynamic> OrderToMap(){
-//   return{
-//     '_id': _id,
-//     'OrderTime': OrderTime,
-//     'Status': Status,
-//     'Email': Email,
-//     'Amount': Amount
-//   };
-// }
-
-// static Order OrderFromMap(Map<String, dynamic> map){
-//   var order = Order(OrderTime: map['OrderTime'], Status: map['Status'], Email: map['Email']
-//       , Amount: map['Amount']);
-//   order._id = map['_id'];
-//   return order;
-// }
 
 bool isValidEmail(String email) {
   final emailRegExp = RegExp(
@@ -97,11 +84,13 @@ bool isValidEmail(String email) {
       multiLine: false);
   return emailRegExp.hasMatch(email);
 }
+
 Map<String, dynamic> OrderToMap(Order order) {
   return {
     '_id': order._id?.toHexString(),
     'OrderId': order.OrderId,
     'OrderTime': order.OrderTime.toIso8601String(),
+    'ModifyTime': order.ModifyTime.toIso8601String(),
     'Status': order.Status,
     'Email': order.Email,
     'TotalAmount': order.TotalAmount,
@@ -123,8 +112,9 @@ Order? OrderFromMap(Map<String, dynamic>? map) {
     return null;
   }
   return Order(
-    OrderId:  map['orderId'],
+    OrderId: map['orderId'],
     OrderTime: DateTime.parse(map['OrderTime']),
+    ModifyTime: DateTime.parse(map['ModifyTime']),
     Status: map['Status'],
     Email: map['Email'],
     TotalAmount: map['TotalAmount'],

@@ -1,10 +1,11 @@
+import 'dart:ui';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:old_goose/DBHelper.dart';
-import 'package:old_goose/services/GrailService.dart';
-import 'package:old_goose/services/MailService.dart';
 import 'e-commerce.dart';
-import 'mont_saint_michel_traffic.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   // Ticket APIs
@@ -16,8 +17,22 @@ Future<void> main() async {
   // var tickets = await grailService.getTicket(onlineOrderId); //TODO:　about 5~10 minute, can query ticket information
 
   // DbHelper.insertUserData();
-  Stripe.publishableKey = 'pk_test_51MzZGsAal8fGT9eQ7oCwc31CbDogCPNTyVSx8kAvxxfRumfHwm9bq0PEheuxRcfaumzVfcAc5iDVC6260FLzuXmI007ZwVzzw7';
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  Stripe.publishableKey = 'pk_test_51MzZGsAal8fGT9eQ7oCwc31CbDogCPNTyVSx8kAvxxfRumfHwm9bq0PEheuxRcfaumzVfcAc5iDVC6260FLzuXmI007ZwVzzw7';
   runApp(const MyApp());
   DbHelper.close();
 }
@@ -40,96 +55,3 @@ class MyApp extends StatelessWidget {
 
 }
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Figma Flutter Generator HomeWidget - FRAME
-    return
-
-      Container(
-          width: 402,
-          height: 870,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(255, 255, 255, 1),
-          ),
-          child: Stack(children: <Widget>[
-            Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                    width: 402,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(171, 182, 194, 1),
-                    ))),
-            const Positioned(
-                top: 16,
-                left: 14,
-                child: Text(
-                  'Old Goose',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: Color.fromRGBO(0, 0, 0, 1),
-                      fontFamily: 'Inter',
-                      fontSize: 30,
-                      letterSpacing:
-                      0 /*percentages not used in flutter. defaulting to zero*/,
-                      fontWeight: FontWeight.normal,
-                      height: 1),
-                )),
-            Positioned(
-                top: 102,
-                left: 34,
-                child: Container(
-                    width: 334,
-                    height: 107,
-                    decoration: BoxDecoration(),
-                    child: Stack(children: <Widget>[
-                      Positioned(
-                          top: 0,
-                          left: 0,
-                          child: GestureDetector(
-                            child: Container(
-                                width: 334,
-                                height: 107,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                  color: Color.fromRGBO(5, 10, 48, 1),
-                                )),
-                            onTap: ()=>{
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficWidget()))
-                            },)),
-                      Positioned(
-                          top: 30,
-                          left: 26,
-                          child: GestureDetector(
-                            child: Text(
-                              '聖米歇爾套票',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 255, 255, 1),
-                                  fontFamily: 'Inter',
-                                  fontSize: 24,
-                                  letterSpacing:
-                                  0 /*percentages not used in flutter. defaulting to zero*/,
-                                  fontWeight: FontWeight.normal,
-                                  height: 1),
-                            ),
-                            onTap: () => {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => TrafficWidget()))
-                            },
-                          )),
-                    ]))),
-          ]
-          )
-      );
-
-  }
-}

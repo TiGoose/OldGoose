@@ -7,6 +7,7 @@ lib/apps/simple_ecommerce.dart
 
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -1253,7 +1254,10 @@ class PackageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _pushScreen(context: context, screen: widget),
+      onTap: () {
+        FirebaseAnalytics.instance.logEvent(name: "${package.title}Pressed");
+        _pushScreen(context: context, screen: widget);
+        },
       child: Container(
         height: 200,
         decoration: BoxDecoration(

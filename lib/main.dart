@@ -28,13 +28,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () async {
-      // try{
-      //   await DbHelper.close();
-      // }
-      // // ignore: empty_catches
-      // catch(e){
-      //
-      // }
       await DbHelper.connect();
       await DbHelper.insertUserData();
     });

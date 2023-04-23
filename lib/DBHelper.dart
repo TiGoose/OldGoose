@@ -1,5 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:old_goose/Order.dart';
+import 'package:old_goose/package.dart';
 import 'package:old_goose/services/UserDataService.dart';
 
 class DbHelper {
@@ -19,6 +20,12 @@ class DbHelper {
       _db = Db(connectionString);
       await _db!.open();
     }
+    else{
+      while (_db!.state != State.open) {
+        // 等待数据库连接成功
+        await Future.delayed(Duration(milliseconds: 100));
+      }
+    }
   }
 
   static Future<void> close() async {
@@ -28,7 +35,10 @@ class DbHelper {
   }
 
   static Future<void> insertUserData() async{
-    await Future.delayed(const Duration(seconds: 10));
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 100));
+    }
     final Map<String, dynamic> userData = await UserDataService.generateUserData();
     var userCol = _db!.collection('user_data');
 
@@ -110,5 +120,19 @@ class DbHelper {
     var cursor = colOrder.find(where.eq('Email', email));
     var orderList = await cursor.map((doc) => OrderFromMap(doc)).toList();
     return orderList;
+  }
+
+  static Future<List<Package>> GetAllPackage() async {
+    if (_db == null) {
+      await connect();
+    }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
+    }
+    var colPackage = _db!.collection('package');
+    var cursor = colPackage.find();
+    var packageList = await cursor.map((doc) => PackageFromMap(doc)).toList();
+    return packageList.where((pkg) => pkg != null).cast<Package>().toList();
   }
 }

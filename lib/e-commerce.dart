@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:old_goose/DBHelper.dart';
+import 'package:old_goose/package.dart';
 import 'package:old_goose/payment.dart';
 import 'package:old_goose/services/GrailService.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,88 +22,71 @@ import 'dart:developer';
 
 import 'Order.dart';
 
-Package saintMichelPackage = Package(
-    title: '聖米歇爾山',
-    imageUrl:
-        'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
-    adultPrice: 2023,
-    childPrice: 1000,
-    description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
-    keywords: '聖米歇爾山 Mont Saint Michel 法國',
-    from: 'xxx',
-    to: 'qqqq');
-Package schlossNeuschwansteinCastlePackage = Package(
-    title: '新天鵝堡',
-    imageUrl:
-        'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
-    adultPrice: 50556,
-    childPrice: 20886,
-    description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
-    keywords: '新天鵝堡 Schloss Neuschwanstein castle 慕尼黑 德國',
-    from: 'xxx',
-    to: 'qqqq');
-Package frankfurtPackage = Package(
-    title: '法蘭克福兩日遊',
-    imageUrl: 'https://mimihan.tw/wp-content/uploads/20190408150845_16.jpg',
-    adultPrice: 3000,
-    childPrice: 2300,
-    description: '',
-    keywords:
-        '#羅馬廣場 #市政廳 #法蘭克福大教堂 #鐵橋 #歐洲中央銀行 #歌德故居 #法蘭克福歌劇院 #正義之泉 #聖保羅教堂 #法蘭克福證券交易所',
-    from: 'xxx',
-    to: 'qqqq');
-Package berlinPackage = Package(
-    title: '柏林三日遊',
-    imageUrl:
-        'https://www.leo-travel.idv.tw/wp-content/uploads/germany-berlin-berliner-dom-spree-river-cruise-DSC_6387-photo-17701.jpg',
-    adultPrice: 3000,
-    childPrice: 2300,
-    description: '',
-    keywords:
-        '#勃蘭登堡門 #德國國會大廈#柏林大教堂 #菩提樹下大街 #歐洲猶太人紀念碑 #波茨坦廣場 #勝利紀念柱 #柏林墻遺址 #東德安全部博物館 #佩加蒙博物館 #玉林廣場',
-    from: 'xxx',
-    to: 'qqqq');
-Package munichPackage = Package(
-    title: '慕尼黑兩日遊',
-    imageUrl:
-        'https://www.leo-travel.idv.tw/wp-content/uploads/germany-munich-Marienplatz-1476964067.jpg',
-    adultPrice: 3000,
-    childPrice: 2300,
-    description: '',
-    keywords:
-        '#慕尼黑啤酒屋 德國  #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
-    from: 'xxx',
-    to: 'qqqq'
-);
+// Package saintMichelPackage = Package(
+//     title: '聖米歇爾山',
+//     imageUrl:
+//         'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
+//     adultPrice: 2023,
+//     childPrice: 1000,
+//     description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈',
+//     keywords: '聖米歇爾山 Mont Saint Michel 法國',
+//     from: 'xxx',
+//     to: 'qqqq');
+// Package schlossNeuschwansteinCastlePackage = Package(
+//     title: '新天鵝堡',
+//     imageUrl:
+//         'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
+//     adultPrice: 50556,
+//     childPrice: 20886,
+//     description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆',
+//     keywords: '新天鵝堡 Schloss Neuschwanstein castle 慕尼黑 德國',
+//     from: 'xxx',
+//     to: 'qqqq');
+// Package frankfurtPackage = Package(
+//     title: '法蘭克福兩日遊',
+//     imageUrl: 'https://mimihan.tw/wp-content/uploads/20190408150845_16.jpg',
+//     adultPrice: 3000,
+//     childPrice: 2300,
+//     description: '',
+//     keywords:
+//         '#羅馬廣場 #市政廳 #法蘭克福大教堂 #鐵橋 #歐洲中央銀行 #歌德故居 #法蘭克福歌劇院 #正義之泉 #聖保羅教堂 #法蘭克福證券交易所',
+//     from: 'xxx',
+//     to: 'qqqq');
+// Package berlinPackage = Package(
+//     title: '柏林三日遊',
+//     imageUrl:
+//         'https://www.leo-travel.idv.tw/wp-content/uploads/germany-berlin-berliner-dom-spree-river-cruise-DSC_6387-photo-17701.jpg',
+//     adultPrice: 3000,
+//     childPrice: 2300,
+//     description: '',
+//     keywords:
+//         '#勃蘭登堡門 #德國國會大廈#柏林大教堂 #菩提樹下大街 #歐洲猶太人紀念碑 #波茨坦廣場 #勝利紀念柱 #柏林墻遺址 #東德安全部博物館 #佩加蒙博物館 #玉林廣場',
+//     from: 'xxx',
+//     to: 'qqqq');
+// Package munichPackage = Package(
+//     title: '慕尼黑兩日遊',
+//     imageUrl:
+//         'https://www.leo-travel.idv.tw/wp-content/uploads/germany-munich-Marienplatz-1476964067.jpg',
+//     adultPrice: 3000,
+//     childPrice: 2300,
+//     description: '',
+//     keywords:
+//         '#慕尼黑啤酒屋 德國  #聖瑪利亞廣場 #寶馬博物館 #安聯拜仁慕尼黑球場 #奧林匹克公園 #瑪麗安教堂 #慕尼黑凱旋門 #慕尼黑新市政廳 #慕尼黑王宮 #寧芬堡宮 #英國花園',
+//     from: 'xxx',
+//     to: 'qqqq'
+// );
 
-List<Package> packages = [
-  saintMichelPackage,
-  schlossNeuschwansteinCastlePackage,
-  frankfurtPackage,
-  berlinPackage,
-  munichPackage,
-];
+// List<Package> packages = [
+//   saintMichelPackage,
+//   schlossNeuschwansteinCastlePackage,
+//   frankfurtPackage,
+//   berlinPackage,
+//   munichPackage,
+// ];
 
-class Package {
-  final String title;
-  final String imageUrl;
-  final int adultPrice;
-  final int childPrice;
-  final String description;
-  final String keywords;
-  final String from;
-  final String to;
+var packages = DbHelper.GetAllPackage();
 
-  Package(
-      {required this.title,
-      required this.imageUrl,
-      required this.adultPrice,
-      required this.childPrice,
-      required this.description,
-      required this.keywords,
-      required this.from,
-      required this.to});
-}
+
 
 Cart cart = Cart();
 
@@ -129,23 +113,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late String searchString;
+  late List<Package> packages;
+  late List<Widget> packageTiles;
 
   @override
   void initState() {
     searchString = '';
     super.initState();
+    _loadPackages();
   }
 
   void setSearchString(String value) => setState(() {
         searchString = value;
       });
 
+  Future<void> _loadPackages() async {
+    await DbHelper.connect();
+    final pkgs = await DbHelper.GetAllPackage();
+    setState(() {
+      packages = pkgs;
+
+
+      // for(var pkg in packages){
+      //   packageTiles.add(PackageTile(package: pkg, widget: PackageScreen(package: pkg)));
+      //   packageTiles.add(const SizedBox(height: 16));
+      // }
+
+      packageTiles = packages.map((package) => PackageTile(
+        package: package,
+        widget: PackageScreen(package: package),
+      ),
+      ).toList();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var listViewPadding =
         const EdgeInsets.symmetric(horizontal: 16, vertical: 24);
     List<Widget> searchResultTiles = [];
-    if (searchString.isNotEmpty) {
+    if (searchString.isNotEmpty && packages.isNotEmpty) {
       searchResultTiles = packages
           .where(
               (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
@@ -153,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
             (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
       )
           .toList();
+
     }
     return Scaffold(
       appBar: AppBar(
@@ -171,41 +180,14 @@ class _HomeScreenState extends State<HomeScreen> {
           : ListView(
               padding: listViewPadding,
               children: [
-                Text(
-                  '老天鵝精選套裝行程',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 16),
-                PackageTile(
-                  package: saintMichelPackage,
-                  widget: PackageScreen(package: saintMichelPackage),
-                ),
-                const SizedBox(height: 16),
-                PackageTile(
-                  package: schlossNeuschwansteinCastlePackage,
-                  widget: PackageScreen(
-                      package: schlossNeuschwansteinCastlePackage),
-                ),
-                const SizedBox(height: 16),
-                PackageTile(
-                  package: frankfurtPackage,
-                  widget: PackageScreen(
-                      package: frankfurtPackage),
-                ),
-                const SizedBox(height: 16),
-                PackageTile(
-                  package: berlinPackage,
-                  widget: PackageScreen(
-                      package: berlinPackage),
-                ),
-                const SizedBox(height: 16),
-                PackageTile(
-                  package: munichPackage,
-                  widget: PackageScreen(
-                      package: munichPackage),
-                ),
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
+                ...packageTiles,
+                  const SizedBox(height: 16),
               ],
+              // children: [
+              //   const SizedBox(height: 16),
+              // ...packageTiles
+              // ],
             ),
     );
   }
@@ -817,12 +799,9 @@ class _PackageScreenState extends State<PackageScreen> {
                         .sections?[0].offers?[0].services?[0].bookingCode;
                     var onlineOrderId = await grailService.booking(
                         bookingCode!, emailController.text);
-                    print('aaa');
                     await DbHelper.UpdateOrderId(orderId, onlineOrderId);
-                    print('bbb');
                   } catch (e) {
                     await DbHelper.UpdateStatus(orderId, 'BookingFail');
-                    print('ccc');
                   }
                 });
               },

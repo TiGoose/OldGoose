@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onChanged: setSearchString,
         ),
         actions: const [
-          CartAppBarAction(),
+          LiveChatBarAction(),
         ],
       ),
       body: searchString.isNotEmpty
@@ -136,6 +136,40 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+class LiveChatBarAction extends StatefulWidget{
+  const LiveChatBarAction({Key? key}) : super(key: key);
+
+  @override
+  State<LiveChatBarAction> createState() => _LiveChatBarActionState();
+
+}
+
+class _LiveChatBarActionState extends State<LiveChatBarAction> {
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Stack(
+        alignment: Alignment.center,
+        children: const [
+          Icon(
+            Icons.message,
+          )
+        ],
+      ),
+      // onPressed: () => _pushScreen(
+      //   context: context,
+      //   screen: const CartScreen(),
+      // ),
+      onPressed: () => {
+        print('chatttttt')
+      },
+    );
+  }
+}
+
+
 
 class CartAppBarAction extends StatefulWidget {
   const CartAppBarAction({Key? key}) : super(key: key);
@@ -476,7 +510,7 @@ class _PackageScreenState extends State<PackageScreen> {
         centerTitle: true,
         title: Text(package.title),
         actions: const [
-          CartAppBarAction(),
+          LiveChatBarAction(),
         ],
       ),
       body:

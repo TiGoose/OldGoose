@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:old_goose/DBHelper.dart';
-import 'package:old_goose/payment.dart';
 
 import 'Order.dart';
 
@@ -452,6 +451,7 @@ class _PackageScreenState extends State<PackageScreen> {
   final lastNameController = TextEditingController();
   final firstNameController = TextEditingController();
   final passportController = TextEditingController();
+  final ticketTimeController = TextEditingController();
 
   Package get package => widget.package;
 
@@ -465,6 +465,7 @@ class _PackageScreenState extends State<PackageScreen> {
     lastNameController.dispose();
     firstNameController.dispose();
     passportController.dispose();
+    ticketTimeController.dispose();
     super.dispose();
   }
 
@@ -503,6 +504,20 @@ class _PackageScreenState extends State<PackageScreen> {
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.red,
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: ticketTimeController,
+                keyboardType: TextInputType.datetime,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '出發日期',
+                  hintText: '請選擇您的出發日期',
+                ),
+                // validator: validateQuantity,
               ),
             ),
             SizedBox(height: 20),

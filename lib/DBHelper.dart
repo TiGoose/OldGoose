@@ -54,11 +54,12 @@ class DbHelper {
     return result.isSuccess;
   }
 
-  static Future<String> UpdateOrderId(String id, String orderId) async{
+  static Future<bool> UpdateOrderId(String id, String orderId) async{
     if (_db == null) {
       await connect();
     }
     var colOrder = _db!.collection('order');
+    print('ooo');
     var modify = {
       r'$set': {
         'Status': 'BookDone',
@@ -68,7 +69,9 @@ class DbHelper {
     };
 
     var result = await colOrder.updateOne(where.eq('_id', ObjectId.parse(id)), modify);
-    return result.id.toHexString();
+    print('rrr');
+    print(result.id);
+    return result.isSuccess;
   }
 
   // DbHelper.insertOrder(Order.NewOrder(email: 'vincent7326@yahoo.com', amount: 3));

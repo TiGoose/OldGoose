@@ -442,14 +442,23 @@ class _PackageScreenState extends State<PackageScreen> {
   final adultCountController = TextEditingController();
   final emailController = TextEditingController();
   final childCountController = TextEditingController();
+  final mobileController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final passportController = TextEditingController();
 
   Package get package => widget.package;
+
 
   @override
   void dispose() {
     adultCountController.dispose();
     emailController.dispose();
     childCountController.dispose();
+    mobileController.dispose();
+    lastNameController.dispose();
+    firstNameController.dispose();
+    passportController.dispose();
     super.dispose();
   }
 

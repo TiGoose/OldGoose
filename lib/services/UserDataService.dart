@@ -33,7 +33,6 @@ class UserDataService {
     }
 
     // 生成使用者位置資訊
-    final Geolocator geolocator = Geolocator();
     final Position position = await Geolocator.getCurrentPosition();
     userData['location'] = {
       'latitude': position.latitude,

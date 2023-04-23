@@ -120,11 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
               widget: PackageScreen(package: schlossNeuschwansteinCastlePackage),
           ),
           const SizedBox(height: 16),
-          CategoryTile(
-            imageUrl: manLookRightImageUrl,
-            category: mensCategory,
-            imageAlignment: Alignment.topCenter,
-          ),
         ],
       ),
     );

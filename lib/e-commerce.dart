@@ -8,21 +8,30 @@ lib/apps/simple_ecommerce.dart
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:old_goose/payment.dart';
 
 const String manLookRightImageUrl =
     'https://flutter-ui.s3.us-east-2.amazonaws.com/ecommerce/man-look-right.jpg';
 
-const String saintMichelImageUrl = 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg';
-const String schlossNeuschwansteinCastleImageUrl = 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg';
-
-Package saintMichelPackage = Package(title: '聖米歇爾山');
-Package schlossNeuschwansteinCastlePackage = Package(title: '新天鵝堡');
+Package saintMichelPackage = Package(
+    title: '聖米歇爾山',
+    imageUrl: 'https://www.leo-travel.idv.tw/wp-content/uploads/france-paris-mont-saint-michel-shutterstock_527012107.jpg',
+    price: '2,023',
+    description: 'this is 聖米歇爾山的介紹得斯~~ 哈哈哈哈'
+);
+Package schlossNeuschwansteinCastlePackage = Package(
+    title: '新天鵝堡',
+    imageUrl: 'https://travelwithmiya.com/wp-content/uploads/2022/07/Neuschwanstein-05.jpg',
+    price: '50,556',
+    description: 'this is 新天鵝堡的介紹得斯~~ 顆顆顆顆'
+);
 
 class Package {
   final String title;
+  final String imageUrl;
+  final String price;
+  final String description;
 
-  Package({required this.title});
+  Package({required this.title, required this.imageUrl, required this.price, required this.description});
 }
 
 Cart cart = Cart();
@@ -102,18 +111,16 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 16),
           PackageTile(
               package: saintMichelPackage,
-              imageUrl: saintMichelImageUrl,
-              widget: PackageScreen(package: saintMichelPackage, imageUrl: saintMichelImageUrl)
+              widget: PackageScreen(package: saintMichelPackage),
           ),
           const SizedBox(height: 16),
           PackageTile(
               package: schlossNeuschwansteinCastlePackage,
-              imageUrl: schlossNeuschwansteinCastleImageUrl,
-              widget: PackageScreen(package: schlossNeuschwansteinCastlePackage, imageUrl: schlossNeuschwansteinCastleImageUrl)
+              widget: PackageScreen(package: schlossNeuschwansteinCastlePackage),
           ),
           const SizedBox(height: 16),
           CategoryTile(
-            imageUrl: saintMichelImageUrl,
+            imageUrl: manLookRightImageUrl,
             category: mensCategory,
             imageAlignment: Alignment.topCenter,
           ),
@@ -422,9 +429,8 @@ class CallToActionButton extends StatelessWidget {
 
 class PackageScreen extends StatefulWidget{
 
-  const PackageScreen({Key? key, required this.package, required this.imageUrl}) : super(key: key);
+  const PackageScreen({Key? key, required this.package}) : super(key: key);
   final Package package;
-  final String imageUrl;
 
   @override
   State<PackageScreen> createState() => _PackageScreenState();
@@ -436,7 +442,6 @@ class _PackageScreenState extends State<PackageScreen> {
   final childCountController = TextEditingController();
 
   Package get package => widget.package;
-  String get imageUrl => widget.imageUrl;
 
   @override
   void dispose() {
@@ -462,16 +467,16 @@ class _PackageScreenState extends State<PackageScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.network(
-              imageUrl,
+              package.imageUrl,
             ),
             SizedBox(height: 20),
-            Text('這邊是介紹 12123132145465 jfweioj jewij jeiwo dk kdk ~~~6 ewffwe 5465464564654654w  ejdiwjeioj oiwj',
+            Text(package.description,
               style: TextStyle(
                 fontSize: 16
               ),
             ),
             SizedBox(height: 20),
-            Text('這邊是價格 \$20000',
+            Text('this is price~ \$' + package.price,
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.red,
@@ -488,7 +493,7 @@ class _PackageScreenState extends State<PackageScreen> {
                   labelText: 'Email',
                   hintText: '請輸入您的 email',
                 ),
-                // validator: validateEmail.,
+                // validator: validateEmail,
               ),
             ),
             SizedBox(height: 20),
@@ -864,11 +869,9 @@ class _CartScreenState extends State<CartScreen> {
 class PackageTile extends StatelessWidget {
   const PackageTile(
       {required this.package,
-        required this.imageUrl,
         this.imageAlignment = Alignment.center,
         Key? key, required this.widget})
       : super(key: key);
-  final String imageUrl;
   final Package package;
   final StatefulWidget widget;
 
@@ -892,7 +895,7 @@ class PackageTile extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Image.network(
-              imageUrl,
+              package.imageUrl,
               color: kGreyBackground,
               colorBlendMode: BlendMode.darken,
               alignment: imageAlignment,

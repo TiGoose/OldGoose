@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:old_goose/e_commerce.dart';
+
+import '../e-commerce.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

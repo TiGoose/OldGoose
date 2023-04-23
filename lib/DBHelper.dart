@@ -44,9 +44,11 @@ class DbHelper {
     var colOrder = _db!.collection('order');
 
     // var result = await colOrder.insertOne(OrderToMap(order));
-    var result = await colOrder.insert(OrderToMap(order));
-    return result['\$oid'];
+    // var result = await colOrder.insert(OrderToMap(order));
+    var result = await colOrder.insertOne(OrderToMap(order));
+    var id = result.id.toHexString();
 
+    return id;
     // await colOrder.insert(order.OrderToMap());
 
     // await colOrder.insert({

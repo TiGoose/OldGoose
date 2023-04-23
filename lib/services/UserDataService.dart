@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserDataService {
   static Future<Map<String, dynamic>> generateUserData() async {
     final Map<String, dynamic> userData = {};
-    print('qq user data');
+    userData['TrackTime'] = DateTime.now().toUtc();
 
     // 生成使用者設備資訊
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -33,7 +33,6 @@ class UserDataService {
     }
 
     // 生成使用者位置資訊
-    final Geolocator geolocator = Geolocator();
     final Position position = await Geolocator.getCurrentPosition();
     userData['location'] = {
       'latitude': position.latitude,

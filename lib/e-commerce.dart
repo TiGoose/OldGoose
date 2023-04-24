@@ -140,10 +140,16 @@ class _HomeScreenState extends State<HomeScreen> {
       //   packageTiles.add(const SizedBox(height: 16));
       // }
 
-      packageTiles = packages.map((package) => PackageTile(
-        package: package,
-        widget: PackageScreen(package: package),
-      ),
+      packageTiles = packages.map((package) =>
+          Column(
+            children: [
+              PackageTile(
+                package: package,
+                widget: PackageScreen(package: package),
+              ),
+              const SizedBox(height: 20)
+            ],
+          )
       ).toList();
     });
   }
@@ -159,7 +165,13 @@ class _HomeScreenState extends State<HomeScreen> {
           .where(
               (p) => p.keywords.toLowerCase().contains(searchString.toLowerCase()))
           .map(
-            (p) => PackageTile(package: p, widget: PackageScreen(package: p)),
+            (p) =>
+            Column(
+              children: [
+                PackageTile(package: p, widget: PackageScreen(package: p)),
+                SizedBox(height: 20,)
+              ],
+            )
       )
           .toList();
 
@@ -183,7 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                   const SizedBox(height: 16),
                 ...packageTiles,
-                  const SizedBox(height: 16),
               ],
               // children: [
               //   const SizedBox(height: 16),

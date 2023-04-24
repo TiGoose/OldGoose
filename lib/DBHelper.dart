@@ -35,6 +35,9 @@ class DbHelper {
   }
 
   static Future<void> insertUserData() async{
+    if (_db == null) {
+      await connect();
+    }
     while (_db!.state != State.open) {
       // 等待数据库连接成功
       await Future.delayed(Duration(milliseconds: 100));
@@ -49,6 +52,10 @@ class DbHelper {
   static Future<bool> UpdateStatus(String id, String status) async{
     if (_db == null) {
       await connect();
+    }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
     }
     var colOrder = _db!.collection('order');
     var modify = {
@@ -65,6 +72,10 @@ class DbHelper {
   static Future<bool> UpdateOrderId(String id, String orderId) async{
     if (_db == null) {
       await connect();
+    }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
     }
     var colOrder = _db!.collection('order');
     var modify = {
@@ -83,6 +94,10 @@ class DbHelper {
   static Future<String> insertOrder(Order order) async {
     if (_db == null) {
       await connect();
+    }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
     }
     var colOrder = _db!.collection('order');
 
@@ -107,6 +122,10 @@ class DbHelper {
     if (_db == null) {
       await connect();
     }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
+    }
     var colOrder = _db!.collection('order');
     var map = await colOrder.findOne(where.eq('_id', id));
     return OrderFromMap(map);
@@ -115,6 +134,10 @@ class DbHelper {
   static Future<List<Order?>> GetOrderByEMail(String email) async {
     if (_db == null) {
       await connect();
+    }
+    while (_db!.state != State.open) {
+      // 等待数据库连接成功
+      await Future.delayed(Duration(milliseconds: 99));
     }
     var colOrder = _db!.collection('order');
     var cursor = colOrder.find(where.eq('Email', email));

@@ -817,7 +817,9 @@ class _PackageScreenState extends State<PackageScreen> {
               onPressed: () async {
                 var insurancePolicyId = 0;
                 await DialogUtils.displayDialogOKCallBack(context).then((value) => {
-                  if(value != null && value ){ insurancePolicyId = 1 }
+                  if(value != null && value ){
+                    insurancePolicyId = 1
+                  }
                 });
 
                 var adultC = _adultCount;
@@ -828,6 +830,7 @@ class _PackageScreenState extends State<PackageScreen> {
 
                 var totalAmount = package.adultPrice * adultC +
                     package.childPrice * childC;
+                totalAmount = insurancePolicyId == 1 ? totalAmount * (105 / 100).toInt() : totalAmount;
                 _email = emailController.text;
                 log("insurancePolicyId" + insurancePolicyId.toString());
                 var orderId = await DbHelper.insertOrder(Order.NewOrder(

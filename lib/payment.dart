@@ -166,7 +166,7 @@ class BankTransferWidgetState extends State<BankTransferWidget> {
             SizedBox(height: 20),
             Center(
               child: Image.asset(
-                'assets/images/usdt.png',
+                'assets/images/qrcode.png',
                 width: 200,
                 height: 200,
               ),

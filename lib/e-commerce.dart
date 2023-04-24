@@ -829,8 +829,8 @@ class _PackageScreenState extends State<PackageScreen> {
                   try {
                     var grailService = GrailService();
                     var searchResponse = await grailService.search(
-                        "ST_D1297OY2",
-                        "ST_LV5236GZ",
+                        package.from,
+                        package.to,
                         selectedDate.toString(),
                         "15:00",
                         _adultCount,

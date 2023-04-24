@@ -2,6 +2,9 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'package:old_goose/Order.dart';
 import 'package:old_goose/package.dart';
 import 'package:old_goose/services/UserDataService.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 class DbHelper {
   static final DbHelper _singleton = DbHelper._internal();
@@ -157,5 +160,18 @@ class DbHelper {
     var cursor = colPackage.find();
     var packageList = await cursor.map((doc) => PackageFromMap(doc)).toList();
     return packageList.where((pkg) => pkg != null).cast<Package>().toList();
+  }
+
+  static Future<List<Package>> GetAllPackage2() async {
+    final url = Uri.parse('http://v.walila.fun:9999/packages');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedJson = jsonDecode(response.body);
+      var packageList = decodedJson.map((json) => PackageFromMap(json)).toList();
+      return packageList.where((pkg) => pkg != null).cast<Package>().toList();
+    } else {
+      throw Exception('Failed to get packages');
+    }
   }
 }

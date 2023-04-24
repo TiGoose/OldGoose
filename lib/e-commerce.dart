@@ -545,6 +545,7 @@ class _PackageScreenState extends State<PackageScreen> {
   final firstNameController = TextEditingController();
   final passportController = TextEditingController();
   final ticketTimeController = TextEditingController();
+  final couponController = TextEditingController();
 
   int _adultCount = 0;
   int _childCount = 0;
@@ -599,6 +600,7 @@ class _PackageScreenState extends State<PackageScreen> {
     firstNameController.dispose();
     passportController.dispose();
     ticketTimeController.dispose();
+    couponController.dispose();
     super.dispose();
   }
 
@@ -790,7 +792,7 @@ class _PackageScreenState extends State<PackageScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: TextFormField(
                 controller: passportController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '護照號碼',
@@ -799,8 +801,24 @@ class _PackageScreenState extends State<PackageScreen> {
               ),
             ),
             SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextFormField(
+                controller: couponController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '优惠码',
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+                var insurancePolicyId = 0;
+                await DialogUtils.displayDialogOKCallBack(context).then((value) => {
+                  if(value != null && value ){ insurancePolicyId = 1 }
+                });
 
                 var adultC = _adultCount;
                 var childC = _childCount;
@@ -809,8 +827,9 @@ class _PackageScreenState extends State<PackageScreen> {
                 }
 
                 var totalAmount = package.adultPrice * adultC +
-                        package.childPrice * childC;
+                    package.childPrice * childC;
                 _email = emailController.text;
+                log("insurancePolicyId" + insurancePolicyId.toString());
                 var orderId = await DbHelper.insertOrder(Order.NewOrder(
                     email: _email,
                     orderId: '',
@@ -823,7 +842,8 @@ class _PackageScreenState extends State<PackageScreen> {
                     mobile: mobileController.text,
                     birthday: '',
                     passport: passportController.text,
-                    gender: 'M'));
+                    gender: 'M',
+                    insurancePolicyId: insurancePolicyId));
 
                 Future(() async {
                   try {
@@ -872,6 +892,34 @@ class _PackageScreenState extends State<PackageScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DialogUtils {
+  static Future<bool?> displayDialogOKCallBack(BuildContext context) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('更安心'),
+          content:  const Text('你知道嗎？加購旅遊保險，讓你的旅遊之路不再充滿驚險！讓我們一起喊出口號：「保險保你玩，出遊不再慘！」'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('先不用'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('我要加購！'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

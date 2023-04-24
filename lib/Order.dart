@@ -19,6 +19,7 @@ class Order {
   String Birthday;
   String Passport;
   String Gender;
+  int InsurancePolicyId;
 
   Order(
       {required this.OrderId,
@@ -36,7 +37,9 @@ class Order {
       required this.Mobile,
       required this.Birthday,
       required this.Passport,
-      required this.Gender});
+      required this.Gender,
+        required this.InsurancePolicyId
+      });
 
   factory Order.NewOrder({
     required String orderId,
@@ -51,6 +54,7 @@ class Order {
     required String birthday,
     required String passport,
     required String gender,
+    required int insurancePolicyId,
   }) {
     if (!isValidEmail(email)) {
       throw ArgumentError('Invalid email address');
@@ -73,6 +77,7 @@ class Order {
       Birthday: birthday,
       Passport: passport,
       Gender: gender,
+      InsurancePolicyId: insurancePolicyId
     );
   }
 }
@@ -104,6 +109,7 @@ Map<String, dynamic> OrderToMap(Order order) {
     'Birthday': order.Birthday,
     'Passport': order.Passport,
     'Gender': order.Gender,
+    'InsurancePolicyId': order.InsurancePolicyId,
   };
 }
 
@@ -128,5 +134,6 @@ Order? OrderFromMap(Map<String, dynamic>? map) {
     Birthday: map['Birthday'],
     Passport: map['Passport'],
     Gender: map['Gender'],
+    InsurancePolicyId: map['InsurancePolicyId'],
   ).._id = map['_id'] != null ? ObjectId.parse(map['_id']) : null;
 }

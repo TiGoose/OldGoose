@@ -6,12 +6,12 @@ class MailService {
 
   MailService(this.address);
 
-  Future<void> sendBookingMail(String onlineOrderId, int adultCount, int childCount) async {
+  Future<void> sendBookingMail(String orderId, int adultCount, int childCount) async {
     const title = "謝謝您的購買，我們確認款項後將盡速為您出票 - 老天鵝團隊";
     var content = "親愛的客戶：<br><br>感謝您的購買，我們已收到您的訂單<br><br>"
-        "訂單編號：$onlineOrderId<br>"
-        "大人：$adultCount<br>"
-        "小孩：$childCount<br><br>"
+        "訂單編號：$orderId<br>"
+        "大人：$adultCount 位<br>"
+        "小孩：$childCount 位<br><br>"
         "我們確認款項後將盡速為您出票，謝謝您的耐心等候<br><br>"
         "如果您有任何問題或需要進一步協助，歡迎聯繫 valorelove@gmail.com <br><br>"
         "老天鵝團隊";

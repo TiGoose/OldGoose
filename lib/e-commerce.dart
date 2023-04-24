@@ -800,20 +800,23 @@ class _PackageScreenState extends State<PackageScreen> {
                     var searchResponse = await grailService.search(
                         "ST_D1297OY2",
                         "ST_LV5236GZ",
-                        "2023-04-25",
+                        "2023-05-25",
                         "15:00",
                         _adultCount,
                         _childCount);
                     var bookingCode = searchResponse.data?[1].solutions?[0]
                         .sections?[0].offers?[0].services?[0].bookingCode;
                     var onlineOrderId = await grailService.booking(
-                        bookingCode!, emailController.text, _adultCount, _childCount);
+                        bookingCode!, emailController.text, _adultCount, _childCount, orderId);
                     await DbHelper.UpdateOrderId(orderId, onlineOrderId);
+
+                    var confirmResponse = await grailService.confirm(onlineOrderId);
+
                   } catch (e) {
                     await DbHelper.UpdateStatus(orderId, 'BookingFail');
                   }
                 });
-                
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(

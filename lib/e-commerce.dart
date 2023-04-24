@@ -777,13 +777,13 @@ class _PackageScreenState extends State<PackageScreen> {
                   throw ArgumentError('成人或小孩票數量都是0');
                 }
 
-                makePayment('TWD',(package.adultPrice * adultC + package.childPrice * childC).toString());
-
+                var totalAmount = package.adultPrice * adultC +
+                        package.childPrice * childC;
+                _email = emailController.text;
                 var orderId = await DbHelper.insertOrder(Order.NewOrder(
-                    email: emailController.text,
+                    email: _email,
                     orderId: '',
-                    amount: package.adultPrice * adultC +
-                        package.childPrice * childC,
+                    amount: totalAmount,
                     adultCount: adultC,
                     childCount: childC,
                     session: '',
@@ -794,25 +794,13 @@ class _PackageScreenState extends State<PackageScreen> {
                     passport: passportController.text,
                     gender: 'M'));
 
-                Future(() async {
-                  try {
-                    var grailService = GrailService();
-                    var searchResponse = await grailService.search(
-                        "ST_D1297OY2",
-                        "ST_LV5236GZ",
-                        "2023-04-25",
-                        "15:00",
-                        _adultCount,
-                        _childCount);
-                    var bookingCode = searchResponse.data?[1].solutions?[0]
-                        .sections?[0].offers?[0].services?[0].bookingCode;
-                    var onlineOrderId = await grailService.booking(
-                        bookingCode!, emailController.text, _adultCount, _childCount);
-                    await DbHelper.UpdateOrderId(orderId, onlineOrderId);
-                  } catch (e) {
-                    await DbHelper.UpdateStatus(orderId, 'BookingFail');
-                  }
-                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ConfirmationWidget(orderId: orderId, currency: 'TWD', amount: totalAmount, email: _email),
+                  ),
+                );
+
               },
               child: Text('確認購買'),
             ),
@@ -821,7 +809,114 @@ class _PackageScreenState extends State<PackageScreen> {
       ),
     );
   }
+}
 
+class ConfirmationWidget extends StatefulWidget {
+  String orderId;
+  String currency;
+  int amount;
+  String email;
+  ConfirmationWidget(
+      {super.key,
+        required this.orderId,
+        required this.currency,
+        required this.amount,
+        required this.email});
+
+  @override
+  ConfirmationWidgetState createState() => ConfirmationWidgetState();
+}
+
+class ConfirmationWidgetState extends State<ConfirmationWidget> {
+  Map<String, dynamic>? paymentIntent;
+  var clientkey = "sk_test_51MzZGsAal8fGT9eQSbcU99X0lPZRRro6amrKu8vbFUz9zFkmEqEoi71EMt8vGlcKf9fBmJ4IshSqP2JBHYLCP4kG00Pd6voMhq"; // Secret Key
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('交易狀態'),
+          actions: const [
+            LiveChatBarAction(),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(height: 20),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Total',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodySmall,
+                      ),
+                      Text(
+                        '${widget.currency}${widget.amount.toStringAsFixed(2)}',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleSmall,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  CallToActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BankTransferWidget(
+                                amount: widget.amount,
+                                orderId: widget.orderId,
+                                email: widget.email,
+                                currency: widget.currency,
+                              ),
+                        ),
+                      );
+                    },
+                    labelText: '银行转账',
+                    minSize: const Size(220, 45),
+                  ),
+                  SizedBox(height: 20),
+                  CallToActionButton(
+                    onPressed: () {
+                      makePayment(widget.currency, widget.amount.toString());
+                    },
+                    labelText: '信用卡',
+                    minSize: const Size(220, 45),
+                  ),
+                  SizedBox(height: 20),
+                  CallToActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PaymentWidget(
+                                  amount: widget.amount,
+                                  orderId: widget.orderId,
+                                  email: widget.email),
+                        ),
+                      );
+                    },
+                    labelText: 'USDT',
+                    minSize: const Size(220, 45),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ));
+  }
   createPaymentIntent(String amount, String currency) async {
     try {
 
@@ -869,7 +964,7 @@ class _PackageScreenState extends State<PackageScreen> {
           merchantDisplayName: 'OldGoose',
         ),
       ).then((value) async {
-      // TODO: now finally display payment sheeet
+        // TODO: now finally display payment sheeet
         displayPaymentSheet();
       }
       );

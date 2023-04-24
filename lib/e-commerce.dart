@@ -85,9 +85,6 @@ import 'Order.dart';
 //   munichPackage,
 // ];
 
-var packages = DbHelper.GetAllPackage();
-
-
 
 Cart cart = Cart();
 

@@ -27,7 +27,7 @@ class GrailService {
     return ResponseData.fromJson(rawSearchResponse);
   }
 
-  Future<String> booking(String bookingCode, String address) async {
+  Future<String> booking(String bookingCode, String address, int adultCount, int childCount) async {
     print('==booking ticket==');
     var bookingRequest = BookingRequest.fromJson(jsonDecode('{"passengers":[{"last_name":"cheng","first_name":"kyo","birthdate":"1984-12-25","passport":"666666","email":"$address","phone":"+886053111222","gender":"male"}],"sections":["${bookingCode!}"],"seat_reserved":true,"memo":"partner_order_id"}'));
     var onlineOrderAsync = await client.onlineOrder(bookingRequest);
@@ -36,9 +36,10 @@ class GrailService {
     print(rawBookingResponse);
 
     var mailService = MailService(address);
-    await mailService.sendBookingMail();
+    var onlineOrderId = rawBookingResponse['data']['id'].toString();
+    await mailService.sendBookingMail(onlineOrderId, adultCount, childCount);
 
-    return rawBookingResponse['data']['id'].toString();
+    return onlineOrderId;
   }
 
   Future<dynamic> confirm(String onlineOrderId) async {

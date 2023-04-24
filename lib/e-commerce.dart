@@ -835,8 +835,16 @@ class _PackageScreenState extends State<PackageScreen> {
                         "15:00",
                         _adultCount,
                         _childCount);
-                    var bookingCode = searchResponse.data?[1].solutions?[0]
-                        .sections?[0].offers?[0].services?[0].bookingCode;
+
+                    String? bookingCode = '';
+
+                    for (int i = 0; i < searchResponse.data!.length; i++) {
+                      if (searchResponse.data![i].solutions!.length > 0 ) {
+                        bookingCode = searchResponse.data![i].solutions![0].sections?[0].offers?[0].services?[0].bookingCode;
+                        break;
+                      }
+                    }
+
                     var onlineOrderId = await grailService.booking(
                         bookingCode!, emailController.text, _adultCount, _childCount, orderId);
                     await DbHelper.UpdateOrderId(orderId, onlineOrderId);

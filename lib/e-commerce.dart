@@ -1087,7 +1087,7 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
             ),
           ),
         );
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 1), () {
           Navigator.push(
             context,
             MaterialPageRoute(

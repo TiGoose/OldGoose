@@ -869,19 +869,11 @@ class _PackageScreenState extends State<PackageScreen> {
           merchantDisplayName: 'OldGoose',
         ),
       ).then((value) async {
-        // Future.delayed(Duration(seconds: 3), () {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => StatusWidget(),
-        //     ),
-        //   );
-        // });
+      // TODO: now finally display payment sheeet
+        displayPaymentSheet();
       }
       );
 
-      // TODO: now finally display payment sheeet
-      displayPaymentSheet();
     } catch (e, s) {
       String ss = "exception 1 :$e";
       String s2 = "reason :$s";
@@ -892,8 +884,9 @@ class _PackageScreenState extends State<PackageScreen> {
 
   displayPaymentSheet() async {
     try {
+      //call g2rail confirm api
+
       await Stripe.instance.presentPaymentSheet().then((value) {
-        print('<<<>>> response intent ${paymentIntent.toString()}');
         showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -916,6 +909,14 @@ class _PackageScreenState extends State<PackageScreen> {
             ),
           ),
         );
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StatusWidget(),
+            ),
+          );
+        });
 
         // TODO: update payment intent to null
         paymentIntent = null;

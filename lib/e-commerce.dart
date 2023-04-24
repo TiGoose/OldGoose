@@ -869,15 +869,16 @@ class _PackageScreenState extends State<PackageScreen> {
           merchantDisplayName: 'OldGoose',
         ),
       ).then((value) async {
-        Future.delayed(Duration(seconds: 3), () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => StatusWidget(),
-            ),
-          );
-        });
-      });
+        // Future.delayed(Duration(seconds: 3), () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => StatusWidget(),
+        //     ),
+        //   );
+        // });
+      }
+      );
 
       // TODO: now finally display payment sheeet
       displayPaymentSheet();
@@ -892,6 +893,7 @@ class _PackageScreenState extends State<PackageScreen> {
   displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
+        print('<<<>>> response intent ${paymentIntent.toString()}');
         showDialog(
           context: context,
           builder: (_) => AlertDialog(

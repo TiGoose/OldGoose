@@ -551,6 +551,19 @@ class _PackageScreenState extends State<PackageScreen> {
   String _email = '';
   Map<String, dynamic>? paymentIntent;
   var clientkey = "sk_test_51MzZGsAal8fGT9eQSbcU99X0lPZRRro6amrKu8vbFUz9zFkmEqEoi71EMt8vGlcKf9fBmJ4IshSqP2JBHYLCP4kG00Pd6voMhq"; // Secret Key
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });}
 
   _increaseAdultCount() {
     setState(() {
@@ -629,16 +642,34 @@ class _PackageScreenState extends State<PackageScreen> {
             SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextFormField(
-                controller: ticketTimeController,
-                keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '出發日期',
-                  hintText: '請選擇您的出發日期',
-                ),
-                // validator: validateQuantity,
+              child:
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Selected Date:',
+                  ),
+                  Text(
+                    '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => _selectDate(context),
+                    child: Text('Select date'),
+                  ),
+                ],
               ),
+              // TextFormField(
+              //   controller: ticketTimeController,
+              //   keyboardType: TextInputType.datetime,
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(),
+              //     labelText: '出發日期',
+              //     hintText: '請選擇您的出發日期',
+              //   ),
+              //   // validator: validateQuantity,
+              // ),
             ),
             SizedBox(height: 20),
             Padding(
@@ -800,7 +831,7 @@ class _PackageScreenState extends State<PackageScreen> {
                     var searchResponse = await grailService.search(
                         "ST_D1297OY2",
                         "ST_LV5236GZ",
-                        "2023-05-25",
+                        selectedDate.toString(),
                         "15:00",
                         _adultCount,
                         _childCount);

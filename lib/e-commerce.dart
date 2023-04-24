@@ -797,10 +797,13 @@ class _PackageScreenState extends State<PackageScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ConfirmationWidget(orderId: orderId, currency: 'TWD', amount: totalAmount, email: _email),
+                    builder: (context) => ConfirmationWidget(
+                        orderId: orderId,
+                        currency: 'TWD',
+                        amount: totalAmount,
+                        email: _email),
                   ),
                 );
-
               },
               child: Text('確認購買'),
             ),
@@ -816,6 +819,7 @@ class ConfirmationWidget extends StatefulWidget {
   String currency;
   int amount;
   String email;
+
   ConfirmationWidget(
       {super.key,
         required this.orderId,
@@ -889,7 +893,7 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
                   SizedBox(height: 20),
                   CallToActionButton(
                     onPressed: () {
-                      makePayment(widget.currency, widget.amount.toString());
+                      makePayment(widget.currency, widget.amount.toString(), widget.orderId);
                     },
                     labelText: '信用卡',
                     minSize: const Size(220, 45),
@@ -948,7 +952,7 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
     return calculatedAmout.toString();
   }
 
-  Future<void> makePayment(String currency, String amount) async {
+  Future<void> makePayment(String currency, String amount, String orderId) async {
     try {
       // TODO: Create Payment intent
       paymentIntent = await createPaymentIntent(amount, currency);
@@ -964,8 +968,8 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
           merchantDisplayName: 'OldGoose',
         ),
       ).then((value) async {
-        // TODO: now finally display payment sheeet
-        displayPaymentSheet();
+      // TODO: now finally display payment sheeet
+        displayPaymentSheet(orderId);
       }
       );
 
@@ -977,8 +981,25 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
     }
   }
 
-  displayPaymentSheet() async {
+  displayPaymentSheet(String orderId) async {
     try {
+      var order = await DbHelper.GetOrderById(orderId);
+
+      Future(() async {
+        try {
+          var grailService = GrailService();
+          var confirmResponse = await grailService.confirm(order!.OrderId);
+          print('confirm here >>>>' + confirmResponse.toString());
+          // var bookingCode = confirmResponse.data?[1].solutions?[0]
+          //     .sections?[0].offers?[0].services?[0].bookingCode;
+          // var onlineOrderId = await grailService.booking(
+          //     bookingCode!, emailController.text);
+          // await DbHelper.UpdateOrderId(orderId, onlineOrderId);
+        } catch (e) {
+          // await DbHelper.UpdateStatus(orderId, 'BookingFail');
+        }
+      });
+
       //call g2rail confirm api
 
       await Stripe.instance.presentPaymentSheet().then((value) {
@@ -1008,7 +1029,7 @@ class ConfirmationWidgetState extends State<ConfirmationWidget> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => StatusWidget(),
+              builder: (context) => StatusWidget(), // can put order in status page
             ),
           );
         });
